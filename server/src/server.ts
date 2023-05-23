@@ -1,17 +1,18 @@
-import express from "express";
+import app from "./app";
+import env from "./util/validateEnv";
+import mongoose from "mongoose";
 
-// This effectively add as an observer
-const app = express();
 
 // Port is effectively a connection point for the observer
 // React uses 3000 by default hence the need for using another port
-const port = 4000;
+const port = env.PORT;
 
-// An error function of sorts, a null case
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
-});
-
-app.listen(port, () => {
-    console.log("Server running on port: " + port);
-});
+mongoose.connect(env.MONGO_CONNECTION_STRING!)
+    .then(() => {
+        console.log("Mongoose connected");
+        app.listen(port, () => {
+            console.log("Server running on port: " + port);
+        });
+    })
+    .catch(console.error);
+    // then is for the Promise being successful and catch is for when it fails
