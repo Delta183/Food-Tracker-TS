@@ -1,22 +1,18 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
+import notesRoutes from "./routes/notes"
+// There was a type error here, sometimes imports in TS result in this, try the command given or make a d.ts file
+import morgan from "morgan"
 
-import NoteModel from "./models/note"
 const app = express();
 
+app.use(morgan("dev"))
+
+// Sets up express such that it can accept JSON bodies
+app.use(express.json());
+
 // Endpoints
-// request, response and next
-app.get("/", async (req, res, next) => {
-    try {
-        // throw Error("Bazinga!")
-        // Get the notes from our database
-        // execute the find function to get all NoteModels in the database
-        const notes = await NoteModel.find().exec();
-        res.status(200).json(notes); 
-    } catch (error) {
-       next(error);
-    }
-});
+app.use("/api/notes", notesRoutes)
 
 // For requests for routers in which we have no endpoint for
 app.use((req, res, next) => {
