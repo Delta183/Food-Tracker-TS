@@ -45,6 +45,7 @@ export const getNote: RequestHandler = async (req, res, next) => {
 // Prior to this, the error handling here was not optimal and even missing/entering the title
 // incorrectly would lead to errors
 interface CreateNoteBody {
+    // Question mark (?) denotes the variable as optional
     title?: string,
     text?: string,
 }
@@ -66,6 +67,75 @@ export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknow
         });
         // Send the new note back as a JSON object
         res.status(201).json(newNote);
+    } catch (error) {
+        next(error);
+    }
+};
+
+interface UpdateNoteParams {
+    noteId: string,
+}
+
+interface UpdateNoteBody {
+    title?: string,
+    text?: string,
+}
+
+// The order for RequestHandler is Params, response, body, query params
+export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBody, unknown> = async (req, res, next) => {
+    const noteId = req.params.noteId;
+    const newTitle = req.body.title;
+    const newText = req.body.text;
+
+    try {
+        // Check for is the id is in the proper structure
+        if (!mongoose.isValidObjectId(noteId)) {
+            throw createHttpError(400, "Invalid note id");
+        }
+
+        // Check if newTitle was provided
+        if (!newTitle) {
+            throw createHttpError(400, "Note must have a title");
+        }
+
+        const note = await NoteModel.findById(noteId).exec();
+
+        // Check if the note retrieved actually exists to begin with
+        if (!note) {
+            throw createHttpError(404, "Note not found");
+        }
+
+        // Otherwise overwrite the title and text and then save the note
+        note.title = newTitle;
+        note.text = newText;
+
+        const updatedNote = await note.save();
+
+        res.status(200).json(updatedNote);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deleteNote: RequestHandler = async (req, res, next) => {
+    const noteId = req.params.noteId;
+
+    try {
+
+        if (!mongoose.isValidObjectId(noteId)) {
+            throw createHttpError(400, "Invalid note id");
+        }
+
+        const note = await NoteModel.findById(noteId).exec();
+
+        if (!note) {
+            throw createHttpError(404, "Note not found");
+        }
+
+        // .remove could not be found but this should be just as effective
+        await note.deleteOne();
+
+        res.sendStatus(204);
     } catch (error) {
         next(error);
     }
