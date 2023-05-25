@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './styles/global.css'; // this used to be the index.css file but is still used as a global css file
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

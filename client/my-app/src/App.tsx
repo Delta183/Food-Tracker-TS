@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import {Button} from 'react-bootstrap';
-import {Note} from './models/note'
+import {Note as NoteModel} from './models/note';
+import Note from './components/Note';
 
 function App() {
   // React needs a special type of variable for updated value
   // Using <> allows us to declare the type of the react variables
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<NoteModel[]>([]);
 
   useEffect(() => {
     // Await functions need to be async
@@ -27,8 +27,12 @@ function App() {
   }, []); // passing the empty array allows this to run only one time
 
   return (
-    <div className="App">
-      {JSON.stringify(notes)}
+    <div>
+      boi
+      {/* .map allows us to use our array of elements for something */}
+      {notes.map(note => (
+        <Note note={note} key={note._id}/>
+      ))}
     </div>
   );
 }
