@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
-import {Button} from 'react-bootstrap';
+import {Button, Container, Row, Col} from 'react-bootstrap';
 import {Note as NoteModel} from './models/note';
 import Note from './components/Note';
+import styles from './styles/NotesPage.module.css';
 
 function App() {
   // React needs a special type of variable for updated value
@@ -27,13 +28,17 @@ function App() {
   }, []); // passing the empty array allows this to run only one time
 
   return (
-    <div>
+    <Container>
       boi
+      <Row xs={1} md={2} xl={3} className='g-4'>
       {/* .map allows us to use our array of elements for something */}
       {notes.map(note => (
-        <Note note={note} key={note._id}/>
+        <Col key={note._id}>
+          <Note note={note} className={styles.note}/>
+        </Col>
       ))}
-    </div>
+      </Row>
+    </Container>
   );
 }
 
