@@ -39,6 +39,21 @@ export async function createNote(note: NoteInput): Promise<Note> {
     return response.json();
 }
 
+// Update 
+export async function updateNote(noteId: string, note: NoteInput): Promise<Note> {
+    const response = await fetchData("/api/notes/" + noteId,
+        {
+            // Patch will be used for updates
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(note),
+        });
+    return response.json();
+}
+
+// Delete
 export async function deleteNote(noteId: string) {
     // We add the id here to match the route in the server file as well as the id for which to delete
     await fetchData("/api/notes/" + noteId, { method: "DELETE" });

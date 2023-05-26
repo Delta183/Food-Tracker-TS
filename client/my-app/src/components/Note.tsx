@@ -11,12 +11,13 @@ import stylesUtils from '../styles/utils.module.css';
 // Props is the arguments unto which we pass to the component.
 interface NoteProps {
     note: NoteModel,
-    className?: string,
+    onNoteClicked: (note: NoteModel) => void,
     onDeleteNoteClicked: (note: NoteModel) => void,
+    className?: string,
 }
 
 // Prior to NoteProps is the chunk of the arguments that will be passed
-const Note = ({note, className, onDeleteNoteClicked}: NoteProps) => {
+const Note = ({note, className, onNoteClicked, onDeleteNoteClicked}: NoteProps) => {
     // Unpacking the note model
     const {
         title,
@@ -35,7 +36,8 @@ const Note = ({note, className, onDeleteNoteClicked}: NoteProps) => {
 
     return (
         // The second className here is the props, not a typo dupe
-        <Card className={`${styles.noteCard} ${className}`}>
+        <Card className={`${styles.noteCard} ${className}`}
+        onClick={() => onNoteClicked(note)}>
             <Card.Body>
                 <Card.Title className={stylesUtils.flexCenter}>
                     {title}

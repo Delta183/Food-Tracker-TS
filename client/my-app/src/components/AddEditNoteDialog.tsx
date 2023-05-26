@@ -5,20 +5,32 @@ import { NoteInput } from "../network/notes.api";
 import * as NotesApi from "../network/notes.api";
 
 
-interface AddNoteDialogProps {
+interface AddEditNoteDialogProps {
+    noteToEdit?: Note, // Variable to differentiate a note to be added and one to be updated
     onDismiss: () => void,
     onNoteSaved: (note: Note) => void,
 }
 
 // The props this component will need when declared with the interface above just making it clear what types they will be
-const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
+const AddEditNoteDialog = ({onDismiss, onNoteSaved, noteToEdit}: AddEditNoteDialogProps) => {
 
     // Since the hook returns multiple values, we deconstruct the variables
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<NoteInput>();
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<NoteInput>({ 
+        defaultValues: {
+            title: noteToEdit?.title || "",
+            text: noteToEdit?.text || "",
+    }
+});
 
     async function onSubmit(input: NoteInput) {
         try {
-            const noteResponse = await NotesApi.createNote(input);
+            let noteResponse: Note;
+            // Check for if note is one to edit or one to add, call the according function
+            if (noteToEdit) {
+                noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
+            } else {
+                noteResponse = await NotesApi.createNote(input);
+            }
             onNoteSaved(noteResponse);
         } catch (error) {
             console.error(error);
@@ -30,13 +42,14 @@ const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
         <Modal show onHide={onDismiss}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Add Note
+                    {/* Ternary operator for if in edit or adding */}
+                    {noteToEdit ? "Edit note" : "Add note"}
                 </Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
                 {/* Our async function had the same name incidentally, curious syntax */}
-                <Form id="addNoteForm" onSubmit={handleSubmit(onSubmit)}>
+                <Form id="addEditNoteForm" onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="mb-3">
                         <Form.Label>Title</Form.Label>
                         <Form.Control
@@ -69,7 +82,7 @@ const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
                 form also denotes which form of input the button is connected to */}
                 <Button
                     type="submit"
-                    form="addNoteForm"
+                    form="addEditNoteForm"
                     disabled={isSubmitting}
                 >
                     Save
@@ -79,5 +92,5 @@ const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
      );
 }
  
-export default AddNoteDialog;
+export default AddEditNoteDialog;
 

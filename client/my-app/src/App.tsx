@@ -6,7 +6,8 @@ import Note from './components/Note';
 import styles from './styles/NotesPage.module.css';
 import stylesUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes.api';
-import AddNoteDialog from './components/AddNoteDialog';
+import AddEditNoteDialog from './components/AddEditNoteDialog';
+import { FaPlus } from "react-icons/fa";
 
 function App() {
   // React needs a special type of variable for updated value
@@ -14,6 +15,8 @@ function App() {
   const [notes, setNotes] = useState<NoteModel[]>([]);
 
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+
+  const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 
   useEffect(() => {
     // Await functions need to be async
@@ -49,9 +52,10 @@ function App() {
     <Container>
       {/* This button will prompt the add note dialog */}
       <Button 
-        className={`mb-4 ${stylesUtils.blockCenter}`}
+        className={`mb-4 ${stylesUtils.blockCenter} ${stylesUtils.flexCenter}`}
         onClick={() => setShowAddNoteDialog(true)}
       >
+        <FaPlus />
         Add New Note
       </Button>
       <Row xs={1} md={2} xl={3} className='g-4'>
@@ -61,6 +65,7 @@ function App() {
           <Note 
             note={note} 
             className={styles.note}
+            onNoteClicked={setNoteToEdit}
             onDeleteNoteClicked={deleteNote}
           />
         </Col>
@@ -69,7 +74,7 @@ function App() {
       {/* Will only show whatever appears after && if the variable is true */}
       {/* We could do it by passing the variable in the component but that will keep the component active */}
       { showAddNoteDialog &&
-      <AddNoteDialog 
+      <AddEditNoteDialog 
       onDismiss={() => setShowAddNoteDialog(false)}
       onNoteSaved={(newNote) => {
         // Creates a new array, adds the notes that exist currently in which we will add the newest one afterwards
@@ -79,6 +84,18 @@ function App() {
       }}
       />
       }
+      {/* The update card component that only appears once editing begins */}
+      {noteToEdit &&
+				<AddEditNoteDialog
+					noteToEdit={noteToEdit}
+					onDismiss={() => setNoteToEdit(null)}
+					onNoteSaved={(updatedNote) => {
+            // The function needed to map all the notes but ensure the edited one has its new information
+						setNotes(notes.map(existingNote => existingNote._id === updatedNote._id ? updatedNote : existingNote));
+						setNoteToEdit(null);
+					}}
+				/>
+			}
     </Container>
   );
 }
