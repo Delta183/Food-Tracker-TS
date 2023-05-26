@@ -31,6 +31,20 @@ function App() {
     loadNotes();
   }, []); // passing the empty array allows this to run only one time
 
+  // Delete Note logic
+  async function deleteNote(note: NoteModel) {
+		try {
+			await NotesApi.deleteNote(note._id);
+      // Go through each note of the array and only includes them if the id does not match the given one
+      // Thus resulting in its removal from the app
+			setNotes(notes.filter(existingNote => existingNote._id !== note._id));
+		} catch (error) {
+			console.error(error);
+			alert(error);
+		}
+	}
+
+  
   return (
     <Container>
       {/* This button will prompt the add note dialog */}
@@ -44,7 +58,11 @@ function App() {
       {/* .map allows us to use our array of elements for something */}
       {notes.map(note => (
         <Col key={note._id}>
-          <Note note={note} className={styles.note}/>
+          <Note 
+            note={note} 
+            className={styles.note}
+            onDeleteNoteClicked={deleteNote}
+          />
         </Col>
       ))}
       </Row>

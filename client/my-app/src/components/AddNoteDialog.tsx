@@ -42,6 +42,8 @@ const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
                         <Form.Control
                             type="text"
                             placeholder="Title"
+                            // The below is used in tandem with feedback
+                            isInvalid={!!errors.title}
                             {...register("title", { required: "Required" })}
                         />
                         {/* This is used to provide the feedback for good or bad input */}

@@ -38,3 +38,8 @@ export async function createNote(note: NoteInput): Promise<Note> {
         });
     return response.json();
 }
+
+export async function deleteNote(noteId: string) {
+    // We add the id here to match the route in the server file as well as the id for which to delete
+    await fetchData("/api/notes/" + noteId, { method: "DELETE" });
+}

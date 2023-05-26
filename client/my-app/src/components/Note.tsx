@@ -3,7 +3,8 @@ import { formatDate } from "../utils/formatDate";
 import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Note as NoteModel } from "../models/note";
-
+import {MdDelete} from "react-icons/md"; // md means material design
+import stylesUtils from '../styles/utils.module.css';
 
 // An interface to declare what variables the Note needs
 // It can be done without it in JS but its not as certain
@@ -11,10 +12,11 @@ import { Note as NoteModel } from "../models/note";
 interface NoteProps {
     note: NoteModel,
     className?: string,
+    onDeleteNoteClicked: (note: NoteModel) => void,
 }
 
 // Prior to NoteProps is the chunk of the arguments that will be passed
-const Note = ({note, className}: NoteProps) => {
+const Note = ({note, className, onDeleteNoteClicked}: NoteProps) => {
     // Unpacking the note model
     const {
         title,
@@ -35,8 +37,16 @@ const Note = ({note, className}: NoteProps) => {
         // The second className here is the props, not a typo dupe
         <Card className={`${styles.noteCard} ${className}`}>
             <Card.Body>
-                <Card.Title className={styles.cardBody}>
+                <Card.Title className={stylesUtils.flexCenter}>
                     {title}
+                    <MdDelete 
+                        className='text-muted ms-auto'
+                        onClick={(e) => {
+                            onDeleteNoteClicked(note);
+                            // Allows this click to go through
+                            e.stopPropagation();
+                        }}
+                    />
                 </Card.Title>
                 <Card.Text className={styles.cardText   }>
                     {text}
