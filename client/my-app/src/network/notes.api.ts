@@ -1,5 +1,6 @@
 // import { ConflictError, UnauthorizedError } from "../errors/http_errors";
 import { Note } from "../models/note";
+import {User} from "../models/user"
 
 // These parameters allow us to call it much like a fetch function
 async function fetchData(input: RequestInfo, init?: RequestInit) {
@@ -12,6 +13,50 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
         throw Error(errorMessage);
     }
 } // There is no export for this function as we will use it in this file
+
+export async function getLoggedInUser(): Promise<User> {
+    const response = await fetchData("/api/users", { method: "GET" });
+    return response.json();
+}
+
+export interface SignUpCredentials {
+    username: string,
+    email: string,
+    password: string,
+}
+
+export async function signUp(credentials: SignUpCredentials): Promise<User> {
+    const response = await fetchData("/api/users/signup",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(credentials),
+        });
+    return response.json();
+}
+
+export interface LoginCredentials {
+    username: string,
+    password: string,
+}
+
+export async function login(credentials: LoginCredentials): Promise<User> {
+    const response = await fetchData("/api/users/login",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(credentials),
+        });
+    return response.json();
+}
+
+export async function logout() {
+    await fetchData("/api/users/logout", { method: "POST" });
+}
 
 // We write Promise<Note[]> as a safeguard
 export async function fetchNotes(): Promise<Note[]> {
