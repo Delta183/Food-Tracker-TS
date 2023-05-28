@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import logo from './logo.svg';
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Container, Row, Col, Spinner} from 'react-bootstrap';
 import {Note as NoteModel} from './models/note';
 import Note from './components/Note';
 import styles from './styles/NotesPage.module.css';
@@ -14,6 +14,11 @@ function App() {
   // Using <> allows us to declare the type of the react variables
   const [notes, setNotes] = useState<NoteModel[]>([]);
 
+  const [notesLoading, setNotesLoading] = useState(true);
+  // Making an error type specifically for the notes
+  const [showNotesLoadingError, setShowNotesLoadingError] = useState(true);
+
+
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
 
   const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
@@ -22,12 +27,19 @@ function App() {
     // Await functions need to be async
     async function loadNotes() {
       try {
+        setShowNotesLoadingError(false);
+        setNotesLoading(true);
         // Anything under the function header is run on every render, useEffect allows it to be done once
         const notes = await NotesApi.fetchNotes();
         setNotes(notes);
       } catch (error) {
         console.error(error);
-        alert(error);
+        // As this is the fail state for loading notes, our custom error type is set
+        setShowNotesLoadingError(true);
+      }
+      finally {
+        // Finally is called whether of note an error occurs.
+        setNotesLoading(false);
       }
     }
     // Call the functions afterwards
@@ -47,9 +59,23 @@ function App() {
 		}
 	}
 
+  const notesGrid = 
+  <Row xs={1} md={2} xl={3} className={`g-4 ${styles.notesGrid}`}>
+    {/* .map allows us to use our array of elements for something */}
+    {notes.map(note => (
+      <Col key={note._id}>
+        <Note 
+          note={note} 
+          className={styles.note}
+          onNoteClicked={setNoteToEdit}
+          onDeleteNoteClicked={deleteNote}
+        />
+      </Col>
+    ))}
+  </Row>
   
   return (
-    <Container>
+    <Container className={styles.notesPage}>
       {/* This button will prompt the add note dialog */}
       <Button 
         className={`mb-4 ${stylesUtils.blockCenter} ${stylesUtils.flexCenter}`}
@@ -58,19 +84,19 @@ function App() {
         <FaPlus />
         Add New Note
       </Button>
-      <Row xs={1} md={2} xl={3} className='g-4'>
-      {/* .map allows us to use our array of elements for something */}
-      {notes.map(note => (
-        <Col key={note._id}>
-          <Note 
-            note={note} 
-            className={styles.note}
-            onNoteClicked={setNoteToEdit}
-            onDeleteNoteClicked={deleteNote}
-          />
-        </Col>
-      ))}
-      </Row>
+      {notesLoading && <Spinner animation='border' variant='primary'/>}
+      {/* Contingency if notes don't load */}
+      {showNotesLoadingError && <p>Something went wrong. Please refresh the page</p>}
+      {/* Once loading completes, and there is no error, then we must have vaid notes */}
+      {!notesLoading && !showNotesLoadingError && 
+      <>
+      {/* The empty tages makes for a fragment, allows us to put more than one component */}
+      {notes.length > 0
+        ? notesGrid
+        : <p>You don't have any notes yet</p>
+      }
+      </>
+      }
       {/* Will only show whatever appears after && if the variable is true */}
       {/* We could do it by passing the variable in the component but that will keep the component active */}
       { showAddNoteDialog &&
