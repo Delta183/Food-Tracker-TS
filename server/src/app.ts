@@ -1,10 +1,14 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
-import notesRoutes from "./routes/notes"
+import notesRoutes from "./routes/notes";
+import userRoutes from "./routes/users";
 import createHttpError, { isHttpError } from "http-errors";
 
 // There was a type error here, sometimes imports in TS result in this, try the command given or make a d.ts file
 import morgan from "morgan"
+import session from "express-session";
+import env from "./util/validateEnv";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -12,8 +16,20 @@ app.use(morgan("dev"))
 
 // Sets up express such that it can accept JSON bodies
 app.use(express.json());
-
+app.use(session({
+    secret: env.SESSION_SECRET, // secret key for the session
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+        maxAge: 60 * 60 * 1000
+    },
+    rolling:true,
+    store: MongoStore.create({
+        mongoUrl: env.MONGO_CONNECTION_STRING
+    })
+}));
 // Endpoints
+app.use("/api/users", userRoutes)
 app.use("/api/notes", notesRoutes)
 
 // For requests for routers in which we have no endpoint for
