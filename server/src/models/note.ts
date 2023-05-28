@@ -2,7 +2,7 @@ import { InferSchemaType, model, Schema } from "mongoose";
 
 // The Schema resembles a class with attributes
 const noteSchema = new Schema({
-    // userId: { type: Schema.Types.ObjectId, required: true }, // required is true akin to a DB
+    userId: { type: Schema.Types.ObjectId, required: true }, // required is true akin to a DB
     title: { type: String, required: true },
     text: { type: String },
 }, { timestamps: true });

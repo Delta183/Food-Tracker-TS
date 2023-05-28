@@ -9,6 +9,7 @@ import morgan from "morgan"
 import session from "express-session";
 import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
+import { requiresAuth } from "./middleware/auth";
 
 const app = express();
 
@@ -30,7 +31,8 @@ app.use(session({
 }));
 // Endpoints
 app.use("/api/users", userRoutes)
-app.use("/api/notes", notesRoutes)
+// With this, notes are protected by the authorization
+app.use("/api/notes", requiresAuth, notesRoutes)
 
 // For requests for routers in which we have no endpoint for
 app.use((req, res, next) => {

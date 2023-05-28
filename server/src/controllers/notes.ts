@@ -2,16 +2,20 @@ import NoteModel from "../models/note"
 import mongoose from "mongoose";
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
+import { assertIsDefined } from "../util/assertIsDefined";
+
 
 // export const is used to export multiple things 
 // When this was initially moved here, req, res and next produced errors as they don't have a type
 // However, providing a type to the function itself allows the params to infer their type
 export const getNotes : RequestHandler = async (req, res, next) => {
+    const authenticatedUserId = req.session.userId;
     try {
-        // throw Error("Bazinga!")
+        assertIsDefined(authenticatedUserId);
+
         // Get the notes from our database
         // execute the find function to get all NoteModels in the database
-        const notes = await NoteModel.find().exec();
+        const notes = await NoteModel.find({ userId: authenticatedUserId }).exec();        
         res.status(200).json(notes); 
     } catch (error) {
        next(error);
@@ -21,8 +25,11 @@ export const getNotes : RequestHandler = async (req, res, next) => {
 export const getNote: RequestHandler = async (req, res, next) => {
     // Referencing the variable in the router such that it can be read 
     const noteId = req.params.noteId;
+    const authenticatedUserId = req.session.userId;
 
     try {
+        // Prior to the endpoints being used, check for authentication
+        assertIsDefined(authenticatedUserId);
         // Check if the given noteId adheres to the structures of ids
         if (!mongoose.isValidObjectId(noteId)) {
             throw createHttpError(400, "Invalid note id");
@@ -33,6 +40,11 @@ export const getNote: RequestHandler = async (req, res, next) => {
         // Provided a valid id, check if the note fetched is null/does not exist
         if (!note) {
             throw createHttpError(404, "Note not found");
+        }
+
+        // If the user id of the note does not match the user, they do not have the rights to modify it
+        if (!note.userId.equals(authenticatedUserId)) {
+            throw createHttpError(401, "You cannot access this note");
         }
 
         res.status(200).json(note);
@@ -55,13 +67,16 @@ interface CreateNoteBody {
 export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknown> = async (req, res, next) => {
     const title = req.body.title;
     const text = req.body.text;
+    const authenticatedUserId = req.session.userId;
     try {
+        assertIsDefined(authenticatedUserId);
         // Ensure the title is there for the notes
         if (!title) {
             throw createHttpError(400, "Note must have a title");
         }
         // provided the title and text, we create a new NoteModel object
         const newNote = await NoteModel.create({
+            userId: authenticatedUserId,
             title: title,
             text: text,
         });
@@ -86,8 +101,12 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
     const noteId = req.params.noteId;
     const newTitle = req.body.title;
     const newText = req.body.text;
+    const authenticatedUserId = req.session.userId;
+
 
     try {
+        assertIsDefined(authenticatedUserId);
+
         // Check for is the id is in the proper structure
         if (!mongoose.isValidObjectId(noteId)) {
             throw createHttpError(400, "Invalid note id");
@@ -105,6 +124,10 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
             throw createHttpError(404, "Note not found");
         }
 
+        if (!note.userId.equals(authenticatedUserId)) {
+            throw createHttpError(401, "You cannot access this note");
+        }
+
         // Otherwise overwrite the title and text and then save the note
         note.title = newTitle;
         note.text = newText;
@@ -119,8 +142,10 @@ export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBod
 
 export const deleteNote: RequestHandler = async (req, res, next) => {
     const noteId = req.params.noteId;
+    const authenticatedUserId = req.session.userId;
 
     try {
+        assertIsDefined(authenticatedUserId);
 
         if (!mongoose.isValidObjectId(noteId)) {
             throw createHttpError(400, "Invalid note id");
@@ -130,6 +155,10 @@ export const deleteNote: RequestHandler = async (req, res, next) => {
 
         if (!note) {
             throw createHttpError(404, "Note not found");
+        }
+
+        if (!note.userId.equals(authenticatedUserId)) {
+            throw createHttpError(401, "You cannot access this note");
         }
 
         // .remove could not be found but this should be just as effective
