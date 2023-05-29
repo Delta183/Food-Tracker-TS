@@ -11,8 +11,6 @@ import * as NotesApi from "./network/notes.api";
 import NotesPage from './pages/NotesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PrivacyPage from './pages/PrivacyPage';
-import NotesPageLoggedInView from './components/NotesPageLoggedInView';
-import NotesPageLoggedOutView from './components/NotesPageLoggedOutView';
 
 function App() {
 
@@ -35,7 +33,6 @@ function App() {
 
 	return (
 		<BrowserRouter>
-		<div>
 			<NavBar
 				loggedInUser={loggedInUser}
 				onLoginClicked={() => setShowLoginModal(true)}
@@ -43,21 +40,21 @@ function App() {
 				onLogoutSuccessful={() => setLoggedInUser(null)}
 			/>
 			<Container className={styles.pageContainer}>
-					<Routes>
-						<Route
-							path='/'
-							element={<NotesPage loggedInUser={loggedInUser} />}
-						/>
-						<Route
-							path='/privacy'
-							element={<PrivacyPage />}
-						/>
-						<Route
-							path='/*'
-							element={<NotFoundPage />}
-						/>
-					</Routes>
-				</Container>
+				<Routes>
+					<Route
+						path='/'
+						element={<NotesPage loggedInUser={loggedInUser} />}
+					/>
+					<Route
+						path='/privacy'
+						element={<PrivacyPage />}
+					/>
+					<Route
+						path='/*'
+						element={<NotFoundPage />}
+					/>
+				</Routes>
+			</Container>
       		{/* Sign and Login modals below */}
 			{showSignUpModal &&
 				<SignUpModal
@@ -76,8 +73,7 @@ function App() {
 						setShowLoginModal(false);
 					}}
 				/>
-			}
-		</div>
+				} 
 		</BrowserRouter>
 	);
 }
