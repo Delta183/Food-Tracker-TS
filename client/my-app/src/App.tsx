@@ -1,7 +1,7 @@
 import { Container } from 'react-bootstrap';
-import LoginModal from './components/LoginModal';
-import NavBar from './components/NavBar';
-import SignUpModal from './components/SignUpModal';
+import LoginModal from './components/SignLogin/LoginModal';
+import NavBar from './components/NavBarComponents/NavBar';
+import SignUpModal from './components/SignLogin/SignUpModal';
 import styles from "./styles/App.module.css";
 import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,6 +11,7 @@ import * as NotesApi from "./network/notes.api";
 import NotesPage from './pages/NotesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PrivacyPage from './pages/PrivacyPage';
+import HomePage from './pages/HomePage';
 
 function App() {
 
@@ -39,10 +40,15 @@ function App() {
 				onSignUpClicked={() => setShowSignUpModal(true)}
 				onLogoutSuccessful={() => setLoggedInUser(null)}
 			/>
+			{/* This will determine which page is shown to the user per the router */}
 			<Container className={styles.pageContainer}>
 				<Routes>
 					<Route
 						path='/'
+						element={<HomePage/>}
+					/>
+					<Route
+						path='/notes'
 						element={<NotesPage loggedInUser={loggedInUser} />}
 					/>
 					<Route

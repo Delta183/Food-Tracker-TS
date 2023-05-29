@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
-import NotesPageLoggedInView from "../components/NotesPageLoggedInView";
-import NotesPageLoggedOutView from "../components/NotesPageLoggedOutView";
+import NotesPageLoggedInView from "../components/NotesPageComponents/NotesPageLoggedInView";
+import NotesPageLoggedOutView from "../components/NotesPageComponents/NotesPageLoggedOutView";
 import { User } from "../models/user";
 import styles from "../styles/NotesPage.module.css";
 

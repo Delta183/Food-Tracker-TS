@@ -1,10 +1,10 @@
-import styles from '../styles/Note.module.css'
-import { formatDate } from "../utils/formatDate";
+import styles from '../../styles/Note.module.css'
+import { formatDate } from "../../utils/formatDate";
 import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
-import { Note as NoteModel } from "../models/note";
+import { Note as NoteModel } from "../../models/note";
 import {MdDelete} from "react-icons/md"; // md means material design
-import stylesUtils from '../styles/utils.module.css';
+import stylesUtils from '../../styles/utils.module.css';
 
 // An interface to declare what variables the Note needs
 // It can be done without it in JS but its not as certain

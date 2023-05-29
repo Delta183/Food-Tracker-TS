@@ -1,5 +1,5 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { User } from "../models/user";
+import { User } from "../../models/user";
 import NavBarLoggedInView from "./NavBarLoggedInView";
 import NavBarLoggedOutView from "./NavBarLoggedOutView";
 import { Link } from "react-router-dom";
@@ -23,6 +23,9 @@ const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccess
                     <Nav>
                         <Nav.Link as={Link} to="/privacy">
                             Privacy
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/notes">
+                            Notes
                         </Nav.Link>
                     </Nav>
                     <Nav className="ms-auto">
