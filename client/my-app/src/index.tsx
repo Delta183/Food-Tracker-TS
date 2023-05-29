@@ -1,13 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './styles/global.css'; // this used to be the index.css file but is still used as a global css file
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./styles/global.css"; // this used to be the index.css file but is still used as a global css file
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 // Index.tsx initializes the whole of our App.tsx
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
