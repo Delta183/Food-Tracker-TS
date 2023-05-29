@@ -58,15 +58,6 @@ function App() {
 						/>
 					</Routes>
 				</Container>
-			<Container className={styles.notesPage}>
-        	{/* The use of the fragment allows for this operation to exist */}
-				<>
-					{loggedInUser
-						? <NotesPageLoggedInView />
-						: <NotesPageLoggedOutView />
-					}
-				</>
-			</Container>
       		{/* Sign and Login modals below */}
 			{showSignUpModal &&
 				<SignUpModal
