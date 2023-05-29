@@ -2,10 +2,15 @@ import { Container } from 'react-bootstrap';
 import LoginModal from './components/LoginModal';
 import NavBar from './components/NavBar';
 import SignUpModal from './components/SignUpModal';
-import styles from "./styles/NotesPage.module.css";
+import styles from "./styles/App.module.css";
+import { Route, Routes } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { User } from './models/user';
 import * as NotesApi from "./network/notes.api";
+import NotesPage from './pages/NotesPage';
+import NotFoundPage from './pages/NotFoundPage';
+import PrivacyPage from './pages/PrivacyPage';
 import NotesPageLoggedInView from './components/NotesPageLoggedInView';
 import NotesPageLoggedOutView from './components/NotesPageLoggedOutView';
 
@@ -29,6 +34,7 @@ function App() {
 	}, []);
 
 	return (
+		<BrowserRouter>
 		<div>
 			<NavBar
 				loggedInUser={loggedInUser}
@@ -36,8 +42,24 @@ function App() {
 				onSignUpClicked={() => setShowSignUpModal(true)}
 				onLogoutSuccessful={() => setLoggedInUser(null)}
 			/>
+			<Container className={styles.pageContainer}>
+					<Routes>
+						<Route
+							path='/'
+							element={<NotesPage loggedInUser={loggedInUser} />}
+						/>
+						<Route
+							path='/privacy'
+							element={<PrivacyPage />}
+						/>
+						<Route
+							path='/*'
+							element={<NotFoundPage />}
+						/>
+					</Routes>
+				</Container>
 			<Container className={styles.notesPage}>
-        {/* The use of the fragment allows for this operation to exist */}
+        	{/* The use of the fragment allows for this operation to exist */}
 				<>
 					{loggedInUser
 						? <NotesPageLoggedInView />
@@ -45,7 +67,7 @@ function App() {
 					}
 				</>
 			</Container>
-      {/* Sign and Login modals below */}
+      		{/* Sign and Login modals below */}
 			{showSignUpModal &&
 				<SignUpModal
 					onDismiss={() => setShowSignUpModal(false)}
@@ -65,6 +87,7 @@ function App() {
 				/>
 			}
 		</div>
+		</BrowserRouter>
 	);
 }
 
