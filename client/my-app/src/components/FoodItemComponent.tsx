@@ -29,14 +29,14 @@ const MovieItemComponent = (props: IProps) => {
 //   const onClick = () => {
 //     props.buttonConfig.onClick(props.imdbID);
 //   };
-  const hasPoster = props.foodItem.photo !== INVALID_MOVIE_POSTER_TEXT;
+  // const hasPoster = props.foodItem.photo !== INVALID_MOVIE_POSTER_TEXT;
   return (
     <div className={"movie-item-container"}>
-      <img
+      {/* <img
         className={classNameForPosterStatus(hasPoster)}
         src={hasPoster ? props.foodItem.photo : placeholder}
         alt={altTextForPosterStatus(hasPoster, props.foodItem)}
-      />
+      /> */}
       <div className={"movie-item-title"}>
         {`${props.foodItem.food_name} (${props.foodItem.serving_qty})`}
       </div>
