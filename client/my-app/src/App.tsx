@@ -13,6 +13,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import HomePage from "./pages/HomePage";
 
+
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 

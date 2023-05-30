@@ -11,10 +11,10 @@ const SearchContainerComponent = ({ input, onChange }: IProps) => {
   return (
     <div className={"search-container"}>
       <div className={"search-title-label"}>
-        Nominate your top 5 movies for the upcoming Shoppies Award Show!
+        Select and add foods to your list to get the meaty statistics!
       </div>
       <div className={"search-title-label"}>
-        Use the searchbar below to find a movie to nominate:{" "}
+        Use the searchbar below to find a food or drink:{" "}
       </div>
       <SearchBarComponent input={input} onChange={onChange} />
     </div>
