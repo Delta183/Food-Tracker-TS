@@ -1,5 +1,6 @@
 import { foodSearchItem } from "../models/foodSearchItem";
 import placeholder from "../resources/placeholder.jpeg";
+import styles from "../styles/FoodSearch.module.css";
 const INVALID_FOOD_IMAGE = "N/A";
 
 interface IProps {
@@ -28,20 +29,14 @@ const altTextForPosterStatus = (
   }
 };
 
-const getArray = (foodItem: foodSearchItem): string => {
-  return foodItem.photo["thumb"];
-};
-
 const FoodItemComponent = (props: IProps) => {
-  // console.log(typeof(props.foodItem.photo));
-  // console.log()
   const foodPhoto: string = props.foodItem.photo["thumb"];
   //   const onClick = () => {
   //     props.buttonConfig.onClick(props.imdbID);
   //   };
   const hasPoster = foodPhoto !== INVALID_FOOD_IMAGE;
   return (
-    <div className={"movie-item-container"}>
+    <div className={styles.FoodSearchItem}>
       <img
         className={classNameForPosterStatus(hasPoster)}
         src={hasPoster ? foodPhoto : placeholder}

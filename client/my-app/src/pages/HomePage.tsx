@@ -20,7 +20,7 @@ const HomePage = () => {
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performSearch = async (query: string) => {
     searchFoodsWithQuery(query, (results, error) => {
-      console.log(results);
+      // console.log(results);
       setSearchResults(results);
       setSearchResultError(error);
     });

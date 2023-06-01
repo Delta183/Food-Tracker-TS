@@ -1,0 +1,21 @@
+.FoodSearchPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .FoodSearchItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+  }
+  
+  .FoodGrid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+  

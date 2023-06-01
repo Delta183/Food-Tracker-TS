@@ -1,5 +1,6 @@
 import { foodSearchItem } from "../../models/foodSearchItem";
 import SearchResultComponent from "./SearchResultComponent";
+import styles from "../../styles/FoodSearch.module.css";
 
 interface IProps {
   results: foodSearchItem[]; // the array that will return from the search
@@ -27,7 +28,7 @@ const shouldShowNoResultsPlaceholder = (props: IProps): boolean => {
 
 const SearchResultListComponent = (props: IProps) => {
   return (
-    <div className={"content-list-container"}>
+    <div className={styles.FoodSearchPage}>
       <div className={"content-list-header"}>
         {props.query === null || props.query.length === 0
           ? "Results"
@@ -43,6 +44,7 @@ const SearchResultListComponent = (props: IProps) => {
           No results found. Please try another query.
         </div>
       ) : null}
+      <div className={styles.FoodGrid}>
       {props.results.map((result) => {
         // This part calls on the SearchResultComponent which are all the titles
         return (
@@ -54,6 +56,7 @@ const SearchResultListComponent = (props: IProps) => {
           />
         );
       })}
+      </div>
     </div>
   );
 };
