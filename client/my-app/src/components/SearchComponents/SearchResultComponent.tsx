@@ -1,12 +1,12 @@
-import { foodSearchItem } from "../../models/foodSearchItem"
-import FoodItemComponent from "../FoodItemComponent"
+import { foodSearchItem } from "../../models/foodSearchItem";
+import FoodItemComponent from "../FoodItemComponent";
 
 interface IProps {
   key: string;
   tagID: string;
   result: foodSearchItem;
-//   isNominated: boolean;
-//   onAddNominationClick: (imdbID: string) => void;
+  //   isNominated: boolean;
+  //   onAddNominationClick: (imdbID: string) => void;
 }
 
 const SearchResultComponent = (props: IProps) => {
@@ -14,12 +14,12 @@ const SearchResultComponent = (props: IProps) => {
     <FoodItemComponent
       tagID={props.tagID}
       foodItem={props.result}
-    //   buttonConfig={{
-    //     disabled: props.isNominated,
-    //     className: "base-button nominate-button",
-    //     title: "Nominate",
-    //     onClick: props.onAddNominationClick,
-    //   }}
+      //   buttonConfig={{
+      //     disabled: props.isNominated,
+      //     className: "base-button nominate-button",
+      //     title: "Nominate",
+      //     onClick: props.onAddNominationClick,
+      //   }}
     />
   );
 };

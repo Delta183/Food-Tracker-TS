@@ -9,7 +9,6 @@ import ContentContainerComponent from "../components/ContentContainerComponent";
 
 const DEBOUNCE_DURATION = 500;
 
-
 // This page is responsible for the current homescreen
 const HomePage = () => {
   const [input, setInput] = useState("");
@@ -21,7 +20,7 @@ const HomePage = () => {
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performSearch = async (query: string) => {
     searchFoodsWithQuery(query, (results, error) => {
-      console.log(results)
+      console.log(results);
       setSearchResults(results);
       setSearchResultError(error);
     });
@@ -47,9 +46,9 @@ const HomePage = () => {
         onChange={onSearchBarTextChange}
       />
       <ContentContainerComponent
-       searchResultError={searchResultError}
-       results={searchResults}
-       query={input}
+        searchResultError={searchResultError}
+        results={searchResults}
+        query={input}
       />
     </Container>
   );

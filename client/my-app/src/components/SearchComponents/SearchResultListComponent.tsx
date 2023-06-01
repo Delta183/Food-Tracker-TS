@@ -1,9 +1,9 @@
-import { foodSearchItem } from "../../models/foodSearchItem"
+import { foodSearchItem } from "../../models/foodSearchItem";
 import SearchResultComponent from "./SearchResultComponent";
 
 interface IProps {
   results: foodSearchItem[]; // the array that will return from the search
-  query: string; 
+  query: string;
   searchResultError: Error | null;
 }
 

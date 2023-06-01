@@ -1,4 +1,3 @@
-
 import { foodSearchItem } from "../models/foodSearchItem";
 
 // The REACT_APP part of the variable names allow for env variables
@@ -22,15 +21,15 @@ const searchFoodsWithQuery = async (
     {
       method: "GET",
       headers: {
-        "x-app-key":key,
-        "x-app-id":id,
-        "Content-Type":"application/json",
-        "x-remote-user-id":"0",
+        "x-app-key": key,
+        "x-app-id": id,
+        "Content-Type": "application/json",
+        "x-remote-user-id": "0",
       },
     }
   )
     .then((response) => response.json())
-    
+
     .then((searchResponse) => {
       const errorMessage = searchResponse["Error"];
       if (errorMessage !== null && errorMessage !== undefined) {
@@ -39,11 +38,14 @@ const searchFoodsWithQuery = async (
       } else {
         // In the response, I get two arrays in an array where "common" is the header
         // for the common set of food
-        const searchResponseResults: foodSearchItem[] = searchResponse["common"];
+        const searchResponseResults: foodSearchItem[] =
+          searchResponse["common"];
         // This will filter items with the same ids in the array
-        var cleanResults = searchResponseResults.filter((searchResponseResults, index, self) =>
-        index === self.findIndex((t) => (t.tag_id === searchResponseResults.tag_id))
-      )
+        var cleanResults: foodSearchItem[] = searchResponseResults.filter(
+          (searchResponseResults, index, self) =>
+            index ===
+            self.findIndex((t) => t.tag_id === searchResponseResults.tag_id)
+        );
         if (Array.isArray(cleanResults)) {
           callback(cleanResults, null);
         } else {
