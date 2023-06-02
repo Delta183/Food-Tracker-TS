@@ -1,6 +1,6 @@
 import { foodSearchItem } from "../models/foodSearchItem";
 import SearchResultListComponent from "./SearchComponents/SearchResultListComponent";
-import styles from "../styles/FoodSearch.module.css"
+import styles from "../styles/FoodSearch.module.css";
 interface IProps {
   results: foodSearchItem[];
   query: string;

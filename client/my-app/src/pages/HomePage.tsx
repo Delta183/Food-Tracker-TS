@@ -47,12 +47,12 @@ const HomePage = () => {
         input={input}
         onChange={onSearchBarTextChange}
       />
-       <Container className={styles.contentContainer}>
-      <ContentContainerComponent
-        searchResultError={searchResultError}
-        results={searchResults}
-        query={input}
-      />
+      <Container className={styles.contentContainer}>
+        <ContentContainerComponent
+          searchResultError={searchResultError}
+          results={searchResults}
+          query={input}
+        />
       </Container>
     </Container>
   );

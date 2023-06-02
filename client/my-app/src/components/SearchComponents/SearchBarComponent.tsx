@@ -1,4 +1,4 @@
-import styles from "../../styles/FoodSearch.module.css"
+import styles from "../../styles/FoodSearch.module.css";
 
 interface IProps {
   input: string; // Tracking the input in a string

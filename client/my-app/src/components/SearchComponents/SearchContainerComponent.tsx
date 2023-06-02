@@ -1,5 +1,5 @@
 import SearchBarComponent from "./SearchBarComponent";
-import styles from "../../styles/FoodSearch.module.css"
+import styles from "../../styles/FoodSearch.module.css";
 // The IProps again being what is sent over by the parent components
 // These will be sent further down to the child component of SearchBarComponent
 interface IProps {

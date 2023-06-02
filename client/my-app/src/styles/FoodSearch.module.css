@@ -1,43 +1,51 @@
 .FoodSearchPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .FoodSearchItem {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 12px;
-    margin-bottom: 6px;
-    background-color: #9cec8c;
-    border: 1px solid black;
-    border-radius: 8px;
-    width: 150%; 
-    /* The width was set to this because of the previous css effects not properly wrapping the entire div */
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .FoodSearchItemTitle {
-    text-align: center;
-    margin-left: 12px;
-    font-size: 13p;
-    font-style: italic;
-    font-weight: 500;
-  }
+.FoodSearchItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 12px;
+  margin-bottom: 6px;
+  background-color: #9cec8c;
+  border: 1px solid black;
+  border-radius: 8px;
+  width: 200%;
+  /* The width was set to this because of the previous css effects not properly wrapping the entire div */
+}
 
-  .foodItemImage {
-    height: 10vmax;
-    width: 10vmax;
-    margin-right: 12px;
-  }
+.FoodSearchItemTitle {
+  text-align: center;
+  margin-left: 12px;
+  font-size: 13p;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: capitalize;
+  /* text-transform is a css only fix to the issue of the names being lower case but for the sake of this project, its not exactly relevant */
+}
 
-  .foodItemPlaceholderImage {
-    height: 9vmax;
-    margin-right: 12px;
-  }
-  
-  /* Search container */
+.foodSearchItemButtonColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.foodItemImage {
+  height: 10vmax;
+  width: 10vmax;
+  margin-right: 12px;
+}
+
+.foodItemPlaceholderImage {
+  height: 9vmax;
+  margin-right: 12px;
+}
+
+/* Search container */
 .searchContainer {
   display: flex;
   flex-direction: column;
@@ -70,12 +78,14 @@
 
 .searchResultsPlaceholderLabel {
   text-align: center;
+  align-items: center;
   margin-right: 12px;
   font-size: 13pt;
   font-style: italic;
   font-weight: 500;
   margin-top: 12px;
   margin-bottom: 12px;
+  width: 200%;
 }
 
 /* Content (Container for search results and nominations)  */
@@ -84,7 +94,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
-  
 }
 
 .contentListContainer {
@@ -102,4 +111,5 @@
   border: 2px solid black;
   border-radius: 8px;
   min-width: fit-content;
+  width: 200%;
 }
