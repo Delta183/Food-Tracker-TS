@@ -1,6 +1,6 @@
 import { foodSearchItem } from "../models/foodSearchItem";
 import SearchResultListComponent from "./SearchComponents/SearchResultListComponent";
-
+import styles from "../styles/FoodSearch.module.css"
 interface IProps {
   results: foodSearchItem[];
   query: string;
@@ -11,7 +11,7 @@ interface IProps {
 // current list of items from the user
 const ContentContainerComponent = (props: IProps) => {
   return (
-    <div className={"content-container"}>
+    <div className={styles.contentContainer}>
       <SearchResultListComponent
         searchResultError={props.searchResultError}
         results={props.results}

@@ -9,13 +9,97 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    padding: 12px;
+    margin-bottom: 6px;
+    background-color: #9cec8c;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 150%; 
+    /* The width was set to this because of the previous css effects not properly wrapping the entire div */
+  }
 
+  .FoodSearchItemTitle {
+    text-align: center;
+    margin-left: 12px;
+    font-size: 13p;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .foodItemImage {
+    height: 10vmax;
+    width: 10vmax;
+    margin-right: 12px;
+  }
+
+  .foodItemPlaceholderImage {
+    height: 9vmax;
+    margin-right: 12px;
   }
   
-  .FoodGrid {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-  }
+  /* Search container */
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding-top: 36px;
+  padding-bottom: 36px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #9cec8c;
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+.searchBar {
+  background: #f2f1f9;
+  border: 2px solid black;
+  border-radius: 4px;
+  font-size: large;
+  padding: 0.5rem;
+}
+
+.searchTitleLabel {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.searchResultsPlaceholderLabel {
+  text-align: center;
+  margin-right: 12px;
+  font-size: 13pt;
+  font-style: italic;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+/* Content (Container for search results and nominations)  */
+.contentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
   
+}
+
+.contentListContainer {
+  width: 49%;
+}
+
+.contentListHeader {
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #108043;
+  color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  min-width: fit-content;
+}

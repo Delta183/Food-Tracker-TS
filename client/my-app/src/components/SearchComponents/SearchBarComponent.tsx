@@ -1,3 +1,5 @@
+import styles from "../../styles/FoodSearch.module.css"
+
 interface IProps {
   input: string; // Tracking the input in a string
   onChange: (text: string) => void; // Tracking the changes of the text in this function
@@ -7,7 +9,7 @@ interface IProps {
 const SearchBarComponent = ({ input, onChange }: IProps) => {
   return (
     <input
-      className={"search-bar"}
+      className={styles.searchBar}
       value={input} // Be sure that this matches the value in the IProps
       placeholder={"e.g. Pizza, Chicken"}
       onChange={(e) => onChange(e.target.value)}

@@ -28,23 +28,22 @@ const shouldShowNoResultsPlaceholder = (props: IProps): boolean => {
 
 const SearchResultListComponent = (props: IProps) => {
   return (
-    <div className={styles.FoodSearchPage}>
-      <div className={"content-list-header"}>
+    <div className={styles.contentListContainer}>
+      <div className={styles.contentListHeader}>
         {props.query === null || props.query.length === 0
           ? "Results"
           : `Results for "${props.query}"`}
       </div>
       {isTooManyResultsError(props.searchResultError) ? (
-        <div className={"search-results-placeholder-label"}>
+        <div className={styles.searchResultsPlaceholderLabel}>
           Too many results were returned, please make your query more specific.
         </div>
       ) : null}
       {shouldShowNoResultsPlaceholder(props) ? (
-        <div className={"search-results-placeholder-label"}>
+        <div className={styles.searchResultsPlaceholderLabel}>
           No results found. Please try another query.
         </div>
       ) : null}
-      <div className={styles.FoodGrid}>
       {props.results.map((result) => {
         // This part calls on the SearchResultComponent which are all the titles
         return (
@@ -56,7 +55,6 @@ const SearchResultListComponent = (props: IProps) => {
           />
         );
       })}
-      </div>
     </div>
   );
 };

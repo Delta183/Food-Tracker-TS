@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const classNameForPosterStatus = (hasPoster: boolean): string => {
-  return hasPoster ? "food-item-image" : "movie-item-placeholder-image";
+  return hasPoster ? `${styles.foodItemImage}` : `${styles.foodItemPlaceholderImage}`;
 };
 
 const altTextForPosterStatus = (
@@ -30,6 +30,7 @@ const altTextForPosterStatus = (
 };
 
 const FoodItemComponent = (props: IProps) => {
+  // This fetch may be prone to error
   const foodPhoto: string = props.foodItem.photo["thumb"];
   //   const onClick = () => {
   //     props.buttonConfig.onClick(props.imdbID);
@@ -42,7 +43,7 @@ const FoodItemComponent = (props: IProps) => {
         src={hasPoster ? foodPhoto : placeholder}
         alt={altTextForPosterStatus(hasPoster, props.foodItem)}
       />
-      <div className={"movie-item-title"}>
+      <div className={styles.FoodSearchItemTitle}>
         {`${props.foodItem.food_name} (${props.foodItem.serving_qty})`}
       </div>
       {/* <button
