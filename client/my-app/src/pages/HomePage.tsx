@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 
 // The duration to be waited for prior to actually performing the API call
 const DEBOUNCE_DURATION = 500;
-const MAX_SELECTIONS_LENGTH = 5; // There has to be a limit to the foods selected
+const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_NOMINATIONS_KEY = "foodSelections";
 
 // This page is responsible for the current homescreen
@@ -49,6 +49,7 @@ const HomePage = () => {
   const addFoodSelection = async (tagID: string) => {
     // Ensure the selections do not surpass the limit, otherwise additional selections cannot be done
     if (foodSelections.length >= MAX_SELECTIONS_LENGTH) {
+      // Fire the sweet alert if the limit has been reached
         Swal.fire({
           title: 'Error!',
           text: 'Do you want to continue',

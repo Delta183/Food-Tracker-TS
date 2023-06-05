@@ -24,13 +24,13 @@ const ContentContainerComponent = (props: IProps) => {
         foodSelections={props.foodSelections}
         onAddFoodSelectionClick={props.onAddFoodSelectionClick}
       />
+      {/* TODO: Add means to add the same item in a convenient manner, maybe check if currently in list */}
       <FoodSelectionsListComponent
         foodSelections={props.foodSelections}
         onRemoveFoodSelectionClick={props.onRemoveFoodSelectionClick}
         MAX_SELECTIONS_LENGTH={props.MAX_SELECTIONS_LENGTH}
       />
     </div>
-    // TODO: Add the shopping cart of sorts for the user's selections
   );
 };
 

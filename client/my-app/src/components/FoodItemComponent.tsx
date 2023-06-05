@@ -7,7 +7,7 @@ const INVALID_FOOD_IMAGE = "N/A";
 interface IProps {
   tagID: string;
   foodItem: foodSearchItem;
-  // The button configuration for moving food items into the cart
+  // The button configuration for moving food items into the cart and changes based off results or selections
   buttonConfig: {
     disabled: boolean,
     className: string;
@@ -74,10 +74,11 @@ const FoodItemComponent = (props: IProps) => {
           />
         </div>
         <button 
-        className={props.buttonConfig.className} 
-        onClick={onClick}
-        disabled={props.buttonConfig.disabled}
+          className={props.buttonConfig.className} 
+          onClick={onClick}
+          disabled={props.buttonConfig.disabled}
         >
+          {/* This changes based on which parent sent this component */}
           {props.buttonConfig.title}
         </button>
       </div>

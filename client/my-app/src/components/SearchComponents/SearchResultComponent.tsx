@@ -14,11 +14,12 @@ const SearchResultComponent = (props: IProps) => {
     <FoodItemComponent
       tagID={props.tagID}
       foodItem={props.result}
+      // Since we reuse the button for this and selections, we send a set of configs
       buttonConfig={{
         disabled: props.isSelected,
         className: "base-button nominate-button",
         title: "Select",
-        onClick: props.onAddFoodSelectionClick,
+        onClick: props.onAddFoodSelectionClick, // for the results, we are able to add them to the selections
       }}
     />
   );

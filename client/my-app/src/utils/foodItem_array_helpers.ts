@@ -1,5 +1,7 @@
 import { foodSearchItem } from "../models/foodSearchItem";
 
+// Function to find if a food exists in a given list, mainly to be used to see if a search
+// result is already among the selections.
 const findFoodByTagID = (
   tagID: string,
   foodSearchResults: foodSearchItem[]

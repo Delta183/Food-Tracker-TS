@@ -1,10 +1,9 @@
 import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodSelectionComponent from "./FoodSelectionComponent";
 import styles from "../../styles/FoodSearch.module.css";
-// import checkmark from "../resources/checkmark.png";
 
 interface IProps {
-  foodSelections: foodSearchItem[];
+  foodSelections: foodSearchItem[]; // The list of selections
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
 }

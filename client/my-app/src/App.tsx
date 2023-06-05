@@ -20,6 +20,7 @@ function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
+    // The functions maintained here are called once on the bootup and not on every refresh
     async function fetchLoggedInUser() {
       try {
         const user = await NotesApi.getLoggedInUser();

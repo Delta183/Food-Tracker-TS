@@ -2,22 +2,23 @@ import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodItemComponent from "../FoodItemComponent";
 
 interface IProps {
-  key: string;
-  tagID: string;
-  foodSelection: foodSearchItem;
+  key: string; // Gien that these will be on two lists and modified, id must be tracked
+  tagID: string; // id per the API of Nutritionix
+  foodSelection: foodSearchItem; // the selected food item from the list
   onRemoveFoodSelectionClick: (tagID: string) => void;
 }
 
 const FoodSelectionComponent = (props: IProps) => {
   return (
+    // Use the same component as we need the exact same information but only changing the button
     <FoodItemComponent
       tagID={props.tagID}
       foodItem={props.foodSelection}
       buttonConfig={{
         disabled: false,
         className: "base-button remove-button",
-        title: "Remove",
-        onClick: props.onRemoveFoodSelectionClick,
+        title: "Remove", // Hardcoded remove as selected foods can only be removed 
+        onClick: props.onRemoveFoodSelectionClick, // Additonally replacing the accompanying function with that
       }}
     />
   );
