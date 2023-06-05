@@ -7,12 +7,13 @@ const INVALID_FOOD_IMAGE = "N/A";
 interface IProps {
   tagID: string;
   foodItem: foodSearchItem;
-  //   buttonConfig: {
-  //     disabled: boolean;
-  //     className: string;
-  //     title: string;
-  //     onClick: (imdbID: string) => void;
-  //   };
+  // The button configuration for moving food items into the cart
+  buttonConfig: {
+    disabled: boolean,
+    className: string;
+    title: string;
+    onClick: (imdbID: string) => void;
+  };
 }
 
 const classNameForPosterStatus = (hasPoster: boolean): string => {
@@ -41,12 +42,14 @@ const FoodItemComponent = (props: IProps) => {
   // This fetch may be prone to error
   const foodPhoto: string = props.foodItem.photo["thumb"];
 
-  //   const onClick = () => {
-  //     props.buttonConfig.onClick(props.imdbID);
-  //   };
+  const onClick = () => {
+    props.buttonConfig.onClick(props.tagID);
+  };
+
   const hasPoster = foodPhoto !== INVALID_FOOD_IMAGE;
+
   return (
-    <div className={styles.FoodSearchItem}>
+    <div className={styles.FoodSearchItemContainer}>
       <img
         className={classNameForPosterStatus(hasPoster)}
         src={hasPoster ? foodPhoto : placeholder}
@@ -70,7 +73,13 @@ const FoodItemComponent = (props: IProps) => {
             onChange={(e) => setQuantityCount(e.target.value)}
           />
         </div>
-        <button>Add to List</button>
+        <button 
+        className={props.buttonConfig.className} 
+        onClick={onClick}
+        disabled={props.buttonConfig.disabled}
+        >
+          {props.buttonConfig.title}
+        </button>
       </div>
     </div>
   );

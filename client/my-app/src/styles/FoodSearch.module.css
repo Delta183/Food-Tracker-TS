@@ -1,3 +1,20 @@
+/* Common food components (Use for rendering and search of food items)*/
+
+.FoodSearchItemContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 6px;
+  background-color: #9cec8c;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
 .FoodSearchPage {
   display: flex;
   flex-direction: column;
@@ -14,13 +31,12 @@
   background-color: #9cec8c;
   border: 1px solid black;
   border-radius: 8px;
-  width: 200%;
-  /* The width was set to this because of the previous css effects not properly wrapping the entire div */
 }
 
 .FoodSearchItemTitle {
   text-align: center;
   margin-left: 12px;
+  margin-bottom: 3px;
   font-size: 13p;
   font-style: italic;
   font-weight: 500;
@@ -31,7 +47,7 @@
 .foodSearchItemButtonColumn {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  align-items: center;
 }
 
 .foodItemImage {
@@ -85,7 +101,6 @@
   font-weight: 500;
   margin-top: 12px;
   margin-bottom: 12px;
-  width: 200%;
 }
 
 /* Content (Container for search results and nominations)  */
@@ -110,6 +125,4 @@
   color: white;
   border: 2px solid black;
   border-radius: 8px;
-  min-width: fit-content;
-  width: 200%;
 }

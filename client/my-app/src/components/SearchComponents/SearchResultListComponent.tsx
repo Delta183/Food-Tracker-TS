@@ -1,11 +1,14 @@
 import { foodSearchItem } from "../../models/foodSearchItem";
 import SearchResultComponent from "./SearchResultComponent";
 import styles from "../../styles/FoodSearch.module.css";
+import findFoodByTagID from "../../utils/foodItem_array_helpers";
 
 interface IProps {
   results: foodSearchItem[]; // the array that will return from the search
   query: string;
   searchResultError: Error | null;
+  foodSelections: foodSearchItem[];
+  onAddFoodSelectionClick: (imdbID: string) => void;
 }
 
 const isTooManyResultsError = (error: Error | null): boolean => {
@@ -48,10 +51,11 @@ const SearchResultListComponent = (props: IProps) => {
         // This part calls on the SearchResultComponent which are all the titles
         return (
           <SearchResultComponent
+            isSelected={findFoodByTagID(result.tag_id, props.foodSelections) !== null}
             key={result.tag_id}
             tagID={result.tag_id}
             result={result}
-            // onAddNominationClick={props.onAddNominationClick}
+            onAddFoodSelectionClick={props.onAddFoodSelectionClick}
           />
         );
       })}

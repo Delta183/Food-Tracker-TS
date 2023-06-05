@@ -5,8 +5,8 @@ interface IProps {
   key: string;
   tagID: string;
   result: foodSearchItem;
-  //   isNominated: boolean;
-  //   onAddNominationClick: (imdbID: string) => void;
+  isSelected: boolean;
+  onAddFoodSelectionClick: (tagID: string) => void;
 }
 
 const SearchResultComponent = (props: IProps) => {
@@ -14,12 +14,12 @@ const SearchResultComponent = (props: IProps) => {
     <FoodItemComponent
       tagID={props.tagID}
       foodItem={props.result}
-      //   buttonConfig={{
-      //     disabled: props.isNominated,
-      //     className: "base-button nominate-button",
-      //     title: "Nominate",
-      //     onClick: props.onAddNominationClick,
-      //   }}
+      buttonConfig={{
+        disabled: props.isSelected,
+        className: "base-button nominate-button",
+        title: "Select",
+        onClick: props.onAddFoodSelectionClick,
+      }}
     />
   );
 };
