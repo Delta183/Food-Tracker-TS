@@ -2,6 +2,8 @@ import { useState } from "react";
 import { foodSearchItem } from "../models/foodSearchItem";
 import placeholder from "../resources/placeholder.jpeg";
 import styles from "../styles/FoodSearch.module.css";
+import Button from 'react-bootstrap/Button';
+
 const INVALID_FOOD_IMAGE = "N/A";
 
 interface IProps {
@@ -62,12 +64,15 @@ const FoodItemComponent = (props: IProps) => {
         </div>
         <div className={styles.FoodSearchItemTitle}>
           {/* Below is how we handle the input for quantity */}
-          <label>Quantity:</label>
+          
           {props.buttonConfig.title === "Remove" ? 
            <div>
-            {props.foodItem.quantity}
+            <label>Quantity: {props.foodItem.quantity}</label>
+            
             </div>
             : 
+            <div>
+            <label>Quantity:</label>
             <input
             type="number"
             id="quantity"
@@ -78,16 +83,15 @@ const FoodItemComponent = (props: IProps) => {
             step={initialQuantity}
             onChange={(e) => setQuantityCount(e.target.value)}
           /> 
+          </div>
         }
         </div>
-        <button 
-          className={props.buttonConfig.className} 
-          onClick={onClick}
-          disabled={props.buttonConfig.disabled}
-        >
-          {/* This changes based on which parent sent this component */}
+        <Button variant={props.buttonConfig.className}
+        onClick={onClick}
+        disabled={props.buttonConfig.disabled}>
+        {/* This changes based on which parent sent this component */}
           {props.buttonConfig.title}
-        </button>
+          </Button>{' '}
       </div>
     </div>
   );

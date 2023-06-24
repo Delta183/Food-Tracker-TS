@@ -17,7 +17,7 @@ const SearchResultComponent = (props: IProps) => {
       // Since we reuse the button for this and selections, we send a set of configs
       buttonConfig={{
         disabled: props.isSelected,
-        className: "base-button nominate-button",
+        className: "primary",
         title: "Select",
         onClick: props.onAddFoodSelectionClick, // for the results, we are able to add them to the selections
       }}
