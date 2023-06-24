@@ -44,8 +44,9 @@ const FoodItemComponent = (props: IProps) => {
 
   const onClick = () => {
     props.buttonConfig.onClick(props.tagID);
+    // Update the state of the quantity count on each click
+    props.foodItem.quantity = quantityCount;
   };
-
   const hasPoster = foodPhoto !== INVALID_FOOD_IMAGE;
 
   return (
@@ -62,7 +63,12 @@ const FoodItemComponent = (props: IProps) => {
         <div className={styles.FoodSearchItemTitle}>
           {/* Below is how we handle the input for quantity */}
           <label>Quantity:</label>
-          <input
+          {props.buttonConfig.title === "Remove" ? 
+           <div>
+            {props.foodItem.quantity}
+            </div>
+            : 
+            <input
             type="number"
             id="quantity"
             name="quantity"
@@ -71,7 +77,8 @@ const FoodItemComponent = (props: IProps) => {
             max="100"
             step={initialQuantity}
             onChange={(e) => setQuantityCount(e.target.value)}
-          />
+          /> 
+        }
         </div>
         <button 
           className={props.buttonConfig.className} 

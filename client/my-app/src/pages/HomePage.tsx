@@ -9,6 +9,7 @@ import { foodSearchItem } from "../models/foodSearchItem";
 import searchFoodsWithQuery from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
 import Swal from 'sweetalert2'
+import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
 
 // The duration to be waited for prior to actually performing the API call
 const DEBOUNCE_DURATION = 500;
@@ -90,6 +91,8 @@ const HomePage = () => {
         input={input}
         onChange={onSearchBarTextChange}
       />
+      {/* This is where the results will be for now */}
+      <CalculationComponent/>
       <Container fluid>
         <ContentContainerComponent
           searchResultError={searchResultError}

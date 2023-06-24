@@ -24,7 +24,6 @@ const ContentContainerComponent = (props: IProps) => {
         foodSelections={props.foodSelections}
         onAddFoodSelectionClick={props.onAddFoodSelectionClick}
       />
-      {/* TODO: Add means to add the same item in a convenient manner, maybe check if currently in list */}
       <FoodSelectionsListComponent
         foodSelections={props.foodSelections}
         onRemoveFoodSelectionClick={props.onRemoveFoodSelectionClick}
