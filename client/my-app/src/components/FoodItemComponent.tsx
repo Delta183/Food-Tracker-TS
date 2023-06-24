@@ -67,7 +67,7 @@ const FoodItemComponent = (props: IProps) => {
             id="quantity"
             name="quantity"
             value={quantityCount}
-            min={quantityCount}
+            min={initialQuantity}
             max="100"
             step={initialQuantity}
             onChange={(e) => setQuantityCount(e.target.value)}
