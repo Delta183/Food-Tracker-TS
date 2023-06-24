@@ -17,7 +17,7 @@ const FoodSelectionComponent = (props: IProps) => {
       buttonConfig={{
         disabled: false,
         className: "danger",
-        title: "Remove", // Hardcoded remove as selected foods can only be removed 
+        title: "Remove", // Hardcoded remove as selected foods can only be removed
         onClick: props.onRemoveFoodSelectionClick, // Additonally replacing the accompanying function with that
       }}
     />

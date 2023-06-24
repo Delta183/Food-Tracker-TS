@@ -51,7 +51,9 @@ const SearchResultListComponent = (props: IProps) => {
         // This part calls on the SearchResultComponent which are all the titles
         return (
           <SearchResultComponent
-            isSelected={findFoodByTagID(result.tag_id, props.foodSelections) !== null}
+            isSelected={
+              findFoodByTagID(result.tag_id, props.foodSelections) !== null
+            }
             key={result.tag_id}
             tagID={result.tag_id}
             result={result}

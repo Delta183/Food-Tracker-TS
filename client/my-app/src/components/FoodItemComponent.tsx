@@ -2,7 +2,7 @@ import { useState } from "react";
 import { foodSearchItem } from "../models/foodSearchItem";
 import placeholder from "../resources/placeholder.jpeg";
 import styles from "../styles/FoodSearch.module.css";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 const INVALID_FOOD_IMAGE = "N/A";
 
@@ -11,7 +11,7 @@ interface IProps {
   foodItem: foodSearchItem;
   // The button configuration for moving food items into the cart and changes based off results or selections
   buttonConfig: {
-    disabled: boolean,
+    disabled: boolean;
     className: string;
     title: string;
     onClick: (imdbID: string) => void;
@@ -64,34 +64,35 @@ const FoodItemComponent = (props: IProps) => {
         </div>
         <div className={styles.FoodSearchItemTitle}>
           {/* Below is how we handle the input for quantity */}
-          
-          {props.buttonConfig.title === "Remove" ? 
-           <div>
-            <label>Quantity: {props.foodItem.quantity}</label>
-            
-            </div>
-            : 
+
+          {props.buttonConfig.title === "Remove" ? (
             <div>
-            <label>Quantity:</label>
-            <input
-            type="number"
-            id="quantity"
-            name="quantity"
-            value={quantityCount}
-            min={initialQuantity}
-            max="100"
-            step={initialQuantity}
-            onChange={(e) => setQuantityCount(e.target.value)}
-          /> 
-          </div>
-        }
+              <label>Quantity: {props.foodItem.quantity}</label>
+            </div>
+          ) : (
+            <div>
+              <label>Quantity:</label>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={quantityCount}
+                min={initialQuantity}
+                max="100"
+                step={initialQuantity}
+                onChange={(e) => setQuantityCount(e.target.value)}
+              />
+            </div>
+          )}
         </div>
-        <Button variant={props.buttonConfig.className}
-        onClick={onClick}
-        disabled={props.buttonConfig.disabled}>
-        {/* This changes based on which parent sent this component */}
+        <Button
+          variant={props.buttonConfig.className}
+          onClick={onClick}
+          disabled={props.buttonConfig.disabled}
+        >
+          {/* This changes based on which parent sent this component */}
           {props.buttonConfig.title}
-          </Button>{' '}
+        </Button>{" "}
       </div>
     </div>
   );

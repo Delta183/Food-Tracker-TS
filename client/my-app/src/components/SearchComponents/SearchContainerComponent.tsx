@@ -17,10 +17,7 @@ const SearchContainerComponent = ({ input, onChange }: IProps) => {
       <div className={styles.searchTitleLabel}>
         Use the searchbar below to find a food or drink:{" "}
       </div>
-      <SearchBarComponent 
-      input={input} 
-      onChange={onChange} 
-      />
+      <SearchBarComponent input={input} onChange={onChange} />
     </div>
   );
 };

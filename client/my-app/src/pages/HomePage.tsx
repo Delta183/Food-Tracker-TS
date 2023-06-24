@@ -8,7 +8,7 @@ import findFoodByTagID from "../utils/foodItem_array_helpers";
 import { foodSearchItem } from "../models/foodSearchItem";
 import searchFoodsWithQuery from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
 
 // The duration to be waited for prior to actually performing the API call
@@ -51,12 +51,12 @@ const HomePage = () => {
     // Ensure the selections do not surpass the limit, otherwise additional selections cannot be done
     if (foodSelections.length >= MAX_SELECTIONS_LENGTH) {
       // Fire the sweet alert if the limit has been reached
-        Swal.fire({
-          title: 'Error!',
-          text: 'Do you want to continue',
-          icon: 'error',
-          confirmButtonText: 'Cool'
-        });
+      Swal.fire({
+        title: "Error!",
+        text: "Do you want to continue",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
       return;
     }
 
@@ -82,7 +82,6 @@ const HomePage = () => {
     });
   };
 
-
   return (
     <div>
       Welcome to Food Tracker! With this you can track your calories and other
@@ -92,7 +91,7 @@ const HomePage = () => {
         onChange={onSearchBarTextChange}
       />
       {/* This is where the results will be for now */}
-      <CalculationComponent/>
+      <CalculationComponent />
       <Container fluid>
         <ContentContainerComponent
           searchResultError={searchResultError}
