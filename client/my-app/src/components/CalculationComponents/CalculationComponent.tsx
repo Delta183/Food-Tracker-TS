@@ -1,14 +1,22 @@
+import { useState } from "react";
 import styles from "../../styles/FoodSearch.module.css";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { foodSearchItem } from "../../models/foodSearchItem";
+import { calculateStatistics } from "../../network/nutritionix_api";
+import { foodStatsItem } from "../../models/foodStatsItem";
 
 interface IProps {
     foodSelections: foodSearchItem[]; // the selected food item from the list
   }
 
 const CalculationComponent = (props: IProps) => {
+  const [calculationResults, setCalculationResults] = useState(Array<foodStatsItem>());
+  const [calculationResultError, setCalculationResultError] = useState<Error | null>(
+    null
+  );
   const tableHeaders = [
+    "Serving Quantity",
     "Calories",
     "Total Fat",
     "Saturated Fat",
@@ -21,14 +29,27 @@ const CalculationComponent = (props: IProps) => {
     "Potassium",
   ];
 
-  var searchQuery = "";
-  // So far this is working with the right string but that bug of the last item in the selection persists
-  props.foodSelections.forEach((foodItem) => {
-    var foodString = `${foodItem.quantity} ${foodItem.food_name}, `
-    searchQuery += foodString 
-    // console.log(searchQuery)
-})
-console.log(searchQuery)
+    // Use the function in the api class to get a json response in an array and use the states to set it
+    const performCalculation = async (query: string) => {
+      // A function like this is able to maintain its results and errors and be set within its body
+      calculateStatistics(query, (results, error) => {
+        setCalculationResults(results);
+        setCalculationResultError(error);
+      });
+    };
+  
+
+  const calculateStats = () => {
+    var searchQuery = "";
+    // So far this is working with the right string but that bug of the last item in the selection persists
+    props.foodSelections.forEach((foodItem) => {
+      var foodString = `${foodItem.quantity} ${foodItem.food_name}, `
+      searchQuery += foodString 
+    })
+    console.log("Query" + searchQuery)
+    performCalculation(searchQuery)
+  };
+
   // Will fetch the selections from local storage, the real issue lies in passing that information
 
   return (
@@ -40,7 +61,7 @@ console.log(searchQuery)
         <thead>
           <tr>
             <th>Name</th>
-            {Array.from({ length: 10 }).map((_, index) => (
+            {Array.from({ length: 11 }).map((_, index) => (
               <th key={index}>{tableHeaders.at(index)}</th>
             ))}
           </tr>
@@ -48,25 +69,25 @@ console.log(searchQuery)
         <tbody>
           <tr>
             <td>1</td>
-            {Array.from({ length: 10 }).map((_, index) => (
+            {Array.from({ length: 11 }).map((_, index) => (
               <td key={index}>Table cell {index}</td>
             ))}
           </tr>
           <tr>
             <td>2</td>
-            {Array.from({ length: 10 }).map((_, index) => (
+            {Array.from({ length: 11 }).map((_, index) => (
               <td key={index}>Table cell {index}</td>
             ))}
           </tr>
           <tr>
             <td>3</td>
-            {Array.from({ length: 10 }).map((_, index) => (
+            {Array.from({ length: 11 }).map((_, index) => (
               <td key={index}>Table cell {index}</td>
             ))}
           </tr>
         </tbody>
       </Table>
-      <Button variant="primary">Calculate</Button>{" "}
+      <Button onClick={calculateStats} variant="primary">Calculate</Button>{" "}
     </div>
   );
 };
