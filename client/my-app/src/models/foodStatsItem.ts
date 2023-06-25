@@ -1,6 +1,7 @@
 export interface foodStatsItem {
     food_name: string;
-    serving_qty: number; // This will be a point of reference for its increments
+    serving_qty: number; 
+    // Below are all the pertinent health stats pulled from the response.
     nf_calories: number,
     nf_total_fat: number,
     nf_saturated_fat: number,
@@ -11,4 +12,9 @@ export interface foodStatsItem {
     nf_sugars: number,
     nf_protein: number,
     nf_potassium: number,
+    tags: TagArray,
+  }
+
+  export interface TagArray {
+    tag_id: string
   }

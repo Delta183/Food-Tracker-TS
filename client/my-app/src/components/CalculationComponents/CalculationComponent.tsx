@@ -11,6 +11,18 @@ interface IProps {
   }
 
 const CalculationComponent = (props: IProps) => {
+  var caloriesTotal = 0;
+  var totalFatTotal = 0;
+  var saturatedFatTotal = 0;
+  var cholesterolTotal = 0;
+  var sodiumTotal = 0; 
+  var totalCarbsTotal = 0;
+  var fiberTotal = 0;
+  var sugarsTotal = 0;
+  var proteinTotal = 0;
+  var potassiumTotal = 0
+
+
   const [calculationResults, setCalculationResults] = useState(Array<foodStatsItem>());
   const [calculationResultError, setCalculationResultError] = useState<Error | null>(
     null
@@ -38,17 +50,45 @@ const CalculationComponent = (props: IProps) => {
       });
     };
   
-
+  // when the button is clicked, construct a string using the selections
   const calculateStats = () => {
+    // be sure to reset the values for the next calculation 
+    resetValues();
     var searchQuery = "";
     // So far this is working with the right string but that bug of the last item in the selection persists
     props.foodSelections.forEach((foodItem) => {
       var foodString = `${foodItem.quantity} ${foodItem.food_name}, `
       searchQuery += foodString 
     })
-    console.log("Query" + searchQuery)
+    // console.log("Query" + searchQuery)
     performCalculation(searchQuery)
   };
+  
+  const resetValues = () => {
+    caloriesTotal = 0;
+    totalFatTotal = 0;
+    saturatedFatTotal = 0;
+    cholesterolTotal = 0;
+    sodiumTotal = 0;
+    totalCarbsTotal = 0;
+    fiberTotal = 0;
+    sugarsTotal = 0;
+    proteinTotal = 0;
+    potassiumTotal = 0;
+  }
+
+  const incrementValues = (foodStatsItem : foodStatsItem) => {
+    caloriesTotal += foodStatsItem.nf_calories;
+    totalFatTotal += foodStatsItem.nf_total_fat;
+    saturatedFatTotal += foodStatsItem.nf_saturated_fat;
+    cholesterolTotal += foodStatsItem.nf_cholesterol;
+    sodiumTotal += foodStatsItem.nf_sodium;
+    totalCarbsTotal += foodStatsItem.nf_total_carbohydrate;
+    fiberTotal += foodStatsItem.nf_dietary_fiber;
+    sugarsTotal += foodStatsItem.nf_sugars;
+    proteinTotal += foodStatsItem.nf_protein;
+    potassiumTotal += foodStatsItem.nf_potassium;
+  }
 
   // Will fetch the selections from local storage, the real issue lies in passing that information
 
@@ -67,24 +107,41 @@ const CalculationComponent = (props: IProps) => {
           </tr>
         </thead>
         <tbody>
+          {calculationResults.map((result) => {
+            incrementValues(result)
+            return <tr>
+              <td>{result.food_name}</td>
+              <td>{result.serving_qty}</td>
+              <td>{result.nf_calories}</td>
+              <td>{result.nf_total_fat}</td>
+              <td>{result.nf_saturated_fat}</td>
+              <td>{result.nf_cholesterol}</td>
+              <td>{result.nf_sodium}</td>
+              <td>{result.nf_total_carbohydrate}</td>
+              <td>{result.nf_dietary_fiber}</td>
+              <td>{result.nf_sugars}</td>
+              <td>{result.nf_protein}</td>
+              <td>{result.nf_potassium}</td>
+            </tr>
+          })}
+          {calculationResults.length > 0 ? 
           <tr>
-            <td>1</td>
-            {Array.from({ length: 11 }).map((_, index) => (
-              <td key={index}>Table cell {index}</td>
-            ))}
-          </tr>
-          <tr>
-            <td>2</td>
-            {Array.from({ length: 11 }).map((_, index) => (
-              <td key={index}>Table cell {index}</td>
-            ))}
-          </tr>
-          <tr>
-            <td>3</td>
-            {Array.from({ length: 11 }).map((_, index) => (
-              <td key={index}>Table cell {index}</td>
-            ))}
-          </tr>
+            <td>Total</td>
+            <td></td>
+            <td>{caloriesTotal.toFixed(2)}</td>
+            <td>{totalFatTotal.toFixed(2)}</td>
+            <td>{saturatedFatTotal.toFixed(2)}</td>
+            <td>{cholesterolTotal.toFixed(2)}</td>
+            <td>{sodiumTotal.toFixed(2)}</td>
+            <td>{totalCarbsTotal.toFixed(2)}</td>
+            <td>{fiberTotal.toFixed(2)}</td>
+            <td>{sugarsTotal.toFixed(2)}</td>
+            <td>{proteinTotal.toFixed(2)}</td>
+            <td>{potassiumTotal.toFixed(2)}</td>
+          </tr> :
+          <>
+          </> }
+          
         </tbody>
       </Table>
       <Button onClick={calculateStats} variant="primary">Calculate</Button>{" "}
