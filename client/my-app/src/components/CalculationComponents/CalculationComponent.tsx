@@ -1,8 +1,13 @@
 import styles from "../../styles/FoodSearch.module.css";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import { foodSearchItem } from "../../models/foodSearchItem";
 
-const CalculationComponent = () => {
+interface IProps {
+    foodSelections: foodSearchItem[]; // the selected food item from the list
+  }
+
+const CalculationComponent = (props: IProps) => {
   const tableHeaders = [
     "Calories",
     "Total Fat",
@@ -15,6 +20,16 @@ const CalculationComponent = () => {
     "Protein",
     "Potassium",
   ];
+
+  var searchQuery = "";
+  // So far this is working with the right string but that bug of the last item in the selection persists
+  props.foodSelections.forEach((foodItem) => {
+    var foodString = `${foodItem.quantity} ${foodItem.food_name}, `
+    searchQuery += foodString 
+    // console.log(searchQuery)
+})
+console.log(searchQuery)
+  // Will fetch the selections from local storage, the real issue lies in passing that information
 
   return (
     <div className={styles.searchContainer}>

@@ -40,14 +40,21 @@ const FoodItemComponent = (props: IProps) => {
   // Also we save the initial value separately as that will be how food servings will be measured
   // much like how nutrition facts don't measure by per "1 macaroni noodle" but rather a cup of noodles
   const initialQuantity = props.foodItem.serving_qty.valueOf();
+  const currentQuantity = props.foodItem.quantity;
   const [quantityCount, setQuantityCount] = useState(initialQuantity);
   // This fetch may be prone to error
   const foodPhoto: string = props.foodItem.photo["thumb"];
 
+  const updateQuantity = (foodItem: foodSearchItem, quantityValue: string) => {
+    foodItem.quantity = quantityValue;
+  }
+
   const onClick = () => {
+    // This gets done but doesn't update immediately until the next item does
+    updateQuantity(props.foodItem, quantityCount);
+    // props.foodItem.quantity = quantityCount;
     props.buttonConfig.onClick(props.tagID);
     // Update the state of the quantity count on each click
-    props.foodItem.quantity = quantityCount;
   };
   const hasPoster = foodPhoto !== INVALID_FOOD_IMAGE;
 
@@ -67,7 +74,7 @@ const FoodItemComponent = (props: IProps) => {
 
           {props.buttonConfig.title === "Remove" ? (
             <div>
-              <label>Quantity: {props.foodItem.quantity}</label>
+              Quantity: {currentQuantity}
             </div>
           ) : (
             <div>

@@ -6,7 +6,7 @@ import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
 import { foodSearchItem } from "../models/foodSearchItem";
-import searchFoodsWithQuery from "../network/nutritionix_api";
+import { searchFoodsWithQuery } from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
 import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
@@ -91,7 +91,8 @@ const HomePage = () => {
         onChange={onSearchBarTextChange}
       />
       {/* This is where the results will be for now */}
-      <CalculationComponent />
+      <CalculationComponent 
+      foodSelections={foodSelections}/>
       <Container fluid>
         <ContentContainerComponent
           searchResultError={searchResultError}

@@ -4,7 +4,8 @@ import { foodSearchItem } from "../models/foodSearchItem";
 const key = process.env.REACT_APP_NUTRITIONIX_API_KEY || "";
 const id = process.env.REACT_APP_NUTRITIONIX_API_ID || "";
 
-const searchFoodsWithQuery = async (
+
+export const searchFoodsWithQuery = async (
   query: string,
   callback: (results: foodSearchItem[], error: Error | null) => void
 ) => {
@@ -59,4 +60,4 @@ const searchFoodsWithQuery = async (
     });
 };
 
-export default searchFoodsWithQuery;
+
