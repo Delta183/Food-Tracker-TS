@@ -92,6 +92,9 @@ const HomePage = () => {
     <div>
       Welcome to Food Tracker! With this you can track your calories and other
       statistics with the help of the Nutrionix API.
+      You do not need to sign in to make selections and calculations. The site will remember your selections from your last visit even!
+      However, to save your selections into a meal, you will need to sign in.
+      Please note that your saved meal plans will be public so we can share super, healthy or even super healthy meals with all users.
       <SearchContainerComponent
         input={input}
         onChange={onSearchBarTextChange}

@@ -51,14 +51,14 @@
 }
 
 .foodItemImage {
-  height: 10vmax;
-  width: 10vmax;
-  margin-right: 12px;
+  height: 8vmax;
+  width: 8vmax;
+  
 }
 
 .foodItemPlaceholderImage {
-  height: 9vmax;
-  margin-right: 12px;
+  height: 8vmax;
+  width: 8vmax;
 }
 
 /* Search container */

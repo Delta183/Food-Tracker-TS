@@ -92,7 +92,9 @@ const FoodItemComponent = (props: IProps) => {
             </div>
           )}
         </div>
-        <Button
+      
+      </div>
+      <Button
           variant={props.buttonConfig.className}
           onClick={onClick}
           disabled={props.buttonConfig.disabled}
@@ -100,7 +102,6 @@ const FoodItemComponent = (props: IProps) => {
           {/* This changes based on which parent sent this component */}
           {props.buttonConfig.title}
         </Button>{" "}
-      </div>
     </div>
   );
 };

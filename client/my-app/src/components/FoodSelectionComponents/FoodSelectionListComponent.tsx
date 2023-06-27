@@ -1,6 +1,7 @@
 import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodSelectionComponent from "./FoodSelectionComponent";
 import styles from "../../styles/FoodSearch.module.css";
+import { Button } from "react-bootstrap";
 
 interface IProps {
   foodSelections: foodSearchItem[]; // The list of selections
@@ -34,6 +35,14 @@ const FoodSelectionsListComponent = (props: IProps) => {
           />
         );
       })}
+      {/* Logic here being that 1 item in a meal isn't enough to be archived into a meal and can be abused more easily */}
+      {/* Also user must be signed in for this to work */}
+      {props.foodSelections.length > 1 ? <Button
+          variant="success"
+        >
+         Save as Meal
+        </Button> : <></>
+        }
     </div>
   );
 };
