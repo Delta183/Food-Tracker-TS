@@ -6,9 +6,10 @@ import styles from "../../styles/FoodSearch.module.css";
 interface IProps {
   input: string;
   onChange: (text: string) => void;
+  onSearchBarClear: () => void;
 }
 
-const SearchContainerComponent = ({ input, onChange }: IProps) => {
+const SearchContainerComponent = ({ input, onChange, onSearchBarClear }: IProps) => {
   return (
     <div className={styles.searchContainer}>
       <div className={styles.searchTitleLabel}>
@@ -17,7 +18,10 @@ const SearchContainerComponent = ({ input, onChange }: IProps) => {
       <div className={styles.searchTitleLabel}>
         Use the searchbar below to find a food or drink:{" "}
       </div>
-      <SearchBarComponent input={input} onChange={onChange} />
+      <SearchBarComponent 
+      input={input} 
+      onChange={onChange}
+      onSearchBarClear={onSearchBarClear} />
     </div>
   );
 };

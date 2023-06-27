@@ -37,6 +37,12 @@ const HomePage = () => {
     });
   };
 
+  // Clear input and be sure to clear search results
+  const onSearchBarClear = async () => {
+    setInput("");
+    setSearchResults([]);
+  }
+
   // Set input to be text on change but ensure a debounce is run before performing the search
   const onSearchBarTextChange = async (text: string) => {
     // Set the input to be whatever that text is on change but only send it after the debounce duration elapses
@@ -89,6 +95,7 @@ const HomePage = () => {
       <SearchContainerComponent
         input={input}
         onChange={onSearchBarTextChange}
+        onSearchBarClear={onSearchBarClear}
       />
       {/* This is where the results will be for now */}
       <CalculationComponent 

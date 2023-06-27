@@ -24,21 +24,23 @@ const CalculationComponent = (props: IProps) => {
 
 
   const [calculationResults, setCalculationResults] = useState(Array<foodStatsItem>());
+  // TODO: Manage this error for when this search inevitably yields inaccurate content
   const [calculationResultError, setCalculationResultError] = useState<Error | null>(
     null
   );
+
   const tableHeaders = [
     "Serving Quantity",
-    "Calories",
-    "Total Fat",
-    "Saturated Fat",
-    "Cholesterol",
-    "Sodium",
-    "Total Carbs",
-    "Fiber",
-    "Sugars",
-    "Protein",
-    "Potassium",
+    "Calories (kcal)",
+    "Total Fat (g))",
+    "Saturated Fat (g)",
+    "Cholesterol (mg)",
+    "Sodium (mg)",
+    "Total Carbs (g)",
+    "Fiber (g)",
+    "Sugars (g)",
+    "Protein (g)",
+    "Potassium (mg)",
   ];
 
     // Use the function in the api class to get a json response in an array and use the states to set it
@@ -64,6 +66,7 @@ const CalculationComponent = (props: IProps) => {
     performCalculation(searchQuery)
   };
   
+  // Upon the start of another calculation, we have to be sure to reset the values
   const resetValues = () => {
     caloriesTotal = 0;
     totalFatTotal = 0;
@@ -77,6 +80,7 @@ const CalculationComponent = (props: IProps) => {
     potassiumTotal = 0;
   }
 
+  // incrementing values with each item read in the selections array
   const incrementValues = (foodStatsItem : foodStatsItem) => {
     caloriesTotal += foodStatsItem.nf_calories;
     totalFatTotal += foodStatsItem.nf_total_fat;
@@ -89,8 +93,6 @@ const CalculationComponent = (props: IProps) => {
     proteinTotal += foodStatsItem.nf_protein;
     potassiumTotal += foodStatsItem.nf_potassium;
   }
-
-  // Will fetch the selections from local storage, the real issue lies in passing that information
 
   return (
     <div className={styles.searchContainer}>
@@ -108,8 +110,10 @@ const CalculationComponent = (props: IProps) => {
         </thead>
         <tbody>
           {calculationResults.map((result) => {
+            // Prior to displaying the stats of each food, add their values to the totals
             incrementValues(result)
             return <tr>
+              {/* TODO: Capitalize the value here */}
               <td>{result.food_name}</td>
               <td>{result.serving_qty}</td>
               <td>{result.nf_calories}</td>
@@ -124,10 +128,12 @@ const CalculationComponent = (props: IProps) => {
               <td>{result.nf_potassium}</td>
             </tr>
           })}
+          {/* Provided there are actually results, then show the total row as well. */}
           {calculationResults.length > 0 ? 
           <tr>
             <td>Total</td>
             <td></td>
+            {/* toFixed(2) ensures these are returned as strings up to 2 decimal places */}
             <td>{caloriesTotal.toFixed(2)}</td>
             <td>{totalFatTotal.toFixed(2)}</td>
             <td>{saturatedFatTotal.toFixed(2)}</td>
@@ -140,7 +146,8 @@ const CalculationComponent = (props: IProps) => {
             <td>{potassiumTotal.toFixed(2)}</td>
           </tr> :
           <>
-          </> }
+          </> 
+          }
           
         </tbody>
       </Table>
