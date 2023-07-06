@@ -26,6 +26,7 @@ const CalculationComponent = (props: IProps) => {
     Array<foodStatsItem>()
   );
   // TODO: Manage this error for when this search inevitably yields inaccurate content
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [calculationResultError, setCalculationResultError] =
     useState<Error | null>(null);
 

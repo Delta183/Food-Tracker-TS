@@ -75,14 +75,21 @@ const FoodItemComponent = (props: IProps) => {
         <div className={styles.FoodSearchItemTitle}>
           {`${props.foodItem.food_name}`}
         </div>
-        <div className={styles.FoodSearchItemTitle}>
+      
+        <div className={styles.FoodSearchItemUnit}>
+          {`Unit: ${props.foodItem.serving_unit}`}
+        </div>
+        
+      </div>
+      <div className={styles.foodSearchItemButtonColumn}>
+      <div className={styles.FoodSearchItemTitle}>
           {/* Below is how we handle the input for quantity */}
 
           {props.buttonConfig.title === "Remove" ? (
             <div>Quantity: {currentQuantity}</div>
           ) : (
             <div>
-              <label>Quantity:</label>
+              <div>Quantity:</div>
               <input
                 type="number"
                 id="quantity"
@@ -95,9 +102,6 @@ const FoodItemComponent = (props: IProps) => {
               />
             </div>
           )}
-        </div>
-        <div className={styles.FoodSearchItemUnit}>
-          {`Unit: ${props.foodItem.serving_unit}`}
         </div>
       </div>
       <Button
