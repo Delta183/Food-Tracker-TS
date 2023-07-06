@@ -97,13 +97,12 @@ const HomePage = () => {
       into a meal, you will need to sign in. Please note that your saved meal
       plans will be public so we can share super, healthy or even super healthy
       meals with all users.
+      
       <SearchContainerComponent
         input={input}
         onChange={onSearchBarTextChange}
         onSearchBarClear={onSearchBarClear}
       />
-      {/* This is where the results will be for now */}
-      <CalculationComponent foodSelections={foodSelections} />
       <Container fluid>
         <ContentContainerComponent
           searchResultError={searchResultError}
@@ -115,6 +114,7 @@ const HomePage = () => {
           onRemoveFoodSelectionClick={removeFoodSelection}
         />
       </Container>
+      <CalculationComponent foodSelections={foodSelections} />
     </div>
   );
 };

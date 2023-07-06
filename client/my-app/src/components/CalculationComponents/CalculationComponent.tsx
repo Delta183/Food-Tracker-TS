@@ -97,9 +97,10 @@ const CalculationComponent = (props: IProps) => {
 
   return (
     <div className={styles.searchContainer}>
-      <div className={styles.searchTitleLabel}>
-        Below is the total calculations of your selections
-      </div>
+      <Button onClick={calculateStats} variant="primary">
+        Calculate
+      </Button>{" "}
+    
       <Table responsive variant="dark">
         <thead>
           <tr>
@@ -116,7 +117,7 @@ const CalculationComponent = (props: IProps) => {
             return (
               <tr>
                 {/* TODO: Capitalize the value here */}
-                <td>{result.food_name}</td>
+                <td style={{textTransform:"capitalize"}}>{result.food_name}</td>
                 <td>{result.serving_qty}</td>
                 <td>{result.nf_calories}</td>
                 <td>{result.nf_total_fat}</td>
@@ -153,9 +154,7 @@ const CalculationComponent = (props: IProps) => {
           )}
         </tbody>
       </Table>
-      <Button onClick={calculateStats} variant="primary">
-        Calculate
-      </Button>{" "}
+ 
     </div>
   );
 };
