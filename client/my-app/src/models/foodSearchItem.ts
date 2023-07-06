@@ -2,6 +2,7 @@ export interface foodSearchItem {
   food_name: string;
   serving_qty: string; // This will be a point of reference for its increments
   quantity: string;
+  serving_unit: string;
   tag_id: string;
   photo: PhotoArray; // This is simply because of the way the api returned this information did so in an array
 }

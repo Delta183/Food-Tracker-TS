@@ -10,7 +10,7 @@ interface IProps {
 // Consistent with all sub components of the like, be sure to include the IProps within the header
 const SearchBarComponent = ({ input, onChange, onSearchBarClear }: IProps) => {
   return (
-    <div>
+    <div className={styles.searchBarRow}>
       <input
         className={styles.searchBar}
         value={input} // Be sure that this matches the value in the IProps

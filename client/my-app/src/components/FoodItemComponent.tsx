@@ -90,6 +90,9 @@ const FoodItemComponent = (props: IProps) => {
             </div>
           )}
         </div>
+        <div className={styles.FoodSearchItemTitle}>
+          {`Unit: ${props.foodItem.serving_unit}`}
+        </div>
       </div>
       <Button
         variant={props.buttonConfig.className}
