@@ -9,7 +9,11 @@ interface IProps {
   onSearchBarClear: () => void;
 }
 
-const SearchContainerComponent = ({ input, onChange, onSearchBarClear }: IProps) => {
+const SearchContainerComponent = ({
+  input,
+  onChange,
+  onSearchBarClear,
+}: IProps) => {
   return (
     <div className={styles.searchContainer}>
       <div className={styles.searchTitleLabel}>
@@ -18,10 +22,11 @@ const SearchContainerComponent = ({ input, onChange, onSearchBarClear }: IProps)
       <div className={styles.searchTitleLabel}>
         Use the searchbar below to find a food or drink:{" "}
       </div>
-      <SearchBarComponent 
-      input={input} 
-      onChange={onChange}
-      onSearchBarClear={onSearchBarClear} />
+      <SearchBarComponent
+        input={input}
+        onChange={onChange}
+        onSearchBarClear={onSearchBarClear}
+      />
     </div>
   );
 };

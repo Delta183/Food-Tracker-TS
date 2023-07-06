@@ -2,11 +2,18 @@ import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodSelectionComponent from "./FoodSelectionComponent";
 import styles from "../../styles/FoodSearch.module.css";
 import { Button } from "react-bootstrap";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import AddEditMealDialog from "../MealsPageComponents/AddEditMealDialog";
 
 interface IProps {
   foodSelections: foodSearchItem[]; // The list of selections
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
+}
+
+// Pressing the button to save the selection as a meal will take the user to another page with a form
+const saveAsMeal = () => {
+  // toggle a boolean to make a modal appear
 }
 
 const FoodSelectionsListComponent = (props: IProps) => {
@@ -37,12 +44,23 @@ const FoodSelectionsListComponent = (props: IProps) => {
       })}
       {/* Logic here being that 1 item in a meal isn't enough to be archived into a meal and can be abused more easily */}
       {/* Also user must be signed in for this to work */}
-      {props.foodSelections.length > 1 ? <Button
-          variant="success"
-        >
-         Save as Meal
-        </Button> : <></>
-        }
+      {props.foodSelections.length > 1 ? (
+        <Button variant="success" onClick={saveAsMeal}>Save as Meal</Button>
+      ) : (
+        <></>
+      )}
+       {/* {showAddMealDialog && (
+        <AddEditMealDialog
+          onDismiss={() => setShowAddMealDialog(false)}
+          onMealSaved={(newMeal) => {
+            // Creates a new array, adds the notes that exist currently in which we will add the newest one afterwards
+            setMeals([...meals, newMeal]);
+            // Be sure to close the dialog as well
+            setShowAddMealDialog(false);
+          }}
+          foodSelections={props.selections}
+        />
+      )} */}
     </div>
   );
 };

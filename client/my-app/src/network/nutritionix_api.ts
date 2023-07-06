@@ -4,7 +4,6 @@ import { foodStatsItem } from "../models/foodStatsItem";
 const key = process.env.REACT_APP_NUTRITIONIX_API_KEY || "";
 const id = process.env.REACT_APP_NUTRITIONIX_API_ID || "";
 
-
 export const searchFoodsWithQuery = async (
   query: string,
   callback: (results: foodSearchItem[], error: Error | null) => void
@@ -70,19 +69,16 @@ export const calculateStatistics = async (
     return;
   }
 
-  fetch(
-    `https://trackapi.nutritionix.com/v2/natural/nutrients`,
-    {
-      body: JSON.stringify({query: `${query}`}),
-      method: "POST",
-      headers: {
-        "x-app-key": key,
-        "x-app-id": id,
-        "Content-Type": "application/json",
-        "x-remote-user-id": "0",
-      },
-    }
-  )
+  fetch(`https://trackapi.nutritionix.com/v2/natural/nutrients`, {
+    body: JSON.stringify({ query: `${query}` }),
+    method: "POST",
+    headers: {
+      "x-app-key": key,
+      "x-app-id": id,
+      "Content-Type": "application/json",
+      "x-remote-user-id": "0",
+    },
+  })
     .then((response) => response.json())
 
     .then((searchResponse) => {
@@ -94,7 +90,7 @@ export const calculateStatistics = async (
         // In the response, I get two arrays in an array where "common" is the header
         // for the common set of food
         const searchResponseResults: foodStatsItem[] = searchResponse["foods"];
-        console.log(searchResponseResults)
+        console.log(searchResponseResults);
         // This will filter items with the same ids in the array
         if (Array.isArray(searchResponseResults)) {
           callback(searchResponseResults, null);

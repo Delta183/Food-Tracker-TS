@@ -47,7 +47,7 @@ const FoodItemComponent = (props: IProps) => {
 
   const updateQuantity = (foodItem: foodSearchItem, quantityValue: string) => {
     foodItem.quantity = quantityValue;
-  }
+  };
 
   const onClick = () => {
     // This gets done but doesn't update immediately until the next item does
@@ -73,9 +73,7 @@ const FoodItemComponent = (props: IProps) => {
           {/* Below is how we handle the input for quantity */}
 
           {props.buttonConfig.title === "Remove" ? (
-            <div>
-              Quantity: {currentQuantity}
-            </div>
+            <div>Quantity: {currentQuantity}</div>
           ) : (
             <div>
               <label>Quantity:</label>
@@ -92,16 +90,15 @@ const FoodItemComponent = (props: IProps) => {
             </div>
           )}
         </div>
-      
       </div>
       <Button
-          variant={props.buttonConfig.className}
-          onClick={onClick}
-          disabled={props.buttonConfig.disabled}
-        >
-          {/* This changes based on which parent sent this component */}
-          {props.buttonConfig.title}
-        </Button>{" "}
+        variant={props.buttonConfig.className}
+        onClick={onClick}
+        disabled={props.buttonConfig.disabled}
+      >
+        {/* This changes based on which parent sent this component */}
+        {props.buttonConfig.title}
+      </Button>{" "}
     </div>
   );
 };

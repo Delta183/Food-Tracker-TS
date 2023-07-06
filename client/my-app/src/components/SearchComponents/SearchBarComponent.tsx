@@ -17,12 +17,9 @@ const SearchBarComponent = ({ input, onChange, onSearchBarClear }: IProps) => {
         placeholder={"e.g. Pizza, Chicken"}
         onChange={(e) => onChange(e.target.value)}
       />
-        <Button
-          variant="primary"
-          onClick={onSearchBarClear}
-        >
-          Clear
-        </Button>
+      <Button variant="primary" onClick={onSearchBarClear}>
+        Clear
+      </Button>
     </div>
   );
 };
