@@ -50,8 +50,14 @@ const FoodItemComponent = (props: IProps) => {
   };
 
   const onClick = () => {
-    // This gets done but doesn't update immediately until the next item does
-    updateQuantity(props.foodItem, quantityCount);
+    if (quantityCount === "" || quantityCount === null){
+      // In the case of an empty value being entered, default it to 1
+      updateQuantity(props.foodItem, "1");
+      setQuantityCount("1")
+    }
+    else{
+      updateQuantity(props.foodItem, quantityCount);
+    }
     // props.foodItem.quantity = quantityCount;
     props.buttonConfig.onClick(props.tagID);
     // Update the state of the quantity count on each click
@@ -82,15 +88,15 @@ const FoodItemComponent = (props: IProps) => {
                 id="quantity"
                 name="quantity"
                 value={quantityCount}
-                min={initialQuantity}
-                max="100"
-                step={initialQuantity}
+                min="1"
+                max="1000"
+                step="1"
                 onChange={(e) => setQuantityCount(e.target.value)}
               />
             </div>
           )}
         </div>
-        <div className={styles.FoodSearchItemTitle}>
+        <div className={styles.FoodSearchItemUnit}>
           {`Unit: ${props.foodItem.serving_unit}`}
         </div>
       </div>
