@@ -12,6 +12,7 @@ import NotesPage from "./pages/NotesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import HomePage from "./pages/HomePage";
+import MealsPage from "./pages/MealsPage";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -49,6 +50,7 @@ function App() {
             element={<NotesPage loggedInUser={loggedInUser} />}
           />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/meals" element={<MealsPage loggedInUser={loggedInUser}/>}/>
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </Container>

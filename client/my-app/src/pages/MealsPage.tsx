@@ -1,16 +1,18 @@
 import { Container } from "react-bootstrap";
 import { User } from "../models/user";
-import styles from "../styles/NotesPage.module.css";
-import Meals from "../components/MealsPageComponents/Meals"
+import styles from "../styles/MealsPage.module.css";
+import MealsPageTestView from "../components/MealsPageComponents/MealsPageTestView";
+// import Meals from "../components/MealsPageComponents/Meals"
 interface NotesPageProps {
   loggedInUser: User | null;
 }
 
-const NotesPage = ({ loggedInUser }: NotesPageProps) => {
+const MealsPage = ({ loggedInUser }: NotesPageProps) => {
   return (
     <Container className={styles.notesPage}>
+      <MealsPageTestView/>
     </Container>
   );
 };
 
-export default NotesPage;
+export default MealsPage;

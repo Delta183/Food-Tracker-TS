@@ -116,7 +116,6 @@ const CalculationComponent = (props: IProps) => {
             incrementValues(result);
             return (
               <tr>
-                {/* TODO: Capitalize the value here */}
                 <td style={{textTransform:"capitalize"}}>{result.food_name}</td>
                 <td>{result.serving_qty}</td>
                 <td>{result.nf_calories}</td>
