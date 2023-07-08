@@ -2,8 +2,9 @@ import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodSelectionComponent from "./FoodSelectionComponent";
 import styles from "../../styles/FoodSearch.module.css";
 import { Button } from "react-bootstrap";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Meal as MealModel } from "../../models/meal";
 import AddEditMealDialog from "../MealsPageComponents/AddEditMealDialog";
+import { useState } from "react";
 
 interface IProps {
   foodSelections: foodSearchItem[]; // The list of selections
@@ -11,12 +12,18 @@ interface IProps {
   onRemoveFoodSelectionClick: (imdbID: string) => void;
 }
 
+
+const FoodSelectionsListComponent = (props: IProps) => {
+  const [showAddMealDialog, setShowAddMealDialog] = useState(false);
+  const [meals, setMeals] = useState<MealModel[]>([]);
+
+
 // Pressing the button to save the selection as a meal will take the user to another page with a form
 const saveAsMeal = () => {
   // toggle a boolean to make a modal appear
+  setShowAddMealDialog(true)
 }
 
-const FoodSelectionsListComponent = (props: IProps) => {
   let banner = <div></div>;
   if (props.foodSelections.length >= props.MAX_SELECTIONS_LENGTH) {
     banner = (
@@ -49,7 +56,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
       ) : (
         <></>
       )}
-       {/* {showAddMealDialog && (
+       {showAddMealDialog && (
         <AddEditMealDialog
           onDismiss={() => setShowAddMealDialog(false)}
           onMealSaved={(newMeal) => {
@@ -58,9 +65,9 @@ const FoodSelectionsListComponent = (props: IProps) => {
             // Be sure to close the dialog as well
             setShowAddMealDialog(false);
           }}
-          foodSelections={props.selections}
+          foodSelections={props.foodSelections}
         />
-      )} */}
+      )}
     </div>
   );
 };

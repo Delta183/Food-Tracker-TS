@@ -24,7 +24,7 @@ const Note = ({
   onDeleteMealClicked,
 }: MealProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { title, text, createdAt, updatedAt, name, selections } = meal;
+  const { title, text, createdAt, updatedAt, username, selections } = meal;
 
   let createdUpdatedText: string;
   if (updatedAt > createdAt) {
@@ -40,7 +40,7 @@ const Note = ({
     >
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
-          {title} by: {name}
+          {title} by: {username}
           <MdDelete
             className="text-muted ms-auto"
             onClick={(e) => {

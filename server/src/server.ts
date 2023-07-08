@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 
 // Port is effectively a connection point for the observer
-// React uses 3000 by default hence the need for using another port
+// React uses 3000 by default hence the need for using another port which is 4000 in this case
 const port = env.PORT;
 
 mongoose.connect(env.MONGO_CONNECTION_STRING!)

@@ -29,13 +29,14 @@ const AddEditMealDialog = ({
     defaultValues: {
       title: mealToEdit?.title || "",
       text: mealToEdit?.text || "",
-      name: mealToEdit?.name || "", // TODO: Change this to be the logged in user
+      username: mealToEdit?.username || "", // TODO: Change this to be the logged in user
     },
   });
 
   async function onSubmit(input: MealInput) {
     try {
       let mealResponse: Meal;
+      // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
       input.selections = foodSelections;
       // Check for if note is one to edit or one to add, call the according function
       if (mealToEdit) {
@@ -64,7 +65,7 @@ const AddEditMealDialog = ({
         <Form id="addEditMealForm" onSubmit={handleSubmit(onSubmit)}>
           <TextInputField
             name="title"
-            label="title"
+            label="Title"
             type="text"
             placeholder="Title"
             register={register}
@@ -82,8 +83,8 @@ const AddEditMealDialog = ({
           />
 
           <TextInputField
-            name="name"
-            label="Text"
+            name="username"
+            label="Username"
             as="textarea"
             rows={5}
             placeholder="Name"

@@ -1,12 +1,13 @@
 import { InferSchemaType, model, Schema } from "mongoose";
+import FoodItemModel from "./foodItem";
 
 // The Schema resembles a class with attributes
 const mealSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, required: true }, // required is true akin to a DB
-    username: {type: String, required: true},
+    username: {type: String},
     title: { type: String, required: true },
     text: { type: String }, // the optional description for this meal
-    selections: []
+    selections: {type: [FoodItemModel.schema]} // arrays of objects are handled in this manner
 }, { timestamps: true });
 
 // This is for type safety and code completion pertinent to the type

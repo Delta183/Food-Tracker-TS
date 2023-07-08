@@ -34,7 +34,7 @@ app.use(session({
 app.use("/api/users", userRoutes)
 // With this, notes are protected by the authorization
 app.use("/api/notes", requiresAuth, notesRoutes)
-app.use("/api/meal", requiresAuth, mealsRoutes)
+app.use("/api/meals", requiresAuth, mealsRoutes)
 
 // For requests for routers in which we have no endpoint for
 app.use((req, res, next) => {

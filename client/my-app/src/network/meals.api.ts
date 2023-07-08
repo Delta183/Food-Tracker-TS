@@ -68,7 +68,7 @@ export interface MealInput {
   title: string;
   text?: string;
   selections: foodSearchItem[];
-  name?: string;
+  username?: string;
 }
 
 export async function createMeal(meal: MealInput): Promise<Meal> {

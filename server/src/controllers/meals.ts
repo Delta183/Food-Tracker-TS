@@ -1,15 +1,15 @@
 import MealModel from "../models/meal";
+import FoodItemModel from "../models/foodItem";
 import mongoose from "mongoose";
+import * as bson from 'bson';
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import { assertIsDefined } from "../util/assertIsDefined";
 
 export const getMeals : RequestHandler = async (req, res, next) => {
     const authenticatedUserId = req.session.userId;
-    
     try {
         assertIsDefined(authenticatedUserId);
-
         // Get the meals from our database
         // execute the find function to get all MealModels in the database
         const meals = await MealModel.find({ userId: authenticatedUserId }).exec();        
@@ -57,8 +57,27 @@ interface CreateMealBody {
     username?: string,
     title?: string,
     text?: string,
-    selections: []
+    selections: ClientFoodSearchItem[]
 }
+
+export interface ClientFoodSearchItem {
+    food_name: string;
+    serving_qty: string; // This will be a point of reference for its increments
+    quantity: string;
+    serving_unit: string;
+    tag_id: string;
+    photo: PhotoArray; // This is simply because of the way the api returned this information did so in an array
+  }
+  
+  // This is how we handle nested arrays according
+  export interface PhotoArray {
+    thumb: string;
+  }
+
+// export const convertSelectionToFoodItemModel: typeof FoodItemModel = async (selection: ClientFoodSearchItem) => {
+//     const newFoodItemModel = await FoodItemModel.create
+// }
+
 
 // We pass unknown instead of any because the latter is too unrestricted and ambiguous. 
 // unknown has a greater degree of restriction
@@ -68,19 +87,36 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
     const selections = req.body.selections;
     const username = req.body.username;
     const authenticatedUserId = req.session.userId;
+    // Go through the selection and iterate through the req.selections and convert it into Mongoose friendly selections
+
     try {
         assertIsDefined(authenticatedUserId);
         // Ensure the title is there for the meals
         if (!title) {
             throw createHttpError(400, "Meal must have a title");
         }
+        // eslint-disable-next-line no-var
+        var convertedOutputs = []; 
+        for (const selection of selections) {
+            const newSelection = await FoodItemModel.create({
+                food_name: selection.food_name,
+                serving_qty: selection.serving_qty, // This will be a point of reference for its increments
+                quantity: selection.quantity,
+                serving_unit: selection.serving_unit,
+            });
+            convertedOutputs.push(newSelection)
+        }
+        // props.foodSelections.forEach((foodItem) => {
+        //     var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
+        //     searchQuery += foodString;
+        //   });
         // provided the title and text, username and selections, we create a new MealModel object
         const newMeal = await MealModel.create({
             userId: authenticatedUserId,
             userName: username,
             title: title,
             text: text,
-            selections: selections
+            selections: convertedOutputs // convertedSelections
         });
         // Send the new meal back as a JSON object
         res.status(201).json(newMeal);
@@ -97,7 +133,7 @@ interface UpdateMealBody {
     title?: string,
     text?: string,
     username?: string,
-    selections: []
+    selections: ClientFoodSearchItem[]
 }
 
 // The order for RequestHandler is Params, response, body, query params
@@ -136,7 +172,7 @@ export const updateMeal: RequestHandler<UpdateMealParams, unknown, UpdateMealBod
         // Otherwise overwrite the title, selections and text and then save the meal
         meal.title = newTitle;
         meal.text = newText;
-        meal.selections = newSelections;
+        // meal.selections = newSelections;
 
         const updatedMeal = await meal.save();
 
