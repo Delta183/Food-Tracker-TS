@@ -5,16 +5,11 @@ import { FaPlus } from "react-icons/fa";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import styles from "../../styles/NotesPage.module.css";
-import stylesUtils from "../../styles/utils.module.css";
-import AddEditMealDialog from "./AddEditMealDialog";
 import Meal from "./Meals"
 import { foodSearchItem } from "../../models/foodSearchItem";
 
-interface IProps {
-    selections: foodSearchItem[]
-  }
 
-const MealsPageLoggedInView = (props: IProps) => {
+const MealsPageLoggedInView = () => {
   // React needs a special type of variable for updated value
   // Using <> allows us to declare the type of the react variables
   const [meals, setMeals] = useState<MealModel[]>([]);
@@ -92,39 +87,7 @@ const MealsPageLoggedInView = (props: IProps) => {
           {meals.length > 0 ? mealsGrid : <p>You don't have any notes yet</p>}
         </>
       )}
-      {/* Will only show whatever appears after && if the variable is true */}
-      {/* We could do it by passing the variable in the component but that will keep the component active */}
-      {showAddMealDialog && (
-        <AddEditMealDialog
-          onDismiss={() => setShowAddMealDialog(false)}
-          onMealSaved={(newMeal) => {
-            // Creates a new array, adds the notes that exist currently in which we will add the newest one afterwards
-            setMeals([...meals, newMeal]);
-            // Be sure to close the dialog as well
-            setShowAddMealDialog(false);
-          }}
-          foodSelections={props.selections}
-        />
-      )}
-      {/* The update card component that only appears once editing begins */}
-      {mealToEdit && (
-        <AddEditMealDialog
-          mealToEdit={mealToEdit}
-          foodSelections={props.selections}
-          onDismiss={() => setMealToEdit(null)}
-          onMealSaved={(updatedMeal) => {
-            // The function needed to map all the notes but ensure the edited one has its new information
-            setMeals(
-              meals.map((existingMeal) =>
-              existingMeal._id === updatedMeal._id
-                  ? updatedMeal
-                  : existingMeal
-              )
-            );
-            setMealToEdit(null);
-          }}
-        />
-      )}
+     
     </>
   );
 };

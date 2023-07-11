@@ -5,6 +5,7 @@ import useLocalStorage from "../utils/local_storage_hook";
 import MealsPageTestView from "../components/MealsPageComponents/MealsPageTestView";
 import { foodSearchItem } from "../models/foodSearchItem";
 import MealsPageLoggedInView from "../components/MealsPageComponents/MealsPageLoggedInView";
+import MealsPageLoggedOutView from "../components/MealsPageComponents/MealsPageLoggedOutView";
 // import Meals from "../components/MealsPageComponents/Meals"
 interface NotesPageProps {
   loggedInUser: User | null;
@@ -18,7 +19,8 @@ const MealsPage = ({ loggedInUser }: NotesPageProps) => {
   );
   return (
     <Container className={styles.notesPage}>
-      <MealsPageLoggedInView selections={foodSelections}/>
+       {loggedInUser ? <MealsPageLoggedInView/> :<MealsPageLoggedOutView/>}
+      
     </Container>
   );
 };
