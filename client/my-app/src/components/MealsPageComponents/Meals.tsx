@@ -35,6 +35,7 @@ const Note = ({
     createdUpdatedText = "Created: " + formatDate(createdAt);
   }
 
+  console.log("username: " + meal.username)
   return (
     // The second className here is the props, not a typo dupe
     <Card
@@ -58,7 +59,6 @@ const Note = ({
             <Accordion.Header>Food Selections</Accordion.Header>
             <Accordion.Body>
             {selections.map((selection) => {
-              console.log(selection)
               return <FoodItemDisplayComponent tagID={selection.tag_id} foodItem={selection}/>
             })}
             </Accordion.Body>

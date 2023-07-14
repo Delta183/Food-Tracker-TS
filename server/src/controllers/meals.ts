@@ -113,7 +113,7 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
         // provided the title and text, username and selections, we create a new MealModel object
         const newMeal = await MealModel.create({
             userId: authenticatedUserId,
-            userName: username,
+            username: username,
             title: title,
             text: text,
             selections: convertedOutputs // convertedSelections

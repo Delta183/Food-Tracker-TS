@@ -57,7 +57,6 @@ const FoodItemComponent = (props: IProps) => {
 
 async function loadData() {
   setLoad(true);
-  // console.log(bookName)
   await setFoodPhoto(props.foodItem.photo["thumb"])
   setLoad(false)
 }
