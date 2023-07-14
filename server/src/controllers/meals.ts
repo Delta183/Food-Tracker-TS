@@ -103,6 +103,7 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
                 serving_qty: selection.serving_qty, // This will be a point of reference for its increments
                 quantity: selection.quantity,
                 serving_unit: selection.serving_unit,
+                photo: selection.photo
             });
             convertedOutputs.push(newSelection)
         }

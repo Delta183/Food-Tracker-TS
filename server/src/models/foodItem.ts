@@ -9,7 +9,7 @@ const foodItemSchema = new Schema({
     serving_qty: { type: String }, // This will be a point of reference for its increments
     quantity: { type: String },
     serving_unit: { type: String },
-    photo: {type: photoArraySchema} // TODO: Successfully implement the photos
+    photo: {thumb: String} // TODO: Successfully implement the photos
 })
 
 // This is for type safety and code completion pertinent to the type
