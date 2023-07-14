@@ -63,7 +63,6 @@ const CalculationComponent = (props: IProps) => {
       var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
       searchQuery += foodString;
     });
-    // console.log("Query" + searchQuery)
     performCalculation(searchQuery);
   };
 
@@ -97,9 +96,12 @@ const CalculationComponent = (props: IProps) => {
 
   return (
     <div className={styles.searchContainer}>
-      <Button onClick={calculateStats} variant="primary">
+      <div className={styles.selectionButton}>
+      <Button  onClick={calculateStats} variant="primary">
         Calculate
       </Button>{" "}
+      </div>
+      
     
       <Table responsive variant="dark">
         <thead>

@@ -3,12 +3,11 @@ import { User } from "../models/user";
 import styles from "../styles/MealsPage.module.css";
 import MealsPageLoggedInView from "../components/MealsPageComponents/MealsPageLoggedInView";
 import MealsPageLoggedOutView from "../components/MealsPageComponents/MealsPageLoggedOutView";
-// import Meals from "../components/MealsPageComponents/Meals"
-interface NotesPageProps {
+interface MealsPageProps {
   loggedInUser: User | null;
 }
 
-const MealsPage = ({ loggedInUser }: NotesPageProps) => {
+const MealsPage = ({ loggedInUser }: MealsPageProps) => {
  
   return (
     <Container className={styles.mealsPage}>

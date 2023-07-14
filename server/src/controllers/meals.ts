@@ -106,10 +106,6 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
             });
             convertedOutputs.push(newSelection)
         }
-        // props.foodSelections.forEach((foodItem) => {
-        //     var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
-        //     searchQuery += foodString;
-        //   });
         // provided the title and text, username and selections, we create a new MealModel object
         const newMeal = await MealModel.create({
             userId: authenticatedUserId,

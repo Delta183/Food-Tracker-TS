@@ -5,13 +5,14 @@ import { Button } from "react-bootstrap";
 import { Meal as MealModel } from "../../models/meal";
 import AddEditMealDialog from "../MealsPageComponents/AddEditMealDialog";
 import { useState } from "react";
+import { User } from "../../models/user";
 
 interface IProps {
+  user: User | null;
   foodSelections: foodSearchItem[]; // The list of selections
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
 }
-
 
 const FoodSelectionsListComponent = (props: IProps) => {
   const [showAddMealDialog, setShowAddMealDialog] = useState(false);
@@ -51,11 +52,14 @@ const saveAsMeal = () => {
       })}
       {/* Logic here being that 1 item in a meal isn't enough to be archived into a meal and can be abused more easily */}
       {/* Also user must be signed in for this to work */}
-      {props.foodSelections.length > 1 ? (
-        <Button variant="success" onClick={saveAsMeal}>Save as Meal</Button>
+      {/* Also this should only allow someone who is logged in to save a meal */}
+      <div className={styles.selectionButton}>
+      {props.foodSelections.length > 1 && props.user != null ? (
+        <Button variant="primary" onClick={saveAsMeal}>Save as Meal</Button>
       ) : (
-        <></>
+        <div>To save these as a meal, you must log in</div>
       )}
+      </div>
        {showAddMealDialog && (
         <AddEditMealDialog
           onDismiss={() => setShowAddMealDialog(false)}

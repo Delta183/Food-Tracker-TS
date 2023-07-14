@@ -98,6 +98,17 @@
   margin-bottom: 12px;
 }
 
+/* Selections container */
+
+.selectionButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+
+}
 /* Content (Container for search results and nominations)  */
 .contentContainer {
   display: flex;

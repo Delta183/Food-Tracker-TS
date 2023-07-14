@@ -10,6 +10,11 @@ import { searchFoodsWithQuery } from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
 import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
+import { User } from "../models/user";
+
+interface HomePageProps {
+  loggedInUser: User | null;
+}
 
 // The duration to be waited for prior to actually performing the API call
 const DEBOUNCE_DURATION = 500;
@@ -17,7 +22,7 @@ const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods select
 const LOCAL_STORAGE_NOMINATIONS_KEY = "foodSelections";
 
 // This page is responsible for the current homescreen
-const HomePage = () => {
+const HomePage = ({ loggedInUser }: HomePageProps) => {
   const [input, setInput] = useState("");
   const [searchResults, setSearchResults] = useState(Array<foodSearchItem>());
   const [foodSelections, setFoodSelections] = useLocalStorage(
@@ -111,8 +116,9 @@ const HomePage = () => {
           MAX_SELECTIONS_LENGTH={MAX_SELECTIONS_LENGTH}
           foodSelections={foodSelections}
           onAddFoodSelectionClick={addFoodSelection}
-          onRemoveFoodSelectionClick={removeFoodSelection}
-        />
+          onRemoveFoodSelectionClick={removeFoodSelection} 
+          user={loggedInUser}        
+          />
       </Container>
       <CalculationComponent foodSelections={foodSelections} />
     </div>

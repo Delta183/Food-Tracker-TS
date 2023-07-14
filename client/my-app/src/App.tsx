@@ -44,7 +44,8 @@ function App() {
       {/* This will determine which page is shown to the user per the router */}
       <Container className={styles.pageContainer}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          {/* In the case of Homepage, only logged in users can save meals */}
+          <Route path="/" element={<HomePage loggedInUser={loggedInUser} />} />
           <Route
             path="/notes"
             element={<NotesPage loggedInUser={loggedInUser} />}

@@ -35,7 +35,6 @@ const Note = ({
     createdUpdatedText = "Created: " + formatDate(createdAt);
   }
 
-  console.log("username: " + meal.username)
   return (
     // The second className here is the props, not a typo dupe
     <Card
