@@ -70,6 +70,7 @@ const saveAsMeal = () => {
             setShowAddMealDialog(false);
           }}
           foodSelections={props.foodSelections}
+          user={props.user?.username}
         />
       )}
     </div>

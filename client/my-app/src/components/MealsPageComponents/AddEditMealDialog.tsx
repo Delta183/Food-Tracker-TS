@@ -7,6 +7,7 @@ import TextInputField from "../form/TextInputField";
 import { foodSearchItem } from "../../models/foodSearchItem";
 
 interface AddEditMealDialogProps {
+  user: string | undefined;
   mealToEdit?: Meal; // Variable to differentiate a note to be added and one to be updated
   foodSelections: foodSearchItem[]; // The list of selections
   onDismiss: () => void;
@@ -15,6 +16,7 @@ interface AddEditMealDialogProps {
 
 // The props this component will need when declared with the interface above just making it clear what types they will be
 const AddEditMealDialog = ({
+  user,
   onDismiss,
   foodSelections,
   onMealSaved,
@@ -29,7 +31,6 @@ const AddEditMealDialog = ({
     defaultValues: {
       title: mealToEdit?.title || "",
       text: mealToEdit?.text || "",
-      username: mealToEdit?.username || "", // TODO: Change this to be the logged in user
     },
   });
 
@@ -38,6 +39,7 @@ const AddEditMealDialog = ({
       let mealResponse: Meal;
       // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
       input.selections = foodSelections;
+      input.username = user;
       // Check for if note is one to edit or one to add, call the according function
       if (mealToEdit) {
         mealResponse = await MealsApi.updateMeal(mealToEdit._id, input);
@@ -79,15 +81,6 @@ const AddEditMealDialog = ({
             as="textarea"
             rows={5}
             placeholder="Text"
-            register={register}
-          />
-
-          <TextInputField
-            name="username"
-            label="Username"
-            as="textarea"
-            rows={5}
-            placeholder="Name"
             register={register}
           />
         </Form>
