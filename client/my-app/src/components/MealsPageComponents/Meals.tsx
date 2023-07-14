@@ -1,10 +1,12 @@
-import styles from "../../styles/Note.module.css";
+import styles from "../../styles/Meal.module.css";
 import { formatDate } from "../../utils/formatDate";
 import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Meal as MealModel } from "../../models/meal";
+import Accordion from 'react-bootstrap/Accordion';
 import { MdDelete } from "react-icons/md"; // md means material design
 import stylesUtils from "../../styles/utils.module.css";
+import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
 
 // An interface to declare what variables the Note needs
 // It can be done without it in JS but its not as certain
@@ -23,7 +25,7 @@ const Note = ({
   onMealClicked,
   onDeleteMealClicked,
 }: MealProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // it appears that food items are not accessible at this level
   const { title, text, createdAt, updatedAt, username, selections } = meal;
 
   let createdUpdatedText: string;
@@ -36,7 +38,7 @@ const Note = ({
   return (
     // The second className here is the props, not a typo dupe
     <Card
-      className={`${styles.noteCard} ${className}`}
+    className={styles.mealCard}
     >
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
@@ -50,7 +52,18 @@ const Note = ({
             }}
           />
         </Card.Title>
-        <Card.Text className={styles.cardText}>{text}</Card.Text>
+        <Card.Text className={styles.mealCardText}>{text}</Card.Text>
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Food Selections</Accordion.Header>
+            <Accordion.Body>
+            {selections.map((selection) => {
+              console.log(selection)
+              return <FoodItemDisplayComponent tagID={selection.tag_id} foodItem={selection}/>
+            })}
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
         {/* {selections.map((selection) => {
             return <Card.Text className={styles.cardText}>{selection}</Card.Text>
           })} */}

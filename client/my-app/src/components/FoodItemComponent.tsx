@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { foodSearchItem } from "../models/foodSearchItem";
 import placeholder from "../resources/placeholder.jpeg";
 import styles from "../styles/FoodSearch.module.css";
@@ -41,13 +41,27 @@ const FoodItemComponent = (props: IProps) => {
   // much like how nutrition facts don't measure by per "1 macaroni noodle" but rather a cup of noodles
   const initialQuantity = props.foodItem.serving_qty.valueOf();
   const currentQuantity = props.foodItem.quantity;
+  const [load, setLoad] = useState(false)
+  const [foodPhoto, setFoodPhoto] = useState("")
   const [quantityCount, setQuantityCount] = useState(initialQuantity);
   // This fetch may be prone to error
-  const foodPhoto: string = props.foodItem.photo["thumb"];
+  // const foodPhoto: string = props.foodItem.photo["thumb"];
 
   const updateQuantity = (foodItem: foodSearchItem, quantityValue: string) => {
     foodItem.quantity = quantityValue;
   };
+
+  useEffect(() => {
+    loadData();
+}, [])
+
+async function loadData() {
+  setLoad(true);
+  // console.log(bookName)
+  await setFoodPhoto(props.foodItem.photo["thumb"])
+  setLoad(false)
+}
+
 
   const onClick = () => {
     if (quantityCount === "" || quantityCount === null){

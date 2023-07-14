@@ -57,7 +57,7 @@ const MealsPageLoggedInView = () => {
   }
 
   const mealsGrid = (
-    <Row xs={1} md={2} xl={3} className={`g-4 ${styles.notesGrid}`}>
+    <Row xs={1} md={1} xl={2} className={`g-4 ${styles.notesGrid}`}>
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
@@ -84,7 +84,7 @@ const MealsPageLoggedInView = () => {
       {!mealsLoading && !showMealsLoadingError && (
         <>
           {/* The empty tages makes for a fragment, allows us to put more than one component */}
-          {meals.length > 0 ? mealsGrid : <p>You don't have any notes yet</p>}
+          {meals.length > 0 ? mealsGrid : <p>You don't have any meals yet</p>}
         </>
       )}
      
