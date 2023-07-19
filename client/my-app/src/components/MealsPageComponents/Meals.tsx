@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Meal as MealModel } from "../../models/meal";
 import Accordion from 'react-bootstrap/Accordion';
-import { MdDelete } from "react-icons/md"; // md means material design
+import { MdDelete, MdEditDocument } from "react-icons/md"; // md means material design
 import stylesUtils from "../../styles/utils.module.css";
 import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
 
@@ -41,11 +41,17 @@ const Meals = ({
     // The second className here is the props, not a typo dupe
     <Card
     className={styles.mealCard}
-    onClick={() => onMealClicked(meal)}
     >
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
           {title} by: {username}
+          <MdEditDocument  
+            className="text-muted ms-auto"
+            onClick={(e) => {
+              onMealClicked(meal);
+              // Allows this click to go through
+              e.stopPropagation();
+            }}/>
           <MdDelete
             className="text-muted ms-auto"
             onClick={(e) => {
