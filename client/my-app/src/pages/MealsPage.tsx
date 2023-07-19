@@ -11,7 +11,7 @@ const MealsPage = ({ loggedInUser }: MealsPageProps) => {
  
   return (
     <Container className={styles.mealsPage}>
-       {loggedInUser ? <MealsPageLoggedInView/> :<MealsPageLoggedOutView/>}
+       {loggedInUser ? <MealsPageLoggedInView loggedInUser={loggedInUser}/> :<MealsPageLoggedOutView/>}
     </Container>
   );
 };

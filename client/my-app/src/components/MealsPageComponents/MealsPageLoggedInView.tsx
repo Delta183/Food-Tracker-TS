@@ -6,10 +6,14 @@ import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import styles from "../../styles/NotesPage.module.css";
 import Meal from "./Meals"
-import { foodSearchItem } from "../../models/foodSearchItem";
+import AddEditMealDialog from "./AddEditMealDialog";
+import { User } from "../../models/user";
 
+interface MealsPageProps {
+  loggedInUser: User | null;
+}
 
-const MealsPageLoggedInView = () => {
+const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
   // React needs a special type of variable for updated value
   // Using <> allows us to declare the type of the react variables
   const [meals, setMeals] = useState<MealModel[]>([]);
@@ -17,19 +21,22 @@ const MealsPageLoggedInView = () => {
   const [mealsLoading, setMealsLoading] = useState(true);
   // Making an error type specifically for the notes
   const [showMealsLoadingError, setShowMealsLoadingError] = useState(true);
-  const [showAddMealDialog, setShowAddMealDialog] = useState(false);
 
   const [mealToEdit, setMealToEdit] = useState<MealModel | null>(null);
 
   useEffect(() => {
     // Await functions need to be async
-    async function loadNotes() {
+    async function loadMeals() {
       try {
         setShowMealsLoadingError(false);
         setMealsLoading(true);
         // Anything under the function header is run on every render, useEffect allows it to be done once
-        const notes = await MealsApi.fetchMeals();
-        setMeals(notes);
+        const meals = await MealsApi.fetchMeals();
+        setMeals(meals);
+        // Below is a check for if the id is truly unique
+        // meals.forEach((meal) => {
+        //   console.log(meal._id)
+        // });
       } catch (error) {
         console.error(error);
         // As this is the fail state for loading notes, our custom error type is set
@@ -40,7 +47,7 @@ const MealsPageLoggedInView = () => {
       }
     }
     // Call the functions afterwards
-    loadNotes();
+    loadMeals();
   }, []); // passing the empty array allows this to run only one time
 
   // Delete Note logic
@@ -61,6 +68,7 @@ const MealsPageLoggedInView = () => {
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
+          
           <Meal
             meal={meal}
             className={styles.note}
@@ -74,6 +82,7 @@ const MealsPageLoggedInView = () => {
 
   return (
     <>
+    
     {/* There will be no means of adding one on this page */}
       {mealsLoading && <Spinner animation="border" variant="primary" />}
       {/* Contingency if notes don't load */}
@@ -87,8 +96,27 @@ const MealsPageLoggedInView = () => {
           {meals.length > 0 ? mealsGrid : <p>You don't have any meals yet</p>}
         </>
       )}
-     
+     {mealToEdit && (
+        <AddEditMealDialog
+          user={loggedInUser?.username}
+          mealToEdit={mealToEdit}
+          foodSelections={mealToEdit.selections}
+          onDismiss={() => setMealToEdit(null)}
+          onMealSaved={(updatedMeal) => {
+            // The function needed to map all the notes but ensure the edited one has its new information
+            setMeals(
+              meals.map((existingNote) =>
+                existingNote._id === updatedMeal._id
+                  ? updatedMeal
+                  : existingNote
+              )
+            );
+            setMealToEdit(null);
+          }}
+        />
+      )} 
     </>
+    
   );
 };
 

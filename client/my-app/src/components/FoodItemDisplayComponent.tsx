@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { foodSearchItem } from "../models/foodSearchItem";
 import styles from "../styles/FoodSearch.module.css";
 import placeholder from "../resources/placeholder.jpeg";

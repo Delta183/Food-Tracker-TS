@@ -1,7 +1,6 @@
 import MealModel from "../models/meal";
 import FoodItemModel from "../models/foodItem";
 import mongoose from "mongoose";
-import * as bson from 'bson';
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import { assertIsDefined } from "../util/assertIsDefined";

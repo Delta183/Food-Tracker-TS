@@ -18,13 +18,15 @@ interface MealProps {
   className?: string;
 }
 
+
 // Prior to NoteProps is the chunk of the arguments that will be passed
-const Note = ({
+const Meals = ({
   meal,
   className,
   onMealClicked,
   onDeleteMealClicked,
 }: MealProps) => {
+
   // it appears that food items are not accessible at this level
   const { title, text, createdAt, updatedAt, username, selections } = meal;
 
@@ -39,6 +41,7 @@ const Note = ({
     // The second className here is the props, not a typo dupe
     <Card
     className={styles.mealCard}
+    onClick={() => onMealClicked(meal)}
     >
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
@@ -63,13 +66,11 @@ const Note = ({
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-        {/* {selections.map((selection) => {
-            return <Card.Text className={styles.cardText}>{selection}</Card.Text>
-          })} */}
       </Card.Body>
+      
       <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
     </Card>
   );
 };
 
-export default Note;
+export default Meals;
