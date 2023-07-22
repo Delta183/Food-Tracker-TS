@@ -41,8 +41,8 @@ const FoodItemComponent = (props: IProps) => {
   // much like how nutrition facts don't measure by per "1 macaroni noodle" but rather a cup of noodles
   const initialQuantity = props.foodItem.serving_qty.valueOf();
   const currentQuantity = props.foodItem.quantity;
-  const [load, setLoad] = useState(false)
-  const [foodPhoto, setFoodPhoto] = useState("")
+  const [load, setLoad] = useState(false);
+  const [foodPhoto, setFoodPhoto] = useState("");
   const [quantityCount, setQuantityCount] = useState(initialQuantity);
   // This fetch may be prone to error
   // const foodPhoto: string = props.foodItem.photo["thumb"];
@@ -53,23 +53,21 @@ const FoodItemComponent = (props: IProps) => {
 
   useEffect(() => {
     loadData();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-async function loadData() {
-  setLoad(true);
-  await setFoodPhoto(props.foodItem.photo["thumb"])
-  setLoad(false)
-}
-
+  async function loadData() {
+    setLoad(true);
+    await setFoodPhoto(props.foodItem.photo["thumb"]);
+    setLoad(false);
+  }
 
   const onClick = () => {
-    if (quantityCount === "" || quantityCount === null){
+    if (quantityCount === "" || quantityCount === null) {
       // In the case of an empty value being entered, default it to 1
       updateQuantity(props.foodItem, "1");
-      setQuantityCount("1")
-    }
-    else{
+      setQuantityCount("1");
+    } else {
       updateQuantity(props.foodItem, quantityCount);
     }
     // props.foodItem.quantity = quantityCount;
@@ -89,14 +87,13 @@ async function loadData() {
         <div className={styles.FoodSearchItemTitle}>
           {`${props.foodItem.food_name}`}
         </div>
-      
+
         <div className={styles.FoodSearchItemUnit}>
           {`Unit: ${props.foodItem.serving_unit}`}
         </div>
-        
       </div>
       <div className={styles.foodSearchItemButtonColumn}>
-      <div className={styles.FoodSearchItemTitle}>
+        <div className={styles.FoodSearchItemTitle}>
           {/* Below is how we handle the input for quantity */}
 
           {props.buttonConfig.title === "Remove" ? (

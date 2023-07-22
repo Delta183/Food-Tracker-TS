@@ -12,18 +12,18 @@ interface IProps {
   foodSelections: foodSearchItem[]; // The list of selections
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
+  onClearFoodSelectionClick: () => void;
 }
 
 const FoodSelectionsListComponent = (props: IProps) => {
   const [showAddMealDialog, setShowAddMealDialog] = useState(false);
-  const [meals, setMeals] = useState<MealModel[]>([]);
 
+  // Pressing the button to save the selection as a meal will take the user to another page with a form
+  const saveAsMeal = () => {
+    // toggle a boolean to make a modal appear
+    setShowAddMealDialog(true);
+  };
 
-// Pressing the button to save the selection as a meal will take the user to another page with a form
-const saveAsMeal = () => {
-  // toggle a boolean to make a modal appear
-  setShowAddMealDialog(true)
-}
 
   let banner = <div></div>;
   if (props.foodSelections.length >= props.MAX_SELECTIONS_LENGTH) {
@@ -54,18 +54,32 @@ const saveAsMeal = () => {
       {/* Also user must be signed in for this to work */}
       {/* Also this should only allow someone who is logged in to save a meal */}
       <div className={styles.selectionButton}>
-      {props.foodSelections.length > 1 && props.user != null ? (
-        <Button variant="primary" onClick={saveAsMeal}>Save as Meal</Button>
-      ) : (
-        <div>To save these as a meal, you must log in</div>
-      )}
+      {props.user == null ? (
+          <div>Please log in to save meals</div>
+        ) : (
+          <></>
+        )}
+        {props.foodSelections.length > 1 && props.user != null ? (
+          <>
+          <Button variant="primary" onClick={saveAsMeal}>
+            Save as Meal
+          </Button>
+           <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
+            Clear Selections
+          </Button>
+          </>
+        ) : (
+          // If the user is signed in and the list is empty, it should simply say nothing
+          <></>
+        )}
+       
+   
       </div>
-       {showAddMealDialog && (
+      {showAddMealDialog && (
         <AddEditMealDialog
           onDismiss={() => setShowAddMealDialog(false)}
-          onMealSaved={(newMeal) => {
+          onMealSaved={() => {
             // Creates a new array, adds the notes that exist currently in which we will add the newest one afterwards
-            setMeals([...meals, newMeal]);
             // Be sure to close the dialog as well
             setShowAddMealDialog(false);
           }}

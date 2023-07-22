@@ -24,10 +24,7 @@ const AddEditMealDialog = ({
   onMealSaved,
   mealToEdit,
 }: AddEditMealDialogProps) => {
-
   // const [selections, setSelections] = useState<foodSearchItem[]>(foodSelections);
-
-
 
   // const removeFoodSelection = async (tagID: string) => {
   //   setSelections((previousFoodSelections: foodSearchItem[]) => {
@@ -101,9 +98,10 @@ const AddEditMealDialog = ({
             register={register}
           />
 
-          {mealToEdit ? <> 
-          {/* Below is where we will put the food selections and the means to choose more */}
-          {/* {selections.map((selection) => {
+          {mealToEdit ? (
+            <>
+              {/* Below is where we will put the food selections and the means to choose more */}
+              {/* {selections.map((selection) => {
             return <FoodItemComponent 
               tagID={selection.tag_id} 
               foodItem={selection} 
@@ -114,8 +112,11 @@ const AddEditMealDialog = ({
                 onClick: removeFoodSelection(selection.tag_id),
               }}/>
           })} */}
-          </>: <></>}
-          </Form>
+            </>
+          ) : (
+            <></>
+          )}
+        </Form>
       </Modal.Body>
 
       <Modal.Footer>

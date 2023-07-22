@@ -3,7 +3,7 @@ import { formatDate } from "../../utils/formatDate";
 import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Meal as MealModel } from "../../models/meal";
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from "react-bootstrap/Accordion";
 import { MdDelete, MdEditDocument } from "react-icons/md"; // md means material design
 import stylesUtils from "../../styles/utils.module.css";
 import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
@@ -18,7 +18,6 @@ interface MealProps {
   className?: string;
 }
 
-
 // Prior to NoteProps is the chunk of the arguments that will be passed
 const Meals = ({
   meal,
@@ -26,7 +25,6 @@ const Meals = ({
   onMealClicked,
   onDeleteMealClicked,
 }: MealProps) => {
-
   // it appears that food items are not accessible at this level
   const { title, text, createdAt, updatedAt, username, selections } = meal;
 
@@ -39,19 +37,18 @@ const Meals = ({
 
   return (
     // The second className here is the props, not a typo dupe
-    <Card
-    className={styles.mealCard}
-    >
+    <Card className={styles.mealCard}>
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
           {title} by: {username}
-          <MdEditDocument  
+          <MdEditDocument
             className="text-muted ms-auto"
             onClick={(e) => {
               onMealClicked(meal);
               // Allows this click to go through
               e.stopPropagation();
-            }}/>
+            }}
+          />
           <MdDelete
             className="text-muted ms-auto"
             onClick={(e) => {
@@ -66,14 +63,19 @@ const Meals = ({
           <Accordion.Item eventKey="0">
             <Accordion.Header>Food Selections</Accordion.Header>
             <Accordion.Body>
-            {selections.map((selection) => {
-              return <FoodItemDisplayComponent tagID={selection.tag_id} foodItem={selection}/>
-            })}
+              {selections.map((selection) => {
+                return (
+                  <FoodItemDisplayComponent
+                    tagID={selection.tag_id}
+                    foodItem={selection}
+                  />
+                );
+              })}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
       </Card.Body>
-      
+
       <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
     </Card>
   );

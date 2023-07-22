@@ -93,6 +93,10 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     });
   };
 
+  const clearFoodSelections = async () => {
+    setFoodSelections([]);
+  };
+
   return (
     <div>
       Welcome to Food Tracker! With this you can track your calories and other
@@ -102,7 +106,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       into a meal, you will need to sign in. Please note that your saved meal
       plans will be public so we can share super, healthy or even super healthy
       meals with all users.
-      
       <SearchContainerComponent
         input={input}
         onChange={onSearchBarTextChange}
@@ -116,9 +119,10 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
           MAX_SELECTIONS_LENGTH={MAX_SELECTIONS_LENGTH}
           foodSelections={foodSelections}
           onAddFoodSelectionClick={addFoodSelection}
-          onRemoveFoodSelectionClick={removeFoodSelection} 
-          user={loggedInUser}        
-          />
+          onRemoveFoodSelectionClick={removeFoodSelection}
+          onClearFoodSelectionClick={clearFoodSelections}
+          user={loggedInUser}
+        />
       </Container>
       <CalculationComponent foodSelections={foodSelections} />
     </div>

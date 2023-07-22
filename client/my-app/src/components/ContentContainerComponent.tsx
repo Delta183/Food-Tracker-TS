@@ -13,6 +13,7 @@ interface IProps {
   searchResultError: Error | null;
   onAddFoodSelectionClick: (tagID: string) => void;
   onRemoveFoodSelectionClick: (tagID: string) => void;
+  onClearFoodSelectionClick: () => void;
 }
 
 // The purpose of this component is to maintain the results of the search results and the
@@ -30,6 +31,7 @@ const ContentContainerComponent = (props: IProps) => {
       <FoodSelectionsListComponent
         foodSelections={props.foodSelections}
         onRemoveFoodSelectionClick={props.onRemoveFoodSelectionClick}
+        onClearFoodSelectionClick={props.onClearFoodSelectionClick}
         MAX_SELECTIONS_LENGTH={props.MAX_SELECTIONS_LENGTH}
         user={props.user}
       />

@@ -8,10 +8,13 @@ interface MealsPageProps {
 }
 
 const MealsPage = ({ loggedInUser }: MealsPageProps) => {
- 
   return (
     <Container className={styles.mealsPage}>
-       {loggedInUser ? <MealsPageLoggedInView loggedInUser={loggedInUser}/> :<MealsPageLoggedOutView/>}
+      {loggedInUser ? (
+        <MealsPageLoggedInView loggedInUser={loggedInUser} />
+      ) : (
+        <MealsPageLoggedOutView />
+      )}
     </Container>
   );
 };

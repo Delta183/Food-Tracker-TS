@@ -96,13 +96,12 @@ const CalculationComponent = (props: IProps) => {
 
   return (
     <div className={styles.searchContainer}>
-      <div className={styles.selectionButton}>
-      <Button  onClick={calculateStats} variant="primary">
-        Calculate
-      </Button>{" "}
+      <div className={styles.calculationButton}>
+        <Button onClick={calculateStats} variant="primary" size="lg">
+          Calculate
+        </Button>{" "}
       </div>
-      
-    
+
       <Table responsive variant="dark">
         <thead>
           <tr>
@@ -118,7 +117,9 @@ const CalculationComponent = (props: IProps) => {
             incrementValues(result);
             return (
               <tr>
-                <td style={{textTransform:"capitalize"}}>{result.food_name}</td>
+                <td style={{ textTransform: "capitalize" }}>
+                  {result.food_name}
+                </td>
                 <td>{result.serving_qty}</td>
                 <td>{result.nf_calories}</td>
                 <td>{result.nf_total_fat}</td>
@@ -155,7 +156,6 @@ const CalculationComponent = (props: IProps) => {
           )}
         </tbody>
       </Table>
- 
     </div>
   );
 };

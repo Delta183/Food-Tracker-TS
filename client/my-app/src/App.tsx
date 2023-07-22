@@ -51,7 +51,10 @@ function App() {
             element={<NotesPage loggedInUser={loggedInUser} />}
           />
           <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/meals" element={<MealsPage loggedInUser={loggedInUser}/>}/>
+          <Route
+            path="/meals"
+            element={<MealsPage loggedInUser={loggedInUser} />}
+          />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </Container>

@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import styles from "../../styles/NotesPage.module.css";
-import Meal from "./Meals"
+import Meal from "./Meals";
 import AddEditMealDialog from "./AddEditMealDialog";
 import { User } from "../../models/user";
 
@@ -68,7 +68,6 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
-          
           <Meal
             meal={meal}
             className={styles.note}
@@ -82,8 +81,7 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
 
   return (
     <>
-    
-    {/* There will be no means of adding one on this page */}
+      {/* There will be no means of adding one on this page */}
       {mealsLoading && <Spinner animation="border" variant="primary" />}
       {/* Contingency if notes don't load */}
       {showMealsLoadingError && (
@@ -96,7 +94,7 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
           {meals.length > 0 ? mealsGrid : <p>You don't have any meals yet</p>}
         </>
       )}
-     {mealToEdit && (
+      {mealToEdit && (
         <AddEditMealDialog
           user={loggedInUser?.username}
           mealToEdit={mealToEdit}
@@ -114,9 +112,8 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
             setMealToEdit(null);
           }}
         />
-      )} 
+      )}
     </>
-    
   );
 };
 

@@ -102,13 +102,25 @@
 
 .selectionButton {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;
-
 }
+
+/* Calculations container */
+
+.calculationButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
 /* Content (Container for search results and nominations)  */
 .contentContainer {
   display: flex;

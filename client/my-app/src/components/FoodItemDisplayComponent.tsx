@@ -23,7 +23,7 @@ const altTextForPosterStatus = (
   } else {
     return `Image not found, showing placeholder for ${foodItem.food_name}`;
   }
-}
+};
 const FoodItemDisplayComponent = (props: IProps) => {
   // TODO: Revise the photo retrieval to be safer
   const foodPhoto: string = props.foodItem.photo["thumb"];
@@ -37,7 +37,7 @@ const FoodItemDisplayComponent = (props: IProps) => {
 
   return (
     <div className={styles.FoodSearchItemContainer}>
-        <img
+      <img
         className={classNameForPosterStatus(hasPoster)}
         src={hasPoster ? foodPhoto : placeholder}
         alt={altTextForPosterStatus(hasPoster, props.foodItem)}
@@ -46,11 +46,10 @@ const FoodItemDisplayComponent = (props: IProps) => {
         <div className={styles.FoodSearchItemTitle}>
           {`${props.foodItem.food_name}`}
         </div>
-      
+
         <div className={styles.FoodSearchItemUnit}>
           {`Unit: ${props.foodItem.serving_unit}`}
         </div>
-        
       </div>
       <div className={styles.foodSearchItemButtonColumn}>
         <div className={styles.FoodSearchItemTitle}>
