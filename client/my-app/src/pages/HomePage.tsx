@@ -1,16 +1,17 @@
 import { Container } from "react-bootstrap";
 // import styles from "../styles/FoodSearch.module.css";
 import SearchContainerComponent from "../components/SearchComponents/SearchContainerComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
 import { foodSearchItem } from "../models/foodSearchItem";
-import { searchFoodsWithQuery } from "../network/nutritionix_api";
+import { calculateStatistics, searchFoodsWithQuery } from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
 import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
 import { User } from "../models/user";
+import { foodStatsItem } from "../models/foodStatsItem";
 
 interface HomePageProps {
   loggedInUser: User | null;
@@ -23,15 +24,88 @@ const LOCAL_STORAGE_NOMINATIONS_KEY = "foodSelections";
 
 // This page is responsible for the current homescreen
 const HomePage = ({ loggedInUser }: HomePageProps) => {
+  const [statsArray, setStatsArray] = useState([0,0,0,0,0,0,0,0,0,0]);
   const [input, setInput] = useState("");
-  const [searchResults, setSearchResults] = useState(Array<foodSearchItem>());
   const [foodSelections, setFoodSelections] = useLocalStorage(
     LOCAL_STORAGE_NOMINATIONS_KEY,
     Array<foodSearchItem>()
   );
+  const [searchResults, setSearchResults] = useState(Array<foodSearchItem>());
   const [searchResultError, setSearchResultError] = useState<Error | null>(
     null
   );
+  const [calculationResults, setCalculationResults] = useState(
+    Array<foodStatsItem>()
+  );
+  // TODO: Manage this error for when this search inevitably yields inaccurate content
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [calculationResultError, setCalculationResultError] =
+    useState<Error | null>(null);
+
+  // Use the function in the api class to get a json response in an array and use the states to set it
+  const performCalculation = async (query: string) => {
+    // A function like this is able to maintain its results and errors and be set within its body
+    calculateStatistics(query, (results, error) => {
+      setCalculationResults(results);
+      setCalculationResultError(error);
+      incrementValues(results);
+    });
+  };
+
+  // Have this function be automatic on each addition on the item and set an array in the parent component
+  const calculateStats = async () => {
+    
+    // be sure to reset the values for the next calculation
+    resetValues();
+    var searchQuery = "";
+    // So far this is working with the right string but that bug of the last item in the selection persists
+    foodSelections.forEach((foodItem : foodSearchItem) => {
+      var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
+      searchQuery += foodString;
+    });
+    performCalculation(searchQuery);
+    // Then perform math for the arrays
+    
+   
+    // console.log(statsArray)
+
+  };
+
+  // Upon the start of another calculation, we have to be sure to reset the values
+  const resetValues = async () => {
+    const currentStats = statsArray;
+    currentStats[0] = 0;
+    currentStats[1] = 0;
+    currentStats[2] = 0;
+    currentStats[3] = 0;
+    currentStats[4] = 0;
+    currentStats[5] = 0;
+    currentStats[6] = 0;
+    currentStats[7] = 0;
+    currentStats[8] = 0;
+    currentStats[9] = 0;
+    setStatsArray(currentStats);
+  };
+
+  // incrementing values with each item read in the selections array
+  const incrementValues = async (calculationResults: Array<foodStatsItem>) => {
+    const currentStats = statsArray;
+    calculationResults.forEach((result) => {
+      currentStats[0] += result.nf_calories;
+      currentStats[1] += result.nf_total_fat;
+      currentStats[2] += result.nf_saturated_fat;
+      currentStats[3] += result.nf_cholesterol;
+      currentStats[4] += result.nf_sodium;
+      currentStats[5] += result.nf_total_carbohydrate;
+      currentStats[6] += result.nf_dietary_fiber;
+      currentStats[7] += result.nf_sugars;
+      currentStats[8] += result.nf_protein;
+      currentStats[9] += result.nf_potassium;
+    })
+    
+    // console.log(currentStats[0])
+    setStatsArray(currentStats);
+  };
 
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performSearch = async (query: string) => {
@@ -63,10 +137,10 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     if (foodSelections.length >= MAX_SELECTIONS_LENGTH) {
       // Fire the sweet alert if the limit has been reached
       Swal.fire({
-        title: "Error!",
-        text: "Do you want to continue",
+        title: "Maximum Selections reached!",
+        text: "Please remove some food selections if you want to make a change",
         icon: "error",
-        confirmButtonText: "Cool",
+        confirmButtonText: "OK",
       });
       return;
     }
@@ -81,6 +155,8 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         existingFoodSelections.push(foodSearchItem);
         return existingFoodSelections;
       });
+      // Additonally, call the calculation function on each add
+      // calculateStats();
     }
   };
 
@@ -124,7 +200,11 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
           user={loggedInUser}
         />
       </Container>
-      <CalculationComponent foodSelections={foodSelections} />
+      <CalculationComponent 
+      calculateStats={calculateStats}
+      incrementValues={incrementValues} 
+      calculationResults={calculationResults} 
+      statsArray={statsArray} />
     </div>
   );
 };
