@@ -41,6 +41,7 @@ const FoodItemComponent = (props: IProps) => {
   // much like how nutrition facts don't measure by per "1 macaroni noodle" but rather a cup of noodles
   const initialQuantity = props.foodItem.serving_qty.valueOf();
   const currentQuantity = props.foodItem.quantity;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [load, setLoad] = useState(false);
   const [foodPhoto, setFoodPhoto] = useState("");
   const [quantityCount, setQuantityCount] = useState(initialQuantity);
@@ -70,19 +71,21 @@ const FoodItemComponent = (props: IProps) => {
     } else {
       updateQuantity(props.foodItem, quantityCount);
     }
-    // props.foodItem.quantity = quantityCount;
     props.buttonConfig.onClick(props.tagID);
     // Update the state of the quantity count on each click
   };
+  
   const hasPoster = foodPhoto !== INVALID_FOOD_IMAGE;
 
   return (
     <div className={styles.FoodSearchItemContainer}>
+      {/* Image */}
       <img
         className={classNameForPosterStatus(hasPoster)}
         src={hasPoster ? foodPhoto : placeholder}
         alt={altTextForPosterStatus(hasPoster, props.foodItem)}
       />
+      {/* Title and unit column */}
       <div className={styles.foodSearchItemButtonColumn}>
         <div className={styles.FoodSearchItemTitle}>
           {`${props.foodItem.food_name}`}
@@ -92,10 +95,10 @@ const FoodItemComponent = (props: IProps) => {
           {`Unit: ${props.foodItem.serving_unit}`}
         </div>
       </div>
+      {/* Quantity column */}
       <div className={styles.foodSearchItemButtonColumn}>
         <div className={styles.FoodSearchItemTitle}>
           {/* Below is how we handle the input for quantity */}
-
           {props.buttonConfig.title === "Remove" ? (
             <div>Quantity: {currentQuantity}</div>
           ) : (

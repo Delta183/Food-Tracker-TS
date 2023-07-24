@@ -5,8 +5,6 @@ import { MealInput } from "../../network/meals.api";
 import * as MealsApi from "../../network/meals.api";
 import TextInputField from "../form/TextInputField";
 import { foodSearchItem } from "../../models/foodSearchItem";
-// import FoodItemComponent from "../FoodItemComponent";
-// import { useState } from "react";
 
 interface AddEditMealDialogProps {
   user: string | undefined;
@@ -24,18 +22,7 @@ const AddEditMealDialog = ({
   onMealSaved,
   mealToEdit,
 }: AddEditMealDialogProps) => {
-  // const [selections, setSelections] = useState<foodSearchItem[]>(foodSelections);
-
-  // const removeFoodSelection = async (tagID: string) => {
-  //   setSelections((previousFoodSelections: foodSearchItem[]) => {
-  //     const existingFoodSelections = previousFoodSelections.filter(
-  //       (foodItem: foodSearchItem) => foodItem.tag_id !== tagID
-  //     );
-  //     // console.log(existingFoodSelections)
-  //     return existingFoodSelections;
-  //   });
-  // };
-
+  
   // Since the hook returns multiple values, we deconstruct the variables
   const {
     register,
@@ -97,28 +84,8 @@ const AddEditMealDialog = ({
             placeholder="Text"
             register={register}
           />
-
-          {mealToEdit ? (
-            <>
-              {/* Below is where we will put the food selections and the means to choose more */}
-              {/* {selections.map((selection) => {
-            return <FoodItemComponent 
-              tagID={selection.tag_id} 
-              foodItem={selection} 
-              buttonConfig={{
-                disabled: false,
-                className: "danger",
-                title: "Remove",
-                onClick: removeFoodSelection(selection.tag_id),
-              }}/>
-          })} */}
-            </>
-          ) : (
-            <></>
-          )}
         </Form>
       </Modal.Body>
-
       <Modal.Footer>
         {/* The type is a built in functionality for the button on click
                 form also denotes which form of input the button is connected to */}

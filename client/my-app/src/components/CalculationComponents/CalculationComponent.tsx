@@ -2,12 +2,13 @@ import styles from "../../styles/FoodSearch.module.css";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { foodStatsItem } from "../../models/foodStatsItem";
+import { totalsArray } from "../../models/totalsArray";
 
 interface IProps {
   calculateStats: () => void;
   incrementValues: (calculationResults: foodStatsItem[]) => void;
   calculationResults: foodStatsItem[];
-  statsArray: Array<number>;
+  totalsArray: totalsArray;
 }
 
 const CalculationComponent = (props: IProps) => {
@@ -33,7 +34,7 @@ const CalculationComponent = (props: IProps) => {
         </Button>{" "}
       </div>
 
-      <Table responsive variant="dark">
+      <Table responsive hover={true} variant="light" bordered={true}>
         <thead>
           <tr>
             <th>Name</th>
@@ -66,14 +67,20 @@ const CalculationComponent = (props: IProps) => {
             );
           })}
           {/* Provided there are actually results, then show the total row as well. */}
-          {props.statsArray.length > 0 ? (
+          {props.totalsArray != null ? (
             <tr>
               <td>Total</td>
               <td></td>
-              {props.statsArray.map((element) => {
-                return <td>{element.toFixed(2)}</td>
-              })}
-              {/* toFixed(2) ensures these are returned as strings up to 2 decimal places */}
+              <td>{props.totalsArray.calories.toFixed(2)}</td>
+              <td>{props.totalsArray.totalFat.toFixed(2)}</td>
+              <td>{props.totalsArray.saturatedFat.toFixed(2)}</td>
+              <td>{props.totalsArray.cholesterol.toFixed(2)}</td>
+              <td>{props.totalsArray.sodium.toFixed(2)}</td>
+              <td>{props.totalsArray.totalCarbs.toFixed(2)}</td>
+              <td>{props.totalsArray.fiber.toFixed(2)}</td>
+              <td>{props.totalsArray.sugars.toFixed(2)}</td>
+              <td>{props.totalsArray.protein.toFixed(2)}</td>
+              <td>{props.totalsArray.potassium.toFixed(2)}</td>
             </tr>
           ) : (
             <></>

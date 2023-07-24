@@ -15,13 +15,11 @@ interface MealProps {
   meal: MealModel;
   onMealClicked: (meal: MealModel) => void;
   onDeleteMealClicked: (meal: MealModel) => void;
-  className?: string;
 }
 
 // Prior to NoteProps is the chunk of the arguments that will be passed
 const Meals = ({
   meal,
-  className,
   onMealClicked,
   onDeleteMealClicked,
 }: MealProps) => {

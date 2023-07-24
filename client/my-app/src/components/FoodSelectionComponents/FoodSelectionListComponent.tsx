@@ -2,7 +2,6 @@ import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodSelectionComponent from "./FoodSelectionComponent";
 import styles from "../../styles/FoodSearch.module.css";
 import { Button } from "react-bootstrap";
-import { Meal as MealModel } from "../../models/meal";
 import AddEditMealDialog from "../MealsPageComponents/AddEditMealDialog";
 import { useState } from "react";
 import { User } from "../../models/user";
@@ -17,29 +16,30 @@ interface IProps {
 
 const FoodSelectionsListComponent = (props: IProps) => {
   const [showAddMealDialog, setShowAddMealDialog] = useState(false);
-
   // Pressing the button to save the selection as a meal will take the user to another page with a form
   const saveAsMeal = () => {
     // toggle a boolean to make a modal appear
     setShowAddMealDialog(true);
   };
-
-
+  
+  // Check for if the limit of items has been reached for selections
   let banner = <div></div>;
   if (props.foodSelections.length >= props.MAX_SELECTIONS_LENGTH) {
     banner = (
       <div className="nomination-banner">
-        You have successfully added {props.MAX_SELECTIONS_LENGTH} food items!
+        You have successfully added the maximum {props.MAX_SELECTIONS_LENGTH} food items!
         {/* <img src={checkmark} alt="checkmark" height="36px" width="36px"/> */}
       </div>
     );
   } else {
     banner = <div></div>;
   }
+
   return (
     <div className={styles.contentListContainer}>
       <div className={styles.contentListHeader}>Food Selections</div>
-      {banner}
+      {/* This banner will only appear if the maximum number of selections have be chosed */}
+      {banner} 
       {props.foodSelections.map((selection) => {
         return (
           <FoodSelectionComponent
@@ -75,6 +75,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
        
    
       </div>
+      {/* Toggle for the modal if the user wishes to save the meal */}
       {showAddMealDialog && (
         <AddEditMealDialog
           onDismiss={() => setShowAddMealDialog(false)}

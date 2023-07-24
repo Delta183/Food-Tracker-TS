@@ -17,11 +17,10 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
   // React needs a special type of variable for updated value
   // Using <> allows us to declare the type of the react variables
   const [meals, setMeals] = useState<MealModel[]>([]);
-
   const [mealsLoading, setMealsLoading] = useState(true);
   // Making an error type specifically for the notes
   const [showMealsLoadingError, setShowMealsLoadingError] = useState(true);
-
+  // TODO: Change this for the sending to the edit page
   const [mealToEdit, setMealToEdit] = useState<MealModel | null>(null);
 
   useEffect(() => {
@@ -70,7 +69,6 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
         <Col key={meal._id}>
           <Meal
             meal={meal}
-            className={styles.note}
             onMealClicked={setMealToEdit}
             onDeleteMealClicked={deleteNote}
           />
@@ -94,27 +92,28 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
           {meals.length > 0 ? mealsGrid : <p>You don't have any meals yet</p>}
         </>
       )}
-      {mealToEdit && (
-        <AddEditMealDialog
-          user={loggedInUser?.username}
-          mealToEdit={mealToEdit}
-          foodSelections={mealToEdit.selections}
-          onDismiss={() => setMealToEdit(null)}
-          onMealSaved={(updatedMeal) => {
-            // The function needed to map all the notes but ensure the edited one has its new information
-            setMeals(
-              meals.map((existingNote) =>
-                existingNote._id === updatedMeal._id
-                  ? updatedMeal
-                  : existingNote
-              )
-            );
-            setMealToEdit(null);
-          }}
-        />
-      )}
     </>
   );
 };
 
 export default MealsPageLoggedInView;
+
+// {mealToEdit && (
+//   <AddEditMealDialog
+//     user={loggedInUser?.username}
+//     mealToEdit={mealToEdit}
+//     foodSelections={mealToEdit.selections}
+//     onDismiss={() => setMealToEdit(null)}
+//     onMealSaved={(updatedMeal) => {
+//       // The function needed to map all the notes but ensure the edited one has its new information
+//       setMeals(
+//         meals.map((existingNote) =>
+//           existingNote._id === updatedMeal._id
+//             ? updatedMeal
+//             : existingNote
+//         )
+//       );
+//       setMealToEdit(null);
+//     }}
+//   />
+// )}

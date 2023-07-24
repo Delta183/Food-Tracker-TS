@@ -1,7 +1,6 @@
 import { Container } from "react-bootstrap";
-// import styles from "../styles/FoodSearch.module.css";
 import SearchContainerComponent from "../components/SearchComponents/SearchContainerComponent";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
@@ -12,19 +11,32 @@ import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
 import { User } from "../models/user";
 import { foodStatsItem } from "../models/foodStatsItem";
+import {totalsArray} from "../models/totalsArray"
 
 interface HomePageProps {
   loggedInUser: User | null;
 }
 
 // The duration to be waited for prior to actually performing the API call
+const totalsTemplate : totalsArray = {
+  calories: 0,
+  totalFat: 0,
+  saturatedFat: 0,
+  cholesterol: 0,
+  sodium: 0,
+  totalCarbs: 0,
+  fiber: 0,
+  sugars: 0,
+  protein: 0,
+  potassium: 0
+};
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_NOMINATIONS_KEY = "foodSelections";
 
 // This page is responsible for the current homescreen
 const HomePage = ({ loggedInUser }: HomePageProps) => {
-  const [statsArray, setStatsArray] = useState([0,0,0,0,0,0,0,0,0,0]);
+  const [totals, setTotals] = useState(totalsTemplate);
   const [input, setInput] = useState("");
   const [foodSelections, setFoodSelections] = useLocalStorage(
     LOCAL_STORAGE_NOMINATIONS_KEY,
@@ -48,13 +60,13 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     calculateStatistics(query, (results, error) => {
       setCalculationResults(results);
       setCalculationResultError(error);
+      // The values get incremented within this return block
       incrementValues(results);
     });
   };
 
   // Have this function be automatic on each addition on the item and set an array in the parent component
   const calculateStats = async () => {
-    
     // be sure to reset the values for the next calculation
     resetValues();
     var searchQuery = "";
@@ -64,47 +76,44 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       searchQuery += foodString;
     });
     performCalculation(searchQuery);
-    // Then perform math for the arrays
-    
-   
-    // console.log(statsArray)
-
   };
+
+  // TODO: Note that pressing it twice in quick succession causes a possible double, make it so
+  // that another click doesn't do anything if the data is unchanged.
 
   // Upon the start of another calculation, we have to be sure to reset the values
   const resetValues = async () => {
-    const currentStats = statsArray;
-    currentStats[0] = 0;
-    currentStats[1] = 0;
-    currentStats[2] = 0;
-    currentStats[3] = 0;
-    currentStats[4] = 0;
-    currentStats[5] = 0;
-    currentStats[6] = 0;
-    currentStats[7] = 0;
-    currentStats[8] = 0;
-    currentStats[9] = 0;
-    setStatsArray(currentStats);
+    const currentTotals = totals;
+    currentTotals.calories = 0;
+    currentTotals.totalFat = 0;
+    currentTotals.saturatedFat = 0;
+    currentTotals.cholesterol = 0;
+    currentTotals.sodium = 0;
+    currentTotals.totalCarbs = 0;
+    currentTotals.fiber = 0;
+    currentTotals.sugars = 0;
+    currentTotals.protein = 0;
+    currentTotals.potassium = 0;
+    setTotals(currentTotals);
   };
 
   // incrementing values with each item read in the selections array
   const incrementValues = async (calculationResults: Array<foodStatsItem>) => {
-    const currentStats = statsArray;
+    const currentTotals = totals;
     calculationResults.forEach((result) => {
-      currentStats[0] += result.nf_calories;
-      currentStats[1] += result.nf_total_fat;
-      currentStats[2] += result.nf_saturated_fat;
-      currentStats[3] += result.nf_cholesterol;
-      currentStats[4] += result.nf_sodium;
-      currentStats[5] += result.nf_total_carbohydrate;
-      currentStats[6] += result.nf_dietary_fiber;
-      currentStats[7] += result.nf_sugars;
-      currentStats[8] += result.nf_protein;
-      currentStats[9] += result.nf_potassium;
+      currentTotals.calories += result.nf_calories;
+      currentTotals.totalFat += result.nf_total_fat;
+      currentTotals.saturatedFat += result.nf_saturated_fat;
+      currentTotals.cholesterol += result.nf_cholesterol;
+      currentTotals.sodium += result.nf_sodium;
+      currentTotals.totalCarbs += result.nf_total_carbohydrate;
+      currentTotals.fiber += result.nf_dietary_fiber;
+      currentTotals.sugars += result.nf_sugars;
+      currentTotals.protein += result.nf_protein;
+      currentTotals.potassium += result.nf_potassium;
     })
-    
     // console.log(currentStats[0])
-    setStatsArray(currentStats);
+    setTotals(currentTotals);
   };
 
   // Use the function in the api class to get a json response in an array and use the states to set it
@@ -204,7 +213,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       calculateStats={calculateStats}
       incrementValues={incrementValues} 
       calculationResults={calculationResults} 
-      statsArray={statsArray} />
+      totalsArray={totals} />
     </div>
   );
 };

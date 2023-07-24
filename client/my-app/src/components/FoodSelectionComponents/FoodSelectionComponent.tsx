@@ -2,8 +2,8 @@ import { foodSearchItem } from "../../models/foodSearchItem";
 import FoodItemComponent from "../FoodItemComponent";
 
 interface IProps {
-  key: string; // Gien that these will be on two lists and modified, id must be tracked
-  tagID: string; // id per the API of Nutritionix
+  key: string; // Given that these will be on two lists and modified, id must be tracked
+  tagID: string; // id of each food item per the API of Nutritionix
   foodSelection: foodSearchItem; // the selected food item from the list
   onRemoveFoodSelectionClick: (tagID: string) => void;
 }
