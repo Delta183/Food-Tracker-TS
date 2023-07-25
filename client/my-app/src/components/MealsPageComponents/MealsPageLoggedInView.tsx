@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
-import { FaPlus } from "react-icons/fa";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import styles from "../../styles/NotesPage.module.css";
 import Meal from "./Meals";
-import AddEditMealDialog from "./AddEditMealDialog";
 import { User } from "../../models/user";
 
 interface MealsPageProps {

@@ -4,9 +4,10 @@ import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Meal as MealModel } from "../../models/meal";
 import Accordion from "react-bootstrap/Accordion";
-import { MdDelete, MdEditDocument } from "react-icons/md"; // md means material design
+import { MdDelete } from "react-icons/md"; // md means material design
 import stylesUtils from "../../styles/utils.module.css";
 import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
+import { Link } from 'react-router-dom';
 
 // An interface to declare what variables the Note needs
 // It can be done without it in JS but its not as certain
@@ -39,14 +40,7 @@ const Meals = ({
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
           {title} by: {username}
-          <MdEditDocument
-            className="text-muted ms-auto"
-            onClick={(e) => {
-              onMealClicked(meal);
-              // Allows this click to go through
-              e.stopPropagation();
-            }}
-          />
+          <Link to={`/meals/${meal._id}`}><p className="font-italic type m-0">View Details</p></Link>
           <MdDelete
             className="text-muted ms-auto"
             onClick={(e) => {

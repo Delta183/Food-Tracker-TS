@@ -63,6 +63,11 @@ export async function fetchMeals(): Promise<Meal[]> {
   return response.json();
 }
 
+export async function fetchMeal(mealId: string | undefined): Promise<Meal> {
+  const response = await fetchData(`/api/meals/${mealId}`, { method: "GET" });
+  return response.json();
+}
+
 // Meal creation below
 export interface MealInput {
   title: string;
