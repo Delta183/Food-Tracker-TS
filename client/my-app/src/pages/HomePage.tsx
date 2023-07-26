@@ -36,6 +36,7 @@ const LOCAL_STORAGE_NOMINATIONS_KEY = "foodSelections";
 
 // This page is responsible for the current homescreen
 const HomePage = ({ loggedInUser }: HomePageProps) => {
+  const [didChangeOccur, setDidChangeOccur] = useState(true);
   const [totals, setTotals] = useState(totalsTemplate);
   const [input, setInput] = useState("");
   const [foodSelections, setFoodSelections] = useLocalStorage(
@@ -67,15 +68,19 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
 
   // Have this function be automatic on each addition on the item and set an array in the parent component
   const calculateStats = async () => {
-    // be sure to reset the values for the next calculation
-    resetValues();
-    var searchQuery = "";
-    // So far this is working with the right string but that bug of the last item in the selection persists
-    foodSelections.forEach((foodItem : foodSearchItem) => {
-      var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
-      searchQuery += foodString;
-    });
-    performCalculation(searchQuery);
+    // Only allow the calculation if a change did occur
+    if (didChangeOccur){
+      // be sure to reset the values for the next calculation
+      resetValues();
+      var searchQuery = "";
+      // So far this is working with the right string but that bug of the last item in the selection persists
+      foodSelections.forEach((foodItem : foodSearchItem) => {
+        var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
+        searchQuery += foodString;
+      });
+      performCalculation(searchQuery);
+      setDidChangeOccur(false)
+    }
   };
 
   // TODO: Note that pressing it twice in quick succession causes a possible double, make it so
@@ -159,6 +164,8 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
 
     // Assuming the food item does exist, it can be set as a selection properly
     if (foodSearchItem !== null) {
+      // Toggle that a change occurred for the calculations
+      setDidChangeOccur(true)
       setFoodSelections((previousFoodSelections: foodSearchItem[]) => {
         const existingFoodSelections = [...previousFoodSelections];
         existingFoodSelections.push(foodSearchItem);
@@ -170,6 +177,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   };
 
   const removeFoodSelection = async (tagID: string) => {
+    setDidChangeOccur(true)
     setFoodSelections((previousFoodSelections: foodSearchItem[]) => {
       const existingFoodSelections = previousFoodSelections.filter(
         (foodItem: foodSearchItem) => foodItem.tag_id !== tagID
@@ -179,6 +187,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   };
 
   const clearFoodSelections = async () => {
+    setDidChangeOccur(true)
     setFoodSelections([]);
   };
 
@@ -213,7 +222,8 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       calculateStats={calculateStats}
       incrementValues={incrementValues} 
       calculationResults={calculationResults} 
-      totalsArray={totals} />
+      totalsArray={totals} 
+      didChangeOccur={didChangeOccur}/>
     </div>
   );
 };

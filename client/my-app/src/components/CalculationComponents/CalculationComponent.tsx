@@ -9,6 +9,7 @@ interface IProps {
   incrementValues: (calculationResults: foodStatsItem[]) => void;
   calculationResults: foodStatsItem[];
   totalsArray: totalsArray;
+  didChangeOccur: boolean;
 }
 
 const CalculationComponent = (props: IProps) => {

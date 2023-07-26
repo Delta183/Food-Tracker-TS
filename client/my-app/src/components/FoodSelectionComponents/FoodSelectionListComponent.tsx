@@ -55,7 +55,13 @@ const FoodSelectionsListComponent = (props: IProps) => {
       {/* Also this should only allow someone who is logged in to save a meal */}
       <div className={styles.selectionButton}>
       {props.user == null ? (
+        <div className={styles.foodSearchItemButtonColumn}>
+         <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
+            Clear Selections
+          </Button>
           <div>Please log in to save meals</div>
+        </div>
+         
         ) : (
           <></>
         )}
