@@ -82,7 +82,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   // that another click doesn't do anything if the data is unchanged.
 
   // Upon the start of another calculation, we have to be sure to reset the values
-  const resetValues = async () => {
+  const resetValues = () => {
     const currentTotals = totals;
     currentTotals.calories = 0;
     currentTotals.totalFat = 0;
@@ -98,7 +98,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   };
 
   // incrementing values with each item read in the selections array
-  const incrementValues = async (calculationResults: Array<foodStatsItem>) => {
+  const incrementValues = (calculationResults: Array<foodStatsItem>) => {
     const currentTotals = totals;
     calculationResults.forEach((result) => {
       currentTotals.calories += result.nf_calories;

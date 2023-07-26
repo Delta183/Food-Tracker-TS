@@ -1,6 +1,7 @@
 export interface foodStatsItem {
   food_name: string;
   serving_qty: number;
+  serving_unit: string;
   // Below are all the pertinent health stats pulled from the response.
   nf_calories: number;
   nf_total_fat: number;

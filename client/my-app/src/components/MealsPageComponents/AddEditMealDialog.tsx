@@ -41,6 +41,8 @@ const AddEditMealDialog = ({
       // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
       input.selections = foodSelections;
       input.username = user;
+      // Presumably here is where the calculations will be saved and put into the meals object
+
       // Check for if note is one to edit or one to add, call the according function
       if (mealToEdit) {
         mealResponse = await MealsApi.updateMeal(mealToEdit._id, input);

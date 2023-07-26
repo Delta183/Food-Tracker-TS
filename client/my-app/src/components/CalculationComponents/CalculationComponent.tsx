@@ -52,7 +52,7 @@ const CalculationComponent = (props: IProps) => {
                 <td style={{ textTransform: "capitalize" }}>
                   {result.food_name}
                 </td>
-                <td>{result.serving_qty}</td>
+                <td>{result.serving_qty} {result.serving_unit}</td>
                 <td>{result.nf_calories}</td>
                 <td>{result.nf_total_fat}</td>
                 <td>{result.nf_saturated_fat}</td>
