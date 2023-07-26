@@ -25,7 +25,7 @@ const Meals = ({
   onDeleteMealClicked,
 }: MealProps) => {
   // it appears that food items are not accessible at this level
-  const { title, text, createdAt, updatedAt, username, selections } = meal;
+  const { title, text, createdAt, updatedAt, username } = meal;
 
   let createdUpdatedText: string;
   if (updatedAt > createdAt) {
@@ -52,8 +52,8 @@ const Meals = ({
         </Card.Title>
         <Card.Text className={styles.mealCardText}>{text}</Card.Text>
         <Accordion>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>Food Selections</Accordion.Header>
+          {/*<Accordion.Item eventKey="0">
+              <Accordion.Header>Food Selections</Accordion.Header>
             <Accordion.Body>
               {selections.map((selection) => {
                 return (
@@ -63,8 +63,8 @@ const Meals = ({
                   />
                 );
               })}
-            </Accordion.Body>
-          </Accordion.Item>
+            </Accordion.Body> 
+            </Accordion.Item> */}
         </Accordion>
       </Card.Body>
 

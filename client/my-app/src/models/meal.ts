@@ -1,4 +1,5 @@
 import { foodSearchItem } from "./foodSearchItem";
+import { foodStatsItem } from "./foodStatsItem";
 
 export interface Meal {
   _id: string;
@@ -8,4 +9,5 @@ export interface Meal {
   createdAt: string;
   updatedAt: string;
   selections: foodSearchItem[];
+  selectionsStats: foodStatsItem[];
 }

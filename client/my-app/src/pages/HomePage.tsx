@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import SearchContainerComponent from "../components/SearchComponents/SearchContainerComponent";
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
@@ -47,9 +47,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   const [searchResultError, setSearchResultError] = useState<Error | null>(
     null
   );
-  const [calculationResults, setCalculationResults] = useState(
-    Array<foodStatsItem>()
-  );
+  const [calculationResults, setCalculationResults] = useState(Array<foodStatsItem>());
   // TODO: Manage this error for when this search inevitably yields inaccurate content
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [calculationResultError, setCalculationResultError] =
@@ -61,7 +59,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     calculateStatistics(query, (results, error) => {
       setCalculationResults(results);
       setCalculationResultError(error);
-      // The values get incremented within this return block
       incrementValues(results);
     });
   };
@@ -79,12 +76,11 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         searchQuery += foodString;
       });
       performCalculation(searchQuery);
+      console.log("home: " + calculationResults)
+      // Set this to false upon any calculation to prevent redundant clicks
       setDidChangeOccur(false)
     }
   };
-
-  // TODO: Note that pressing it twice in quick succession causes a possible double, make it so
-  // that another click doesn't do anything if the data is unchanged.
 
   // Upon the start of another calculation, we have to be sure to reset the values
   const resetValues = () => {
@@ -171,8 +167,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         existingFoodSelections.push(foodSearchItem);
         return existingFoodSelections;
       });
-      // Additonally, call the calculation function on each add
-      // calculateStats();
     }
   };
 
@@ -190,6 +184,10 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     setDidChangeOccur(true)
     setFoodSelections([]);
   };
+
+  useEffect(() => {
+    console.log("useEffect: " + calculationResults);
+  }, [calculationResults]);
 
   return (
     <div>
@@ -212,6 +210,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
           query={input}
           MAX_SELECTIONS_LENGTH={MAX_SELECTIONS_LENGTH}
           foodSelections={foodSelections}
+          selectionsStats={calculationResults}
           onAddFoodSelectionClick={addFoodSelection}
           onRemoveFoodSelectionClick={removeFoodSelection}
           onClearFoodSelectionClick={clearFoodSelections}
@@ -219,11 +218,11 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         />
       </Container>
       <CalculationComponent 
-      calculateStats={calculateStats}
-      incrementValues={incrementValues} 
-      calculationResults={calculationResults} 
-      totalsArray={totals} 
-      didChangeOccur={didChangeOccur}/>
+        calculateStats={calculateStats}
+        incrementValues={incrementValues} 
+        calculationResults={calculationResults} 
+        totalsArray={totals} 
+        didChangeOccur={didChangeOccur}/>
     </div>
   );
 };

@@ -1,9 +1,5 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
-const photoArraySchema = new Schema({
-    thumb: {type: String}
-})
-
 const foodItemSchema = new Schema({
     food_name: { type: String },
     serving_qty: { type: String }, // This will be a point of reference for its increments

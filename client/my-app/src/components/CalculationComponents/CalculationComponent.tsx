@@ -48,7 +48,6 @@ const CalculationComponent = (props: IProps) => {
           {props.calculationResults.map((result) => {
             // Prior to displaying the stats of each food, add their values to the totals
             return (
-
               <tr>
                 <td style={{ textTransform: "capitalize" }}>
                   {result.food_name}

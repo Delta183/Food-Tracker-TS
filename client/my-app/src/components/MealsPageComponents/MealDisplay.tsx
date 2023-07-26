@@ -61,6 +61,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
           <h1>{meal?.title} by {meal?.username}</h1>
           <div>{meal?.text}</div>
           <div> id: {mealId} </div>
+          {console.log(meal?.selectionsStats)}
           <div className={styles.mealDisplaySelections}>
           {meal?.selections.map((selection) => {
                     return (

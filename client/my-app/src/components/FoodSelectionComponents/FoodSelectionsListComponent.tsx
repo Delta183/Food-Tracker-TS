@@ -5,10 +5,12 @@ import { Button } from "react-bootstrap";
 import AddEditMealDialog from "../MealsPageComponents/AddEditMealDialog";
 import { useState } from "react";
 import { User } from "../../models/user";
+import { foodStatsItem } from "../../models/foodStatsItem";
 
 interface IProps {
   user: User | null;
   foodSelections: foodSearchItem[]; // The list of selections
+  selectionsStats: foodStatsItem[]
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
   onClearFoodSelectionClick: () => void;
@@ -54,7 +56,8 @@ const FoodSelectionsListComponent = (props: IProps) => {
       {/* Also user must be signed in for this to work */}
       {/* Also this should only allow someone who is logged in to save a meal */}
       <div className={styles.selectionButton}>
-      {props.user == null ? (
+      {/* When the user is logged out */}
+      {props.user == null && props.foodSelections.length > 1 ? (
         <div className={styles.foodSearchItemButtonColumn}>
          <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
             Clear Selections
@@ -65,6 +68,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
         ) : (
           <></>
         )}
+        {/* When the user is logged in */}
         {props.foodSelections.length > 1 && props.user != null ? (
           <>
           <Button variant="primary" onClick={saveAsMeal}>
@@ -91,6 +95,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
             setShowAddMealDialog(false);
           }}
           foodSelections={props.foodSelections}
+          selectionsStats={props.selectionsStats}
           user={props.user?.username}
         />
       )}

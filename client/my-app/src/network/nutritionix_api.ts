@@ -90,7 +90,7 @@ export const calculateStatistics = async (
         // In the response, I get two arrays in an array where "common" is the header
         // for the common set of food
         const searchResponseResults: foodStatsItem[] = searchResponse["foods"];
-        // console.log(searchResponseResults);
+        console.log(searchResponseResults);
         // This will filter items with the same ids in the array
         if (Array.isArray(searchResponseResults)) {
           callback(searchResponseResults, null);

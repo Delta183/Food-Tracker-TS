@@ -1,5 +1,6 @@
 // import { ConflictError, UnauthorizedError } from "../errors/http_errors";
 import { foodSearchItem } from "../models/foodSearchItem";
+import { foodStatsItem } from "../models/foodStatsItem";
 import { Meal } from "../models/meal";
 import { User } from "../models/user";
 
@@ -73,6 +74,7 @@ export interface MealInput {
   title: string;
   text?: string;
   selections: foodSearchItem[];
+  selectionsStats: foodStatsItem[];
   username?: string;
 }
 

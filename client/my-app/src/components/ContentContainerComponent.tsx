@@ -1,13 +1,15 @@
 import { foodSearchItem } from "../models/foodSearchItem";
 import SearchResultListComponent from "./SearchComponents/SearchResultListComponent";
-import FoodSelectionsListComponent from "./FoodSelectionComponents/FoodSelectionListComponent";
+import FoodSelectionsListComponent from "./FoodSelectionComponents/FoodSelectionsListComponent";
 import styles from "../styles/FoodSearch.module.css";
 import { User } from "../models/user";
+import { foodStatsItem } from "../models/foodStatsItem";
 
 interface IProps {
   user: User | null;
   results: foodSearchItem[];
   foodSelections: foodSearchItem[];
+  selectionsStats: foodStatsItem[]
   MAX_SELECTIONS_LENGTH: number;
   query: string;
   searchResultError: Error | null;
@@ -30,6 +32,7 @@ const ContentContainerComponent = (props: IProps) => {
       />
       <FoodSelectionsListComponent
         foodSelections={props.foodSelections}
+        selectionsStats={props.selectionsStats}
         onRemoveFoodSelectionClick={props.onRemoveFoodSelectionClick}
         onClearFoodSelectionClick={props.onClearFoodSelectionClick}
         MAX_SELECTIONS_LENGTH={props.MAX_SELECTIONS_LENGTH}
