@@ -43,6 +43,7 @@ const AddEditMealDialog = ({
       let mealResponse: Meal;
       // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
       input.selections = foodSelections;
+      // TODO: Handle the calculation of the selections should they skip it to happen here
       input.username = user;
       // console.log("onSubmit: " + selectionsStats);
       // Presumably here is where the calculations will be saved and put into the meals object

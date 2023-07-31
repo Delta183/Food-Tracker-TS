@@ -32,7 +32,9 @@ const totalsTemplate : totalsArray = {
 };
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
-const LOCAL_STORAGE_NOMINATIONS_KEY = "foodSelections";
+const LOCAL_STORAGE_SELECTIONS_KEY = "foodSelections";
+const LOCAL_STORAGE_CALCULATIONS_KEY = "selectionCalculations";
+
 
 // This page is responsible for the current homescreen
 const HomePage = ({ loggedInUser }: HomePageProps) => {
@@ -40,8 +42,12 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   const [totals, setTotals] = useState(totalsTemplate);
   const [input, setInput] = useState("");
   const [foodSelections, setFoodSelections] = useLocalStorage(
-    LOCAL_STORAGE_NOMINATIONS_KEY,
+    LOCAL_STORAGE_SELECTIONS_KEY,
     Array<foodSearchItem>()
+  );
+  const [selectionCalculations, setSelectionCalculations] = useLocalStorage(
+    LOCAL_STORAGE_CALCULATIONS_KEY,
+    Array<foodStatsItem>()
   );
   const [searchResults, setSearchResults] = useState(Array<foodSearchItem>());
   const [searchResultError, setSearchResultError] = useState<Error | null>(
@@ -76,7 +82,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         searchQuery += foodString;
       });
       performCalculation(searchQuery);
-      console.log("home: " + calculationResults)
+      // console.log("home: " + calculationResults)
       // Set this to false upon any calculation to prevent redundant clicks
       setDidChangeOccur(false)
     }
