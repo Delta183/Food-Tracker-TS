@@ -12,6 +12,7 @@ import CalculationComponent from "../components/CalculationComponents/Calculatio
 import { User } from "../models/user";
 import { foodStatsItem } from "../models/foodStatsItem";
 import {totalsArray} from "../models/totalsArray"
+import findFoodStatsByTagID  from "../utils/foodStats_array_helpers";
 
 interface HomePageProps {
   loggedInUser: User | null;
@@ -34,18 +35,22 @@ const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_SELECTIONS_KEY = "foodSelections";
 const LOCAL_STORAGE_CALCULATIONS_KEY = "selectionCalculations";
+const LOCAL_STORAGE_TOTALS_KEY = "totals"
 
 
 // This page is responsible for the current homescreen
 const HomePage = ({ loggedInUser }: HomePageProps) => {
-  const [didChangeOccur, setDidChangeOccur] = useState(true);
-  const [totals, setTotals] = useState(totalsTemplate);
+  const [totals, setTotals] = useLocalStorage(
+    LOCAL_STORAGE_TOTALS_KEY,
+    totalsTemplate
+  );
   const [input, setInput] = useState("");
   const [foodSelections, setFoodSelections] = useLocalStorage(
     LOCAL_STORAGE_SELECTIONS_KEY,
     Array<foodSearchItem>()
   );
-  const [selectionCalculations, setSelectionCalculations] = useLocalStorage(
+  // These will be saved to local storage to prevent refresh bugs
+  const [foodStats, setFoodStats] = useLocalStorage(
     LOCAL_STORAGE_CALCULATIONS_KEY,
     Array<foodStatsItem>()
   );
@@ -60,67 +65,20 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     useState<Error | null>(null);
 
   // Use the function in the api class to get a json response in an array and use the states to set it
-  const performCalculation = async (query: string) => {
+  const performCalculation = async (foodItem: foodSearchItem) =>  {
+    var query = `${foodItem.quantity} ${foodItem.food_name}, `;
     // A function like this is able to maintain its results and errors and be set within its body
     calculateStatistics(query, (results, error) => {
       setCalculationResults(results);
+      setFoodStats((previousFoodStats: foodStatsItem[]) => {
+        const existingFoodStats = [...previousFoodStats];
+        existingFoodStats.push(results[0]);
+        return existingFoodStats;
+      }); // The local storage one
+      incrementValue(results[0]);
       setCalculationResultError(error);
-      incrementValues(results);
+      // incrementValues(results);
     });
-  };
-
-  // Have this function be automatic on each addition on the item and set an array in the parent component
-  const calculateStats = async () => {
-    // Only allow the calculation if a change did occur
-    if (didChangeOccur){
-      // be sure to reset the values for the next calculation
-      resetValues();
-      var searchQuery = "";
-      // So far this is working with the right string but that bug of the last item in the selection persists
-      foodSelections.forEach((foodItem : foodSearchItem) => {
-        var foodString = `${foodItem.quantity} ${foodItem.food_name}, `;
-        searchQuery += foodString;
-      });
-      performCalculation(searchQuery);
-      // console.log("home: " + calculationResults)
-      // Set this to false upon any calculation to prevent redundant clicks
-      setDidChangeOccur(false)
-    }
-  };
-
-  // Upon the start of another calculation, we have to be sure to reset the values
-  const resetValues = () => {
-    const currentTotals = totals;
-    currentTotals.calories = 0;
-    currentTotals.totalFat = 0;
-    currentTotals.saturatedFat = 0;
-    currentTotals.cholesterol = 0;
-    currentTotals.sodium = 0;
-    currentTotals.totalCarbs = 0;
-    currentTotals.fiber = 0;
-    currentTotals.sugars = 0;
-    currentTotals.protein = 0;
-    currentTotals.potassium = 0;
-    setTotals(currentTotals);
-  };
-
-  // incrementing values with each item read in the selections array
-  const incrementValues = (calculationResults: Array<foodStatsItem>) => {
-    const currentTotals = totals;
-    calculationResults.forEach((result) => {
-      currentTotals.calories += result.nf_calories;
-      currentTotals.totalFat += result.nf_total_fat;
-      currentTotals.saturatedFat += result.nf_saturated_fat;
-      currentTotals.cholesterol += result.nf_cholesterol;
-      currentTotals.sodium += result.nf_sodium;
-      currentTotals.totalCarbs += result.nf_total_carbohydrate;
-      currentTotals.fiber += result.nf_dietary_fiber;
-      currentTotals.sugars += result.nf_sugars;
-      currentTotals.protein += result.nf_protein;
-      currentTotals.potassium += result.nf_potassium;
-    })
-    // console.log(currentStats[0])
-    setTotals(currentTotals);
   };
 
   // Use the function in the api class to get a json response in an array and use the states to set it
@@ -167,34 +125,117 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     // Assuming the food item does exist, it can be set as a selection properly
     if (foodSearchItem !== null) {
       // Toggle that a change occurred for the calculations
-      setDidChangeOccur(true)
       setFoodSelections((previousFoodSelections: foodSearchItem[]) => {
         const existingFoodSelections = [...previousFoodSelections];
         existingFoodSelections.push(foodSearchItem);
         return existingFoodSelections;
       });
+      performCalculation(foodSearchItem);
     }
   };
 
   const removeFoodSelection = async (tagID: string) => {
-    setDidChangeOccur(true)
     setFoodSelections((previousFoodSelections: foodSearchItem[]) => {
       const existingFoodSelections = previousFoodSelections.filter(
         (foodItem: foodSearchItem) => foodItem.tag_id !== tagID
       );
       return existingFoodSelections;
     });
+
+     // Fetch the selected item in particular from the Nutritionix API endpoints
+    const foodSearchItem = findFoodStatsByTagID(tagID, foodStats);
+    decrementValue(foodSearchItem)
+
+    // console.log(foodStats)
+    // Prior to removal, decrement the foodStatItem from the totals
+    setFoodStats((previousFoodStats: foodStatsItem[]) => {
+      const existingFoodStats = previousFoodStats.filter(
+        (foodStat: foodStatsItem) => foodStat.tags["tag_id"] != tagID
+      );
+      return existingFoodStats;
+    }); 
+    //  console.log("after")
+    //  console.log(foodStats)
+
   };
 
   const clearFoodSelections = async () => {
-    setDidChangeOccur(true)
     setFoodSelections([]);
+    setFoodStats([]);
+    resetValues();
   };
 
-  useEffect(() => {
-    console.log("useEffect: " + calculationResults);
-  }, [calculationResults]);
+   // Upon the start of another calculation, we have to be sure to reset the values
+   const resetValues = () => {
+    const currentTotals = totals;
+    currentTotals.calories = 0;
+    currentTotals.totalFat = 0;
+    currentTotals.saturatedFat = 0;
+    currentTotals.cholesterol = 0;
+    currentTotals.sodium = 0;
+    currentTotals.totalCarbs = 0;
+    currentTotals.fiber = 0;
+    currentTotals.sugars = 0;
+    currentTotals.protein = 0;
+    currentTotals.potassium = 0;
+    setTotals(currentTotals);
+  };
 
+  // incrementing values with each item read in the selections array
+  const incrementAllValues = (calculationResults: Array<foodStatsItem>) => {
+    const currentTotals = totals;
+    calculationResults.forEach((result) => {
+      currentTotals.calories += result.nf_calories;
+      currentTotals.totalFat += result.nf_total_fat;
+      currentTotals.saturatedFat += result.nf_saturated_fat;
+      currentTotals.cholesterol += result.nf_cholesterol;
+      currentTotals.sodium += result.nf_sodium;
+      currentTotals.totalCarbs += result.nf_total_carbohydrate;
+      currentTotals.fiber += result.nf_dietary_fiber;
+      currentTotals.sugars += result.nf_sugars;
+      currentTotals.protein += result.nf_protein;
+      currentTotals.potassium += result.nf_potassium;
+    })
+    // console.log(currentStats[0])
+    setTotals(currentTotals);
+  };
+
+  // Possible error here with a null value that returns
+  const incrementValue = (newFood: foodStatsItem) => {
+    const currentTotals = totals;
+    currentTotals.calories += newFood.nf_calories;
+    currentTotals.totalFat += newFood.nf_total_fat;
+    currentTotals.saturatedFat += newFood.nf_saturated_fat;
+    currentTotals.cholesterol += newFood.nf_cholesterol;
+    currentTotals.sodium += newFood.nf_sodium;
+    currentTotals.totalCarbs += newFood.nf_total_carbohydrate;
+    currentTotals.fiber += newFood.nf_dietary_fiber;
+    currentTotals.sugars += newFood.nf_sugars;
+    currentTotals.protein += newFood.nf_protein;
+    currentTotals.potassium += newFood.nf_potassium;
+    setTotals(currentTotals);
+  };
+
+  const decrementValue = (newFood: foodStatsItem | null) => {
+    if (newFood !== null){
+      const currentTotals = totals;
+      currentTotals.calories -= newFood.nf_calories;
+      currentTotals.totalFat -= newFood.nf_total_fat;
+      currentTotals.saturatedFat -= newFood.nf_saturated_fat;
+      currentTotals.cholesterol -= newFood.nf_cholesterol;
+      currentTotals.sodium -= newFood.nf_sodium;
+      currentTotals.totalCarbs -= newFood.nf_total_carbohydrate;
+      currentTotals.fiber -= newFood.nf_dietary_fiber;
+      currentTotals.sugars -= newFood.nf_sugars;
+      currentTotals.protein -= newFood.nf_protein;
+      currentTotals.potassium -= newFood.nf_potassium;
+      setTotals(currentTotals);
+    }
+    else {
+      console.log("null food found")
+    }
+  };
+  
   return (
     <div>
       Welcome to Food Tracker! With this you can track your calories and other
@@ -224,11 +265,9 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         />
       </Container>
       <CalculationComponent 
-        calculateStats={calculateStats}
-        incrementValues={incrementValues} 
-        calculationResults={calculationResults} 
+        calculationResults={foodStats} 
         totalsArray={totals} 
-        didChangeOccur={didChangeOccur}/>
+        />
     </div>
   );
 };
