@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import SearchContainerComponent from "../components/SearchComponents/SearchContainerComponent";
-import {useEffect, useState } from "react";
+import {useState } from "react";
 import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
@@ -58,7 +58,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   const [searchResultError, setSearchResultError] = useState<Error | null>(
     null
   );
-  const [calculationResults, setCalculationResults] = useState(Array<foodStatsItem>());
   // TODO: Manage this error for when this search inevitably yields inaccurate content
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [calculationResultError, setCalculationResultError] =
@@ -69,7 +68,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     var query = `${foodItem.quantity} ${foodItem.food_name}, `;
     // A function like this is able to maintain its results and errors and be set within its body
     calculateStatistics(query, (results, error) => {
-      setCalculationResults(results);
       setFoodStats((previousFoodStats: foodStatsItem[]) => {
         const existingFoodStats = [...previousFoodStats];
         existingFoodStats.push(results[0]);
@@ -146,16 +144,15 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     const foodSearchItem = findFoodStatsByTagID(tagID, foodStats);
     decrementValue(foodSearchItem)
 
-    // console.log(foodStats)
     // Prior to removal, decrement the foodStatItem from the totals
     setFoodStats((previousFoodStats: foodStatsItem[]) => {
       const existingFoodStats = previousFoodStats.filter(
+        // eslint-disable-next-line eqeqeq
         (foodStat: foodStatsItem) => foodStat.tags["tag_id"] != tagID
       );
       return existingFoodStats;
     }); 
-    //  console.log("after")
-    //  console.log(foodStats)
+
 
   };
 
@@ -178,25 +175,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     currentTotals.sugars = 0;
     currentTotals.protein = 0;
     currentTotals.potassium = 0;
-    setTotals(currentTotals);
-  };
-
-  // incrementing values with each item read in the selections array
-  const incrementAllValues = (calculationResults: Array<foodStatsItem>) => {
-    const currentTotals = totals;
-    calculationResults.forEach((result) => {
-      currentTotals.calories += result.nf_calories;
-      currentTotals.totalFat += result.nf_total_fat;
-      currentTotals.saturatedFat += result.nf_saturated_fat;
-      currentTotals.cholesterol += result.nf_cholesterol;
-      currentTotals.sodium += result.nf_sodium;
-      currentTotals.totalCarbs += result.nf_total_carbohydrate;
-      currentTotals.fiber += result.nf_dietary_fiber;
-      currentTotals.sugars += result.nf_sugars;
-      currentTotals.protein += result.nf_protein;
-      currentTotals.potassium += result.nf_potassium;
-    })
-    // console.log(currentStats[0])
     setTotals(currentTotals);
   };
 
@@ -235,7 +213,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       console.log("null food found")
     }
   };
-  
+
   return (
     <div>
       Welcome to Food Tracker! With this you can track your calories and other
@@ -257,7 +235,8 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
           query={input}
           MAX_SELECTIONS_LENGTH={MAX_SELECTIONS_LENGTH}
           foodSelections={foodSelections}
-          selectionsStats={calculationResults}
+          selectionsStats={foodStats}
+          totalsArray={totals}
           onAddFoodSelectionClick={addFoodSelection}
           onRemoveFoodSelectionClick={removeFoodSelection}
           onClearFoodSelectionClick={clearFoodSelections}

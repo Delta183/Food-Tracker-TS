@@ -6,12 +6,14 @@ import * as MealsApi from "../../network/meals.api";
 import TextInputField from "../form/TextInputField";
 import { foodSearchItem } from "../../models/foodSearchItem";
 import { foodStatsItem } from "../../models/foodStatsItem";
+import { totalsArray } from "../../models/totalsArray";
 
 interface AddEditMealDialogProps {
   user: string | undefined;
   mealToEdit?: Meal; // Variable to differentiate a note to be added and one to be updated
   foodSelections: foodSearchItem[]; // The list of selections
   selectionsStats: foodStatsItem[];
+  totalsArray: totalsArray;
   onDismiss: () => void;
   onMealSaved: (meal: Meal) => void;
 }
@@ -22,6 +24,7 @@ const AddEditMealDialog = ({
   onDismiss,
   foodSelections,
   selectionsStats,
+  totalsArray,
   onMealSaved,
   mealToEdit,
 }: AddEditMealDialogProps) => {
@@ -45,9 +48,10 @@ const AddEditMealDialog = ({
       input.selections = foodSelections;
       // TODO: Handle the calculation of the selections should they skip it to happen here
       input.username = user;
-      // console.log("onSubmit: " + selectionsStats);
       // Presumably here is where the calculations will be saved and put into the meals object
       input.selectionsStats = selectionsStats;
+
+      input.totalsArray = totalsArray;
       // Check for if note is one to edit or one to add, call the according function
       if (mealToEdit) {
         mealResponse = await MealsApi.updateMeal(mealToEdit._id, input);

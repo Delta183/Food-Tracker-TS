@@ -1,5 +1,4 @@
 import styles from "../../styles/FoodSearch.module.css";
-import Button from "react-bootstrap/Button";
 import { foodStatsItem } from "../../models/foodStatsItem";
 import { totalsArray } from "../../models/totalsArray";
 import CalculationTableComponent from "./CalculationTableComponent";

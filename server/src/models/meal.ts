@@ -1,6 +1,7 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 import FoodItemModel from "./foodItem";
 import FoodStatsModel from "./statsItem";
+import TotalsItemModel from "./totalsItem";
 
 // The Schema resembles a class with attributes
 const mealSchema = new Schema({
@@ -10,6 +11,7 @@ const mealSchema = new Schema({
     text: { type: String }, // the optional description for this meal
     selections: {type: [FoodItemModel.schema]}, // arrays of objects are handled in this manner
     selectionsStats: {type: [FoodStatsModel.schema]},
+    totalsArray: {type: TotalsItemModel.schema}
 }, { timestamps: true });
 
 // This is for type safety and code completion pertinent to the type

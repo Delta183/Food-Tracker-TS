@@ -3,10 +3,8 @@ import { formatDate } from "../../utils/formatDate";
 import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Meal as MealModel } from "../../models/meal";
-import Accordion from "react-bootstrap/Accordion";
 import { MdDelete } from "react-icons/md"; // md means material design
 import stylesUtils from "../../styles/utils.module.css";
-import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
 import { Link } from 'react-router-dom';
 
 // An interface to declare what variables the Note needs
@@ -51,21 +49,6 @@ const Meals = ({
           />
         </Card.Title>
         <Card.Text className={styles.mealCardText}>{text}</Card.Text>
-        <Accordion>
-          {/*<Accordion.Item eventKey="0">
-              <Accordion.Header>Food Selections</Accordion.Header>
-            <Accordion.Body>
-              {selections.map((selection) => {
-                return (
-                  <FoodItemDisplayComponent
-                    tagID={selection.tag_id}
-                    foodItem={selection}
-                  />
-                );
-              })}
-            </Accordion.Body> 
-            </Accordion.Item> */}
-        </Accordion>
       </Card.Body>
 
       <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>

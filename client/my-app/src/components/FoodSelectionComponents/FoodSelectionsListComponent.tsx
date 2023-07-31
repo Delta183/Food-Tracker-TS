@@ -6,11 +6,13 @@ import AddEditMealDialog from "../MealsPageComponents/AddEditMealDialog";
 import { useState } from "react";
 import { User } from "../../models/user";
 import { foodStatsItem } from "../../models/foodStatsItem";
+import { totalsArray } from "../../models/totalsArray";
 
 interface IProps {
   user: User | null;
   foodSelections: foodSearchItem[]; // The list of selections
-  selectionsStats: foodStatsItem[]
+  selectionsStats: foodStatsItem[];
+  totalsArray: totalsArray;
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
   onClearFoodSelectionClick: () => void;
@@ -96,6 +98,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
           }}
           foodSelections={props.foodSelections}
           selectionsStats={props.selectionsStats}
+          totalsArray={props.totalsArray}
           user={props.user?.username}
         />
       )}

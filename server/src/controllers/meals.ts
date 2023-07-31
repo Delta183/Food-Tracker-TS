@@ -1,6 +1,7 @@
 import MealModel from "../models/meal";
 import FoodItemModel from "../models/foodItem";
-import StatsItemModel from "../models/statsItem"
+import StatsItemModel from "../models/statsItem";
+import TotalsItemModel from "../models/totalsItem";
 import mongoose from "mongoose";
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
@@ -42,6 +43,19 @@ export interface ClientFoodStatsItem {
   export interface TagArray {
     tag_id: string;
   }
+
+export interface ClientTotalsItem {
+    calories: number;
+    totalFat: number;
+    saturatedFat: number;
+    cholesterol: number;
+    sodium: number;
+    totalCarbs: number;
+    fiber: number;
+    sugars: number;
+    protein: number;
+    potassium: number;
+}
   
 
 export const getMeals : RequestHandler = async (req, res, next) => {
@@ -97,6 +111,7 @@ interface CreateMealBody {
     text?: string,
     selections: ClientFoodSearchItem[],
     selectionsStats: ClientFoodStatsItem[],
+    totalsArray: ClientTotalsItem
 }
 
 // We pass unknown instead of any because the latter is too unrestricted and ambiguous. 
@@ -106,6 +121,7 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
     const text = req.body.text;
     const selections = req.body.selections;
     const selectionsStats = req.body.selectionsStats;
+    const totalsArray = req.body.totalsArray;
     const username = req.body.username;
     const authenticatedUserId = req.session.userId;
     // Go through the selection and iterate through the req.selections and convert it into Mongoose friendly selections
@@ -150,6 +166,20 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
             });
             convertedStatsOutputs.push(newSelectionStat)
         }
+
+        const newTotalsArray = await TotalsItemModel.create({
+            calories: totalsArray.calories,
+            totalFat: totalsArray.totalFat,
+            saturatedFat: totalsArray.saturatedFat,
+            cholesterol: totalsArray.cholesterol,
+            sodium: totalsArray.sodium,
+            totalCarbs: totalsArray.totalCarbs,
+            fiber: totalsArray.fiber,
+            sugars: totalsArray.sugars,
+            protein: totalsArray.protein,
+            potassium: totalsArray.potassium,
+        })
+
         // provided the title and text, username and selections, we create a new MealModel object
         const newMeal = await MealModel.create({
             userId: authenticatedUserId,
@@ -158,6 +188,7 @@ export const createMeal: RequestHandler<unknown, unknown, CreateMealBody, unknow
             text: text,
             selections: convertedOutputs, // convertedSelections
             selectionsStats: convertedStatsOutputs,
+            totalsArray: newTotalsArray
         });
         // Send the new meal back as a JSON object
         res.status(201).json(newMeal);
@@ -176,6 +207,7 @@ interface UpdateMealBody {
     username?: string,
     selections: ClientFoodSearchItem[]
     selectionsStats: ClientFoodStatsItem[]
+    totalsArray: ClientTotalsItem
 }
 
 // The order for RequestHandler is Params, response, body, query params
@@ -185,6 +217,7 @@ export const updateMeal: RequestHandler<UpdateMealParams, unknown, UpdateMealBod
     const newText = req.body.text;
     const newSelections = req.body.selections;
     const newSelectionsStats = req.body.selectionsStats;
+    const newTotalsArray = req.body.totalsArray;
     const authenticatedUserId = req.session.userId;
     // TODO: Finish this update 
 

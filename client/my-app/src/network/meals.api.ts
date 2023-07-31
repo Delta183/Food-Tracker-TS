@@ -2,6 +2,7 @@
 import { foodSearchItem } from "../models/foodSearchItem";
 import { foodStatsItem } from "../models/foodStatsItem";
 import { Meal } from "../models/meal";
+import { totalsArray } from "../models/totalsArray";
 import { User } from "../models/user";
 
 // These parameters allow us to call it much like a fetch function
@@ -75,6 +76,7 @@ export interface MealInput {
   text?: string;
   selections: foodSearchItem[];
   selectionsStats: foodStatsItem[];
+  totalsArray: totalsArray;
   username?: string;
 }
 
