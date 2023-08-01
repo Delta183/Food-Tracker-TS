@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/MealDisplay.module.css";
 import { User } from "../../models/user";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
@@ -10,7 +10,6 @@ import { Spinner } from "react-bootstrap";
 interface MealsPageProps {
   loggedInUser: User | null;
 }
-
 
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const [meal, setMeal] = useState<MealModel>();
@@ -48,35 +47,36 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
 
   return (
     <div>
-       <>
-      {/* There will be no means of adding one on this page */}
-      {mealLoading && <Spinner animation="border" variant="primary" />}
-      {/* Contingency if notes don't load */}
-      {showMealLoadingError && (
-        <p>Something went wrong. Please refresh the page</p>
-      )}
-      {/* Once loading completes, and there is no error, then we must have vaid notes */}
-      {!mealLoading && !showMealLoadingError && (
-        <>
-          <h1>{meal?.title} by {meal?.username}</h1>
-          <div>{meal?.text}</div>
-          <div> id: {mealId} </div>
-          {console.log(meal?.selections)}
-          <div className={styles.mealDisplaySelections}>
-          {meal?.selections.map((selection) => {
-                    return (
-                      <FoodItemDisplayComponent
-                        tagID={selection.tag_id}
-                        foodItem={selection}
-                      />
-                    );
-                  })}
+      <>
+        {/* There will be no means of adding one on this page */}
+        {mealLoading && <Spinner animation="border" variant="primary" />}
+        {/* Contingency if notes don't load */}
+        {showMealLoadingError && (
+          <p>Something went wrong. Please refresh the page</p>
+        )}
+        {/* Once loading completes, and there is no error, then we must have vaid notes */}
+        {!mealLoading && !showMealLoadingError && (
+          <>
+            <h1>
+              {meal?.title} by {meal?.username}
+            </h1>
+            <div>{meal?.text}</div>
+            <div> id: {mealId} </div>
+            {console.log(meal?.totalsArray)}
+            <div className={styles.mealDisplaySelections}>
+              {meal?.selections.map((selection) => {
+                return (
+                  <FoodItemDisplayComponent
+                    tagID={selection.tag_id}
+                    foodItem={selection}
+                  />
+                );
+              })}
             </div>
-          <div>Calculations finally</div>
-        </>
-      )}
-    </>
-     
+            <div>Calculations finally</div>
+          </>
+        )}
+      </>
     </div>
   );
 };

@@ -11,9 +11,10 @@ interface IProps {
 const CalculationComponent = (props: IProps) => {
   return (
     <div className={styles.searchContainer}>
-      <CalculationTableComponent 
-        calculationResults={props.calculationResults} 
-        totalsArray={props.totalsArray}/>
+      <CalculationTableComponent
+        calculationResults={props.calculationResults}
+        totalsArray={props.totalsArray}
+      />
     </div>
   );
 };

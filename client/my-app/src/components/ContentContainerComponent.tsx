@@ -10,8 +10,8 @@ interface IProps {
   user: User | null;
   results: foodSearchItem[];
   foodSelections: foodSearchItem[];
-  selectionsStats: foodStatsItem[]
-  totalsArray: totalsArray
+  selectionsStats: foodStatsItem[];
+  totalsArray: totalsArray;
   MAX_SELECTIONS_LENGTH: number;
   query: string;
   searchResultError: Error | null;
@@ -23,7 +23,7 @@ interface IProps {
 // The purpose of this component is to maintain the results of the search results and the
 // current list of items from the user
 const ContentContainerComponent = (props: IProps) => {
-  console.log(props.totalsArray)
+  console.log(props.totalsArray);
   return (
     <div className={styles.contentContainer}>
       <SearchResultListComponent

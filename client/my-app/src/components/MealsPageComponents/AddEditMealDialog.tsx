@@ -28,7 +28,6 @@ const AddEditMealDialog = ({
   onMealSaved,
   mealToEdit,
 }: AddEditMealDialogProps) => {
-  
   // Since the hook returns multiple values, we deconstruct the variables
   const {
     register,

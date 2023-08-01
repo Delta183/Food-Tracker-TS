@@ -1,25 +1,28 @@
 import { Container } from "react-bootstrap";
 import SearchContainerComponent from "../components/SearchComponents/SearchContainerComponent";
-import {useState } from "react";
+import { useState } from "react";
 import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
 import { foodSearchItem } from "../models/foodSearchItem";
-import { calculateStatistics, searchFoodsWithQuery } from "../network/nutritionix_api";
+import {
+  calculateStatistics,
+  searchFoodsWithQuery,
+} from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
 import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
 import { User } from "../models/user";
 import { foodStatsItem } from "../models/foodStatsItem";
-import {totalsArray} from "../models/totalsArray"
-import findFoodStatsByTagID  from "../utils/foodStats_array_helpers";
+import { totalsArray } from "../models/totalsArray";
+import findFoodStatsByTagID from "../utils/foodStats_array_helpers";
 
 interface HomePageProps {
   loggedInUser: User | null;
 }
 
 // The duration to be waited for prior to actually performing the API call
-const totalsTemplate : totalsArray = {
+const totalsTemplate: totalsArray = {
   calories: 0,
   totalFat: 0,
   saturatedFat: 0,
@@ -29,14 +32,13 @@ const totalsTemplate : totalsArray = {
   fiber: 0,
   sugars: 0,
   protein: 0,
-  potassium: 0
+  potassium: 0,
 };
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_SELECTIONS_KEY = "foodSelections";
 const LOCAL_STORAGE_CALCULATIONS_KEY = "selectionCalculations";
-const LOCAL_STORAGE_TOTALS_KEY = "totals"
-
+const LOCAL_STORAGE_TOTALS_KEY = "totals";
 
 // This page is responsible for the current homescreen
 const HomePage = ({ loggedInUser }: HomePageProps) => {
@@ -64,7 +66,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     useState<Error | null>(null);
 
   // Use the function in the api class to get a json response in an array and use the states to set it
-  const performCalculation = async (foodItem: foodSearchItem) =>  {
+  const performCalculation = async (foodItem: foodSearchItem) => {
     var query = `${foodItem.quantity} ${foodItem.food_name}, `;
     // A function like this is able to maintain its results and errors and be set within its body
     calculateStatistics(query, (results, error) => {
@@ -140,10 +142,9 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       return existingFoodSelections;
     });
 
-     // Fetch the selected item in particular from the Nutritionix API endpoints
+    // Fetch the selected item in particular from the Nutritionix API endpoints
     const foodSearchItem = findFoodStatsByTagID(tagID, foodStats);
-    decrementValue(foodSearchItem)
-
+    decrementValue(foodSearchItem);
     // Prior to removal, decrement the foodStatItem from the totals
     setFoodStats((previousFoodStats: foodStatsItem[]) => {
       const existingFoodStats = previousFoodStats.filter(
@@ -151,9 +152,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
         (foodStat: foodStatsItem) => foodStat.tags["tag_id"] != tagID
       );
       return existingFoodStats;
-    }); 
-
-
+    });
   };
 
   const clearFoodSelections = async () => {
@@ -162,8 +161,8 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     resetValues();
   };
 
-   // Upon the start of another calculation, we have to be sure to reset the values
-   const resetValues = () => {
+  // Upon the start of another calculation, we have to be sure to reset the values
+  const resetValues = () => {
     const currentTotals = totals;
     currentTotals.calories = 0;
     currentTotals.totalFat = 0;
@@ -195,7 +194,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   };
 
   const decrementValue = (newFood: foodStatsItem | null) => {
-    if (newFood !== null){
+    if (newFood !== null) {
       const currentTotals = totals;
       currentTotals.calories -= newFood.nf_calories;
       currentTotals.totalFat -= newFood.nf_total_fat;
@@ -208,9 +207,8 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       currentTotals.protein -= newFood.nf_protein;
       currentTotals.potassium -= newFood.nf_potassium;
       setTotals(currentTotals);
-    }
-    else {
-      console.log("null food found")
+    } else {
+      console.log("null food found");
     }
   };
 
@@ -243,10 +241,10 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
           user={loggedInUser}
         />
       </Container>
-      <CalculationComponent 
-        calculationResults={foodStats} 
-        totalsArray={totals} 
-        />
+      <CalculationComponent
+        calculationResults={foodStats}
+        totalsArray={totals}
+      />
     </div>
   );
 };

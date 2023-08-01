@@ -25,13 +25,14 @@ const FoodSelectionsListComponent = (props: IProps) => {
     // toggle a boolean to make a modal appear
     setShowAddMealDialog(true);
   };
-  
+
   // Check for if the limit of items has been reached for selections
   let banner = <div></div>;
   if (props.foodSelections.length >= props.MAX_SELECTIONS_LENGTH) {
     banner = (
       <div className="nomination-banner">
-        You have successfully added the maximum {props.MAX_SELECTIONS_LENGTH} food items!
+        You have successfully added the maximum {props.MAX_SELECTIONS_LENGTH}{" "}
+        food items!
         {/* <img src={checkmark} alt="checkmark" height="36px" width="36px"/> */}
       </div>
     );
@@ -43,7 +44,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
     <div className={styles.contentListContainer}>
       <div className={styles.contentListHeader}>Food Selections</div>
       {/* This banner will only appear if the maximum number of selections have be chosed */}
-      {banner} 
+      {banner}
       {props.foodSelections.map((selection) => {
         return (
           <FoodSelectionComponent
@@ -58,34 +59,31 @@ const FoodSelectionsListComponent = (props: IProps) => {
       {/* Also user must be signed in for this to work */}
       {/* Also this should only allow someone who is logged in to save a meal */}
       <div className={styles.selectionButton}>
-      {/* When the user is logged out */}
-      {props.user == null && props.foodSelections.length > 1 ? (
-        <div className={styles.foodSearchItemButtonColumn}>
-         <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
-            Clear Selections
-          </Button>
-          <div>Please log in to save meals</div>
-        </div>
-         
+        {/* When the user is logged out */}
+        {props.user == null && props.foodSelections.length > 1 ? (
+          <div className={styles.foodSearchItemButtonColumn}>
+            <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
+              Clear Selections
+            </Button>
+            <div>Please log in to save meals</div>
+          </div>
         ) : (
           <></>
         )}
         {/* When the user is logged in */}
         {props.foodSelections.length > 1 && props.user != null ? (
           <>
-          <Button variant="primary" onClick={saveAsMeal}>
-            Save as Meal
-          </Button>
-           <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
-            Clear Selections
-          </Button>
+            <Button variant="primary" onClick={saveAsMeal}>
+              Save as Meal
+            </Button>
+            <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
+              Clear Selections
+            </Button>
           </>
         ) : (
           // If the user is signed in and the list is empty, it should simply say nothing
           <></>
         )}
-       
-   
       </div>
       {/* Toggle for the modal if the user wishes to save the meal */}
       {showAddMealDialog && (

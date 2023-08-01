@@ -74,7 +74,7 @@ const FoodItemComponent = (props: IProps) => {
     props.buttonConfig.onClick(props.tagID);
     // Update the state of the quantity count on each click
   };
-  
+
   const hasPoster = foodPhoto !== INVALID_FOOD_IMAGE;
 
   return (

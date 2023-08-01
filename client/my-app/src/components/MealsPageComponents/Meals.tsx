@@ -5,7 +5,7 @@ import { Card } from "react-bootstrap";
 import { Meal as MealModel } from "../../models/meal";
 import { MdDelete } from "react-icons/md"; // md means material design
 import stylesUtils from "../../styles/utils.module.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // An interface to declare what variables the Note needs
 // It can be done without it in JS but its not as certain
@@ -17,11 +17,7 @@ interface MealProps {
 }
 
 // Prior to NoteProps is the chunk of the arguments that will be passed
-const Meals = ({
-  meal,
-  onMealClicked,
-  onDeleteMealClicked,
-}: MealProps) => {
+const Meals = ({ meal, onMealClicked, onDeleteMealClicked }: MealProps) => {
   // it appears that food items are not accessible at this level
   const { title, text, createdAt, updatedAt, username } = meal;
 
@@ -38,7 +34,9 @@ const Meals = ({
       <Card.Body>
         <Card.Title className={stylesUtils.flexCenter}>
           {title} by: {username}
-          <Link to={`/meals/${meal._id}`}><p className="font-italic type m-0">View Details</p></Link>
+          <Link to={`/meals/${meal._id}`}>
+            <p className="font-italic type m-0">View Details</p>
+          </Link>
           <MdDelete
             className="text-muted ms-auto"
             onClick={(e) => {
