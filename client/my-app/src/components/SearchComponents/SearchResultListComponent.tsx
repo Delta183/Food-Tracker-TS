@@ -49,6 +49,7 @@ const SearchResultListComponent = (props: IProps) => {
       ) : null}
       {props.results.map((result) => {
         // This part calls on the SearchResultComponent which are all the titles
+        // console.log(result.tag_id)
         return (
           <SearchResultComponent
             isSelected={

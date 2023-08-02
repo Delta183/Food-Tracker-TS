@@ -1,11 +1,33 @@
-.mealDisplaySelectionsColumn {
+.selectionsColumn {
   display: flex;
   flex-direction: column;
 }
 
-.mealDisplaySelectionsRow {
+.statsRow {
   display: flex;
   flex-direction: row;
-  width: 100%;
 }
 
+.selectionsRow{
+  white-space: nowrap;
+  overflow: auto;
+  background-color: #9cec8c;
+  border: 0.5px solid black;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.selectionsRowSingle {
+  display: inline-block;
+  float: none;
+}
+
+.selectionButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 15%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}

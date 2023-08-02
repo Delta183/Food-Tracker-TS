@@ -23,7 +23,6 @@ interface IProps {
 // The purpose of this component is to maintain the results of the search results and the
 // current list of items from the user
 const ContentContainerComponent = (props: IProps) => {
-  console.log(props.totalsArray);
   return (
     <div className={styles.contentContainer}>
       <SearchResultListComponent

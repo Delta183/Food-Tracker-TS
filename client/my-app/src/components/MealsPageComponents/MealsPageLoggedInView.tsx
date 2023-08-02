@@ -19,7 +19,6 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
   // Making an error type specifically for the notes
   const [showMealsLoadingError, setShowMealsLoadingError] = useState(true);
   // TODO: Change this for the sending to the edit page
-  const [mealToEdit, setMealToEdit] = useState<MealModel | null>(null);
 
   useEffect(() => {
     // Await functions need to be async
@@ -67,7 +66,6 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
         <Col key={meal._id}>
           <Meal
             meal={meal}
-            onMealClicked={setMealToEdit}
             onDeleteMealClicked={deleteNote}
           />
         </Col>

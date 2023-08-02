@@ -11,25 +11,14 @@ import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
 import { User } from "../models/user";
 import { foodStatsItem } from "../models/foodStatsItem";
-import { totalsArray } from "../models/totalsArray";
 import findFoodStatsByTagID from "../utils/foodStats_array_helpers";
+import totalsTemplate from "../utils/totalsTemplate";
 
 interface HomePageProps {
   loggedInUser: User | null;
 }
 
-const totalsTemplate: totalsArray = {
-calories: 0,
-  totalFat: 0,
-  saturatedFat: 0,
-  cholesterol: 0,
-  sodium: 0,
-  totalCarbs: 0,
-  fiber: 0,
-  sugars: 0,
-  protein: 0,
-  potassium: 0,
-};
+
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_SELECTIONS_KEY = "foodSelections";
