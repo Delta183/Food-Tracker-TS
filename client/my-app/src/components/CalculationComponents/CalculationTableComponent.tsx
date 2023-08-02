@@ -3,15 +3,18 @@ import { foodStatsItem } from "../../models/foodStatsItem";
 import { totalsArray } from "../../models/totalsArray";
 
 interface IProps {
-  calculationResults: foodStatsItem[];
-  totalsArray: totalsArray;
+  calculationResults: foodStatsItem[] | undefined;
+  totalsArray: totalsArray | undefined;
 }
+
+const DECIMAL_PLACE = 2;
+
 
 const CalculationTableComponent = (props: IProps) => {
   const tableHeaders = [
     "Serving Quantity",
     "Calories (kcal)",
-    "Total Fat (g))",
+    "Total Fat (g)",
     "Saturated Fat (g)",
     "Cholesterol (mg)",
     "Sodium (mg)",
@@ -33,7 +36,7 @@ const CalculationTableComponent = (props: IProps) => {
         </tr>
       </thead>
       <tbody>
-        {props.calculationResults.map((result) => {
+        {props.calculationResults != undefined ? props.calculationResults.map((result) => {
           // Prior to displaying the stats of each food, add their values to the totals
           return (
             <tr>
@@ -55,22 +58,23 @@ const CalculationTableComponent = (props: IProps) => {
               <td>{result.nf_potassium}</td>
             </tr>
           );
-        })}
+        })
+       : <></>}
         {/* Provided there are actually results, then show the total row as well. */}
         {props.totalsArray != null ? (
           <tr>
             <td>Total</td>
             <td></td>
-            <td>{props.totalsArray.calories.toFixed(2)}</td>
-            <td>{props.totalsArray.totalFat.toFixed(2)}</td>
-            <td>{props.totalsArray.saturatedFat.toFixed(2)}</td>
-            <td>{props.totalsArray.cholesterol.toFixed(2)}</td>
-            <td>{props.totalsArray.sodium.toFixed(2)}</td>
-            <td>{props.totalsArray.totalCarbs.toFixed(2)}</td>
-            <td>{props.totalsArray.fiber.toFixed(2)}</td>
-            <td>{props.totalsArray.sugars.toFixed(2)}</td>
-            <td>{props.totalsArray.protein.toFixed(2)}</td>
-            <td>{props.totalsArray.potassium.toFixed(2)}</td>
+            <td>{props.totalsArray.calories.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.totalFat.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.saturatedFat.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.cholesterol.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.sodium.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.totalCarbs.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.fiber.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.sugars.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.protein.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.potassium.toFixed(DECIMAL_PLACE)}</td>
           </tr>
         ) : (
           <></>

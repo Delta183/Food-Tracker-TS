@@ -5,10 +5,7 @@ import debounce from "../utils/debounce";
 import useLocalStorage from "../utils/local_storage_hook";
 import findFoodByTagID from "../utils/foodItem_array_helpers";
 import { foodSearchItem } from "../models/foodSearchItem";
-import {
-  calculateStatistics,
-  searchFoodsWithQuery,
-} from "../network/nutritionix_api";
+import {calculateStatistics, searchFoodsWithQuery,} from "../network/nutritionix_api";
 import ContentContainerComponent from "../components/ContentContainerComponent";
 import Swal from "sweetalert2";
 import CalculationComponent from "../components/CalculationComponents/CalculationComponent";
@@ -21,9 +18,8 @@ interface HomePageProps {
   loggedInUser: User | null;
 }
 
-// The duration to be waited for prior to actually performing the API call
 const totalsTemplate: totalsArray = {
-  calories: 0,
+calories: 0,
   totalFat: 0,
   saturatedFat: 0,
   cholesterol: 0,

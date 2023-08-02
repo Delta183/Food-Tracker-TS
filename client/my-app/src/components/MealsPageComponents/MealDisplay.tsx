@@ -6,6 +6,9 @@ import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import FoodItemDisplayComponent from "../FoodItemDisplayComponent";
 import { Spinner } from "react-bootstrap";
+import CalculationTableComponent from "../CalculationComponents/CalculationTableComponent";
+import Figure from 'react-bootstrap/Figure';
+
 
 interface MealsPageProps {
   loggedInUser: User | null;
@@ -61,19 +64,35 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
               {meal?.title} by {meal?.username}
             </h1>
             <div>{meal?.text}</div>
-            <div> id: {mealId} </div>
+            {/* <div> id: {mealId} </div> */}
             {console.log(meal?.totalsArray)}
-            <div className={styles.mealDisplaySelections}>
+            <div className={styles.mealDisplaySelectionsColumn}>
+              <div className={styles.mealDisplaySelectionsRow}>
               {meal?.selections.map((selection) => {
                 return (
-                  <FoodItemDisplayComponent
-                    tagID={selection.tag_id}
-                    foodItem={selection}
-                  />
+                  <Figure>
+                    <Figure.Image
+                    fluid={true}
+                      width={200}
+                      height={200}
+                      alt="200x200"
+                      src={selection.photo["thumb"]}
+                    />
+                    <Figure.Caption>
+                      {selection.food_name}
+                    </Figure.Caption>
+                  </Figure>
                 );
               })}
+              </div>
+              <div className={styles.mealDisplaySelectionsRow}>
+              <CalculationTableComponent 
+                calculationResults={meal?.selectionsStats} 
+                totalsArray={meal?.totalsArray}
+                />
+                </div>
             </div>
-            <div>Calculations finally</div>
+        
           </>
         )}
       </>

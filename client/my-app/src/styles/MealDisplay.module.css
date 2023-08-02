@@ -1,5 +1,11 @@
-.mealDisplaySelections {
+.mealDisplaySelectionsColumn {
   display: flex;
   flex-direction: column;
-  width: 45%;
 }
+
+.mealDisplaySelectionsRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
