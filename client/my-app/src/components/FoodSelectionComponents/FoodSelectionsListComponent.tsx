@@ -10,6 +10,7 @@ import { totalsArray } from "../../models/totalsArray";
 
 interface IProps {
   user: User | null;
+  isEditing: boolean;
   foodSelections: foodSearchItem[]; // The list of selections
   selectionsStats: foodStatsItem[];
   totalsArray: totalsArray;
@@ -73,9 +74,12 @@ const FoodSelectionsListComponent = (props: IProps) => {
         {/* When the user is logged in */}
         {props.foodSelections.length > 1 && props.user != null ? (
           <>
-            <Button variant="primary" onClick={saveAsMeal}>
+          {/* Furthermore, if the user is editing, do not allow them to save the meal here */}
+            {props.isEditing ? <></> : <>
+             <Button variant="primary" onClick={saveAsMeal}>
               Save as Meal
-            </Button>
+            </Button></>}
+           
             <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
               Clear Selections
             </Button>

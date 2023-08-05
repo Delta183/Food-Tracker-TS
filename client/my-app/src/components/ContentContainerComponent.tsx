@@ -13,6 +13,7 @@ interface IProps {
   selectionsStats: foodStatsItem[];
   totalsArray: totalsArray;
   MAX_SELECTIONS_LENGTH: number;
+  isEditing: boolean;
   query: string;
   searchResultError: Error | null;
   onAddFoodSelectionClick: (tagID: string) => void;
@@ -33,6 +34,7 @@ const ContentContainerComponent = (props: IProps) => {
         onAddFoodSelectionClick={props.onAddFoodSelectionClick}
       />
       <FoodSelectionsListComponent
+        isEditing={props.isEditing}
         foodSelections={props.foodSelections}
         selectionsStats={props.selectionsStats}
         totalsArray={props.totalsArray}

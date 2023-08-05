@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../../styles/MealDisplay.module.css";
 import { User } from "../../models/user";
 import { useParams } from "react-router-dom";
-import { Meal as MealModel } from "../../models/meal";
+import { Meal, Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
 import CalculationTableComponent from "../CalculationComponents/CalculationTableComponent";
@@ -27,8 +27,18 @@ interface MealsPageProps {
   const DEBOUNCE_DURATION = 500;
   const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 
+  const mealInputTemplate: MealInput = {
+      title: "",
+      text: "",
+      selections: [],
+      selectionsStats: [],
+      totalsArray: totalsTemplate,
+      username: ""
+    };
+
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const [meal, setMeal] = useState<MealModel>();
+  const [editedMeal, setEditedMeal] = useState<MealInput>(mealInputTemplate);
   const [mealLoading, setMealLoading] = useState(true);
   // Making an error type specifically for the notes
   const [showMealLoadingError, setShowMealLoadingError] = useState(true);
@@ -234,28 +244,46 @@ const decrementValue = (newFood: foodStatsItem | null) => {
     loadMeal();
   }, [mealId]); // passing the empty array allows this to run only one time
 
-  async function handleSubmit(input: MealInput) {
-    try {
-      // let mealResponse: Meal;
-      // // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
-      // input.selections = foodSelections;
-      // // TODO: Handle the calculation of the selections should they skip it to happen here
-      // input.username = user;
-      // // Presumably here is where the calculations will be saved and put into the meals object
-      // input.selectionsStats = selectionsStats;
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 👇 Get input value from "event"
+    setEditMealTitle(e.target.value);
+  };
 
-      // input.totalsArray = totalsArray;
-      // // Check for if note is one to edit or one to add, call the according function
-      // if (mealToEdit) {
-      //   mealResponse = await MealsApi.updateMeal(mealToEdit._id, input);
-      // } else {
-      //   mealResponse = await MealsApi.createMeal(input);
-      // }
-      // onMealSaved(mealResponse);
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 👇 Get input value from "event"
+    setEditMealText(e.target.value);
+  };
+
+  
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log("Starting before")
+    try {
+      console.log("Starting")
+      if(editedMeal != null){
+        editedMeal.title = editMealTitle;
+        editedMeal.text = editMealText;
+        // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
+        editedMeal.selections = editMealSelections;
+        // TODO: Handle the calculation of the selections should they skip it to happen here
+        editedMeal.username = loggedInUser?.username
+        // Presumably here is where the calculations will be saved and put into the meals object
+        editedMeal.selectionsStats = editMealStats;
+  
+        editedMeal.totalsArray = editMealTotals;
+        if (meal != null){
+          await MealsApi.updateMeal(meal._id, editedMeal);
+          console.log("successful")
+        }
+      }
+      console.log("Finished")
+      // Afterwards go to main page
+      setIsEditMode(false);
     } catch (error) {
       console.error(error);
       alert(error);
     }
+    console.log("what?")
   }
 
   return (
@@ -329,13 +357,14 @@ const decrementValue = (newFood: foodStatsItem | null) => {
             </Button>
           </div>
           {/* Forms below */}
-          <Form id="addEditMealForm" onSubmit={() => handleSubmit}>
+          <Form id="editMealForm" onSubmit={handleSubmit}>
             <Form.Group className="m-3" >
               <Form.Label>Title</Form.Label>
               <Form.Control 
               type="text" 
               placeholder="Title" 
               value={editMealTitle} 
+              onChange={handleTitleChange}
              />
             </Form.Group>
             <Form.Group className="m-3" >
@@ -344,9 +373,10 @@ const decrementValue = (newFood: foodStatsItem | null) => {
                 type="text" 
                 placeholder="Description" 
                 value={editMealText} 
+                onChange={handleTextChange}
               />
             </Form.Group>
-          </Form>
+            
           {/* Selections below */}
           <SearchBarComponent
             input={input}
@@ -358,6 +388,7 @@ const decrementValue = (newFood: foodStatsItem | null) => {
               searchResultError={searchResultError}
               results={searchResults}
               query={input}
+              isEditing={true}
               MAX_SELECTIONS_LENGTH={MAX_SELECTIONS_LENGTH}
               foodSelections={editMealSelections}
               selectionsStats={editMealStats}
@@ -368,10 +399,14 @@ const decrementValue = (newFood: foodStatsItem | null) => {
               user={loggedInUser}
             />
           </Container>
-          <CalculationComponent
-            calculationResults={editMealStats}
+          <CalculationTableComponent 
+            calculationResults={editMealStats} 
             totalsArray={editMealTotals}
-          />
+            />
+          <Button size="lg" variant="primary" type="submit">
+              Save Edit
+          </Button>
+          </Form>
           {/* Calculations below? */}
         </div>
       </>

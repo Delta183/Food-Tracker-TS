@@ -220,7 +220,6 @@ export const updateMeal: RequestHandler<UpdateMealParams, unknown, UpdateMealBod
     const newSelectionsStats = req.body.selectionsStats;
     const newTotalsArray = req.body.totalsArray;
     const authenticatedUserId = req.session.userId;
-    // TODO: Finish this update 
 
     try {
         assertIsDefined(authenticatedUserId);
@@ -246,10 +245,57 @@ export const updateMeal: RequestHandler<UpdateMealParams, unknown, UpdateMealBod
             throw createHttpError(401, "You cannot access this meal");
         }
 
-        // Otherwise overwrite the title, selections and text and then save the meal
-        meal.title = newTitle;
-        meal.text = newText;
-        // meal.selections = newSelections;
+       
+        // eslint-disable-next-line no-var
+        var convertedOutputs = []; 
+        for (const selection of newSelections) {
+            const newSelection = await FoodItemModel.create({
+                food_name: selection.food_name,
+                serving_qty: selection.serving_qty, // This will be a point of reference for its increments
+                quantity: selection.quantity,
+                serving_unit: selection.serving_unit,
+                photo: selection.photo,
+                tag_id: selection.tag_id
+            });
+            convertedOutputs.push(newSelection)
+        }
+
+         // eslint-disable-next-line no-var
+         var convertedStatsOutputs = []; 
+         for (const selection of newSelectionsStats) {
+             const newSelectionStat = await StatsItemModel.create({
+                 food_name: selection.food_name,
+                 serving_qty: selection.serving_qty,
+                 serving_unit: selection.serving_unit,
+                 // Below are all the pertinent health stats pulled from the response.
+                 nf_calories: selection.nf_calories,
+                 nf_total_fat: selection.nf_total_fat,
+                 nf_saturated_fat: selection.nf_saturated_fat,
+                 nf_cholesterol: selection.nf_cholesterol,
+                 nf_sodium: selection.nf_sodium,
+                 nf_total_carbohydrate: selection.nf_total_carbohydrate,
+                 nf_dietary_fiber: selection.nf_dietary_fiber,
+                 nf_sugars: selection.nf_sugars,
+                 nf_protein: selection.nf_protein,
+                 nf_potassium: selection.nf_potassium,
+                 tags: selection.tags,
+             });
+             convertedStatsOutputs.push(newSelectionStat)
+         }
+
+        await meal.updateOne(
+            {selections : convertedOutputs}
+        );
+        await meal.updateOne(
+            {selectionsStats : convertedStatsOutputs}
+        );
+        // {_id: mealId},
+        //     {$set: {'meal.selectionsStats' : convertedStatsOutputs}},
+        // meal.selectionsStats = newSelectionsStats;
+        meal.totalsArray = newTotalsArray
+         // Otherwise overwrite the title, selections and text and then save the meal
+         meal.title = newTitle;
+         meal.text = newText;
 
         const updatedMeal = await meal.save();
 

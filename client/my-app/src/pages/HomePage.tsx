@@ -213,6 +213,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       />
       <Container fluid>
         <ContentContainerComponent
+          isEditing={false}
           searchResultError={searchResultError}
           results={searchResults}
           query={input}
