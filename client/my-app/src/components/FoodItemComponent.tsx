@@ -39,7 +39,7 @@ const FoodItemComponent = (props: IProps) => {
   // Initially the value was being read as a string and thus could not be incremented
   // Also we save the initial value separately as that will be how food servings will be measured
   // much like how nutrition facts don't measure by per "1 macaroni noodle" but rather a cup of noodles
-  const initialQuantity = props.foodItem.serving_qty.valueOf();
+  const initialQuantity = props.foodItem.serving_qty;
   const currentQuantity = props.foodItem.quantity;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [load, setLoad] = useState(false);
