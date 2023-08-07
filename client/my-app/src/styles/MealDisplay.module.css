@@ -8,7 +8,7 @@
   flex-direction: row;
 }
 
-.selectionsRow{
+.selectionsRow {
   white-space: nowrap;
   overflow: auto;
   background-color: #9cec8c;

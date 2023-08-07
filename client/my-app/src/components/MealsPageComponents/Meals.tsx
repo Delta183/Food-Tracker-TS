@@ -26,7 +26,7 @@ const Meals = ({ meal, onDeleteMealClicked }: MealProps) => {
   } else {
     createdUpdatedText = "Created: " + formatDate(createdAt);
   }
-  console.log(meal)
+  console.log(meal);
 
   return (
     // The second className here is the props, not a typo dupe

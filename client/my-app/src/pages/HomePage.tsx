@@ -18,7 +18,6 @@ interface HomePageProps {
   loggedInUser: User | null;
 }
 
-
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_SELECTIONS_KEY = "foodSelections";

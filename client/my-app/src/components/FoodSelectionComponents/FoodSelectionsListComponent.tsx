@@ -74,12 +74,17 @@ const FoodSelectionsListComponent = (props: IProps) => {
         {/* When the user is logged in */}
         {props.foodSelections.length > 1 && props.user != null ? (
           <>
-          {/* Furthermore, if the user is editing, do not allow them to save the meal here */}
-            {props.isEditing ? <></> : <>
-             <Button variant="primary" onClick={saveAsMeal}>
-              Save as Meal
-            </Button></>}
-           
+            {/* Furthermore, if the user is editing, do not allow them to save the meal here */}
+            {props.isEditing ? (
+              <></>
+            ) : (
+              <>
+                <Button variant="primary" onClick={saveAsMeal}>
+                  Save as Meal
+                </Button>
+              </>
+            )}
+
             <Button variant="danger" onClick={props.onClearFoodSelectionClick}>
               Clear Selections
             </Button>

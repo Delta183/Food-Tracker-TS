@@ -64,10 +64,7 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
-          <Meal
-            meal={meal}
-            onDeleteMealClicked={deleteNote}
-          />
+          <Meal meal={meal} onDeleteMealClicked={deleteNote} />
         </Col>
       ))}
     </Row>
@@ -93,23 +90,3 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
 };
 
 export default MealsPageLoggedInView;
-
-// {mealToEdit && (
-//   <AddEditMealDialog
-//     user={loggedInUser?.username}
-//     mealToEdit={mealToEdit}
-//     foodSelections={mealToEdit.selections}
-//     onDismiss={() => setMealToEdit(null)}
-//     onMealSaved={(updatedMeal) => {
-//       // The function needed to map all the notes but ensure the edited one has its new information
-//       setMeals(
-//         meals.map((existingNote) =>
-//           existingNote._id === updatedMeal._id
-//             ? updatedMeal
-//             : existingNote
-//         )
-//       );
-//       setMealToEdit(null);
-//     }}
-//   />
-// )}
