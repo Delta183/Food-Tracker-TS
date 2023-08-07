@@ -69,16 +69,16 @@ const CalculationTableComponent = (props: IProps) => {
           <tr>
             <td>Total</td>
             <td></td>
-            <td>{props.totalsArray.calories.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.totalFat.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.saturatedFat.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.cholesterol.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.sodium.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.totalCarbs.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.fiber.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.sugars.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.protein.toFixed(DECIMAL_PLACE)}</td>
-            <td>{props.totalsArray.potassium.toFixed(DECIMAL_PLACE)}</td>
+            <td>{props.totalsArray.calories.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.totalFat.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.saturatedFat.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.cholesterol.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.sodium.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.totalCarbs.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.fiber.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.sugars.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.protein.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
+            <td>{props.totalsArray.potassium.toFixed(DECIMAL_PLACE).replace('-0', '0')}</td>
           </tr>
         ) : (
           <></>

@@ -207,6 +207,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
       setEditMealStats(meal.selectionsStats);
       setEditMealTotals(meal.totalsArray);
       setIsEditMode(false);
+      refreshPage()
     }
   };
 
