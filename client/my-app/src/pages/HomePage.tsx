@@ -22,7 +22,7 @@ interface HomePageProps {
 }
 
 const DEBOUNCE_DURATION = 500;
-const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
+const MAX_SELECTIONS_LENGTH = 20; // There has to be a limit to the foods selected
 const LOCAL_STORAGE_SELECTIONS_KEY = "foodSelections";
 const LOCAL_STORAGE_CALCULATIONS_KEY = "selectionCalculations";
 const LOCAL_STORAGE_TOTALS_KEY = "totals";
@@ -99,7 +99,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       // Fire the sweet alert if the limit has been reached
       Swal.fire({
         title: "Maximum Selections reached!",
-        text: "Please remove some food selections if you want to make a change",
+        text: "Please remove some food selections if you want to make a change.",
         icon: "error",
         confirmButtonText: "OK",
       });

@@ -6,7 +6,6 @@ import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
 import CalculationTableComponent from "../CalculationComponents/CalculationTableComponent";
-import Figure from "react-bootstrap/Figure";
 import { MealInput } from "../../network/meals.api";
 import { foodSearchItem } from "../../models/foodSearchItem";
 import { foodStatsItem } from "../../models/foodStatsItem";
@@ -22,6 +21,7 @@ import findFoodStatsByTagID from "../../utils/foodStats_array_helpers";
 import ContentContainerComponent from "../ContentContainerComponent";
 import SearchBarComponent from "../SearchComponents/SearchBarComponent";
 import mealInputTemplate from "../../utils/mealInputTemplate";
+import Image from 'react-bootstrap/Image';
 
 interface MealsPageProps {
   loggedInUser: User | null;
@@ -315,22 +315,14 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 <div className={styles.selectionsRow}>
                   {meal?.selections.map((selection) => {
                     return (
-                      <div className={styles.selectionsRowSingle}>
-                        <Figure>
-                          <Figure.Image
-                            fluid={true}
-                            width={150}
-                            height={150}
-                            alt="150x150"
-                            src={selection.photo["thumb"]}
-                          />
-                          <Figure.Caption
-                            style={{ textTransform: "capitalize" }}
-                          >
-                            {selection.food_name}
-                          </Figure.Caption>
-                        </Figure>
-                      </div>
+                      <>
+                        <div className={styles.selectionsRowSingle}>
+                          <div className={styles.selectionsColumn}>
+                          <div className={styles.selectionText}>{selection.food_name}</div>
+                          <Image src={selection.photo["thumb"]} thumbnail />
+                          </div>
+                        </div>
+                      </>
                     );
                   })}
                 </div>

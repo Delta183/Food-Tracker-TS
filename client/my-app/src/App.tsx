@@ -8,9 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { User } from "./models/user";
 import * as NotesApi from "./network/notes.api";
-import NotesPage from "./pages/NotesPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import PrivacyPage from "./pages/PrivacyPage";
 import HomePage from "./pages/HomePage";
 import MealsPage from "./pages/MealsPage";
 import MealDisplay from "./components/MealsPageComponents/MealDisplay";
@@ -43,15 +41,10 @@ function App() {
         onLogoutSuccessful={() => setLoggedInUser(null)}
       />
       {/* This will determine which page is shown to the user per the router */}
-      <Container className={styles.pageContainer}>
+      <Container fluid className={styles.pageContainer}>
         <Routes>
           {/* In the case of Homepage, only logged in users can save meals */}
           <Route path="/" element={<HomePage loggedInUser={loggedInUser} />} />
-          <Route
-            path="/notes"
-            element={<NotesPage loggedInUser={loggedInUser} />}
-          />
-          <Route path="/privacy" element={<PrivacyPage />} />
           <Route
             path="/meals"
             element={<MealsPage loggedInUser={loggedInUser} />}

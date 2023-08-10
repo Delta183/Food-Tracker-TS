@@ -11,6 +11,7 @@ interface IProps {
 const CalculationComponent = (props: IProps) => {
   return (
     <div className={styles.searchContainer}>
+      <h2>Calculations</h2>
       <CalculationTableComponent
         calculationResults={props.calculationResults}
         totalsArray={props.totalsArray}

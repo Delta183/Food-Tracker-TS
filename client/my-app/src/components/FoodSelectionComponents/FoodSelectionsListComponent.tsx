@@ -31,11 +31,11 @@ const FoodSelectionsListComponent = (props: IProps) => {
   let banner = <div></div>;
   if (props.foodSelections.length >= props.MAX_SELECTIONS_LENGTH) {
     banner = (
-      <div className="nomination-banner">
+      <h5>
         You have successfully added the maximum {props.MAX_SELECTIONS_LENGTH}{" "}
         food items!
         {/* <img src={checkmark} alt="checkmark" height="36px" width="36px"/> */}
-      </div>
+      </h5>
     );
   } else {
     banner = <div></div>;
