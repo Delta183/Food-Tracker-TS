@@ -11,7 +11,10 @@ import { MealInput } from "../../network/meals.api";
 import { foodSearchItem } from "../../models/foodSearchItem";
 import { foodStatsItem } from "../../models/foodStatsItem";
 import totalsTemplate from "../../utils/totalsTemplate";
-import {calculateStatistics, searchFoodsWithQuery} from "../../network/nutritionix_api";
+import {
+  calculateStatistics,
+  searchFoodsWithQuery,
+} from "../../network/nutritionix_api";
 import debounce from "../../utils/debounce";
 import Swal from "sweetalert2";
 import findFoodByTagID from "../../utils/foodItem_array_helpers";
@@ -47,7 +50,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const [searchResultError, setSearchResultError] = useState<Error | null>(
     null
   );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [calculationResultError, setCalculationResultError] =
     useState<Error | null>(null);
 
@@ -207,13 +210,13 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
       setEditMealStats(meal.selectionsStats);
       setEditMealTotals(meal.totalsArray);
       setIsEditMode(false);
-      refreshPage()
+      refreshPage();
     }
   };
 
-  function refreshPage(){ 
-    window.location.reload(); 
-}
+  function refreshPage() {
+    window.location.reload();
+  }
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 👇 Get input value from "event"
@@ -245,7 +248,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
       }
       // Afterwards go to main page
       setIsEditMode(false);
-      refreshPage()
+      refreshPage();
     } catch (error) {
       console.error(error);
       alert(error);
