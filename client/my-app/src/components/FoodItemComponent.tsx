@@ -92,7 +92,7 @@ const FoodItemComponent = (props: IProps) => {
         </div>
 
         <div className={styles.FoodSearchItemUnit}>
-          {`Unit: ${props.foodItem.serving_unit}`}
+          {`Unit: ${props.foodItem.serving_qty} ${props.foodItem.serving_unit}`}
         </div>
       </div>
       {/* Quantity column */}
@@ -109,9 +109,9 @@ const FoodItemComponent = (props: IProps) => {
                 id="quantity"
                 name="quantity"
                 value={quantityCount}
-                min={initialQuantity}
+                min="1"
                 max="1000"
-                step={initialQuantity}
+                step="1"
                 onChange={(e) => setQuantityCount(e.target.value)}
               />
             </div>
