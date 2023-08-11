@@ -4,6 +4,7 @@ import { totalsArray } from "./totalsArray";
 
 export interface Meal {
   _id: string;
+  userId: string;
   title: string;
   text?: string;
   username?: string;

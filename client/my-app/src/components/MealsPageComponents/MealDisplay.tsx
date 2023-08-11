@@ -269,6 +269,8 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         setEditMealSelections(meal.selections);
         setEditMealStats(meal.selectionsStats);
         setEditMealTotals(meal.totalsArray);
+        // console.log(meal.userId)
+        // console.log(loggedInUser?._id)
       } catch (error) {
         console.error(error);
         // As this is the fail state for loading notes, our custom error type is set
@@ -299,7 +301,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 <h1>
                   {meal?.title} by {meal?.username}
                 </h1>
-                <div className={styles.selectionButton}>
+                {/* This may not be advisable to have these two attributes on client side */}
+                {meal?.userId === loggedInUser?._id ? 
+                <>
+                 <div className={styles.selectionButton}>
                   <Button
                     size="lg"
                     variant="primary"
@@ -311,7 +316,12 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                     Delete
                   </Button>
                 </div>
-                <div>{meal?.text}</div>
+                </> : 
+                <>
+                  {/* Otherwise the buttons should not appear if the user is not the owner */}
+                </>}
+               
+                <h3>{meal?.text}</h3>
                 <div className={styles.selectionsRow}>
                   {meal?.selections.map((selection) => {
                     return (

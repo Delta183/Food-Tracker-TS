@@ -18,8 +18,8 @@ const NavBar = ({
   onLogoutSuccessful,
 }: NavBarProps) => {
   return (
-    <Navbar bg="dark" variant="dark" expand="sm" sticky="top">
-      <Container>
+    <Navbar bg="dark" variant="dark" expand="sm" fixed="top">
+      <Container fluid>
         <Navbar.Brand as={Link} to="/">
           Food Tracker
         </Navbar.Brand>

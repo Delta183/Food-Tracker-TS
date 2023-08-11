@@ -64,7 +64,8 @@ export const getMeals : RequestHandler = async (req, res, next) => {
         assertIsDefined(authenticatedUserId);
         // Get the meals from our database
         // execute the find function to get all MealModels in the database
-        const meals = await MealModel.find({ userId: authenticatedUserId }).exec();        
+        // const meals = await MealModel.find({ userId: authenticatedUserId }).exec();
+        const meals = await MealModel.find().exec();       
         res.status(200).json(meals); 
     } catch (error) {
        next(error);
@@ -94,9 +95,9 @@ export const getMeal: RequestHandler = async (req, res, next) => {
         }
 
         // If the user id of the meal does not match the user, they do not have the rights to modify it
-        if (!meal.userId.equals(authenticatedUserId)) {
-            throw createHttpError(401, "You cannot access this meal");
-        }
+        // if (!meal.userId.equals(authenticatedUserId)) {
+        //     throw createHttpError(401, "You cannot access this meal");
+        // }
 
         res.status(200).json(meal);
     } catch (error) {
