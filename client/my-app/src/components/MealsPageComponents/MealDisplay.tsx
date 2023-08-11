@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
-import CalculationTableComponent from "../CalculationComponents/CalculationTableComponent";
 import { MealInput } from "../../network/meals.api";
 import { foodSearchItem } from "../../models/foodSearchItem";
 import { foodStatsItem } from "../../models/foodStatsItem";
@@ -23,6 +22,7 @@ import ContentContainerComponent from "../ContentContainerComponent";
 import SearchBarComponent from "../SearchComponents/SearchBarComponent";
 import mealInputTemplate from "../../utils/mealInputTemplate";
 import Image from 'react-bootstrap/Image';
+import CalculationComponent from "../CalculationComponents/CalculationComponent";
 
 interface MealsPageProps {
   loggedInUser: User | null;
@@ -315,11 +315,8 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
           {!mealLoading && !showMealLoadingError && (
             <>
               <div className={styles.selectionsColumn}>
-                <h1>
-                  {meal?.title} by {meal?.username}
-                </h1>
-                {/* This may not be advisable to have these two attributes on client side */}
-                {meal?.userId === loggedInUser?._id ? 
+                 {/* This may not be advisable to have these two attributes on client side */}
+                 {meal?.userId === loggedInUser?._id ? 
                 <>
                  <div className={styles.selectionButton}>
                   <Button
@@ -340,6 +337,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 <>
                   {/* Otherwise the buttons should not appear if the user is not the owner */}
                 </>}
+                <h1>
+                  {meal?.title} by {meal?.username}
+                </h1>
+               
                
                 <h3>{meal?.text}</h3>
                 <div className={styles.selectionsRow}>
@@ -358,7 +359,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 </div>
                 <h1>Calculations</h1>
                 <div className={styles.statsRow}>
-                  <CalculationTableComponent
+                  <CalculationComponent
                     calculationResults={meal?.selectionsStats}
                     totalsArray={meal?.totalsArray}
                   />
@@ -402,11 +403,13 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
               </Form.Group>
 
               {/* Selections below */}
+              <div style={{marginBottom: "12px"}}>
               <SearchBarComponent
                 input={input}
                 onChange={onSearchBarTextChange}
                 onSearchBarClear={onSearchBarClear}
               />
+              </div>
               <Container fluid>
                 <ContentContainerComponent
                   searchResultError={searchResultError}
@@ -423,7 +426,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                   user={loggedInUser}
                 />
               </Container>
-              <CalculationTableComponent
+              <CalculationComponent
                 calculationResults={editMealStats}
                 totalsArray={editMealTotals}
               />

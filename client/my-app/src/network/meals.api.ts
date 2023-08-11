@@ -8,7 +8,7 @@ import { User } from "../models/user";
 // These parameters allow us to call it much like a fetch function
 async function fetchData(input: RequestInfo, init?: RequestInit) {
   const response = await fetch(input, init);
-  console.log(response);
+  // console.log(response);
   if (response.ok) {
     return response;
   } else {

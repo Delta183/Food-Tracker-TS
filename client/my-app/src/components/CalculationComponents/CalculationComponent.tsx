@@ -4,8 +4,8 @@ import { totalsArray } from "../../models/totalsArray";
 import CalculationTableComponent from "./CalculationTableComponent";
 
 interface IProps {
-  calculationResults: foodStatsItem[];
-  totalsArray: totalsArray;
+  calculationResults: foodStatsItem[] | undefined;
+  totalsArray: totalsArray | undefined;
 }
 
 const CalculationComponent = (props: IProps) => {
