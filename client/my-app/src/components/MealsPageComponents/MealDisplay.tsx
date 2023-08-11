@@ -1,7 +1,8 @@
+/* eslint-disable eqeqeq */
 import { useEffect, useState } from "react";
 import styles from "../../styles/MealDisplay.module.css";
 import { User } from "../../models/user";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
@@ -30,6 +31,8 @@ const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
+  const navigate = useNavigate();
+
   const [meal, setMeal] = useState<MealModel>();
   const [editedMeal] = useState<MealInput>(mealInputTemplate);
   const [mealLoading, setMealLoading] = useState(true);
@@ -229,6 +232,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   };
 
   const handleSubmit = async (e: any) => {
+  
     e.preventDefault();
     try {
       if (editedMeal != null) {
@@ -254,6 +258,19 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
       alert(error);
     }
   };
+  
+  const deleteMeal = async (mealId : string | undefined) => {
+    if (mealId != undefined){
+      try {
+        await MealsApi.deleteMeal(mealId);
+        navigate("/meals")
+      } catch (error) {
+        console.error(error);
+        // As this is the fail state for loading notes, our custom error type is set
+        setShowMealLoadingError(true);
+      } 
+    }
+  }
 
   useEffect(() => {
     // Await functions need to be async
@@ -312,7 +329,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                   >
                     Edit
                   </Button>
-                  <Button size="lg" variant="danger">
+                  <Button 
+                    size="lg" 
+                    variant="danger"
+                    onClick={() => deleteMeal(meal?._id )}>
                     Delete
                   </Button>
                 </div>
@@ -407,9 +427,12 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 calculationResults={editMealStats}
                 totalsArray={editMealTotals}
               />
+              <div className={styles.selectionsColumn}>
               <Button size="lg" variant="primary" type="submit">
                 Save Edit
               </Button>
+              </div>
+              
             </Form>
             {/* Calculations below? */}
           </div>

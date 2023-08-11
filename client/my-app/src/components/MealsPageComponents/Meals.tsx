@@ -3,8 +3,6 @@ import { formatDate } from "../../utils/formatDate";
 import { Card } from "react-bootstrap";
 // This is aliasing (x as y) just so we can refer to it as a name that is different
 import { Meal as MealModel } from "../../models/meal";
-import { MdDelete } from "react-icons/md"; // md means material design
-import stylesUtils from "../../styles/utils.module.css";
 import { Link } from "react-router-dom";
 
 // An interface to declare what variables the Note needs
@@ -32,23 +30,17 @@ const Meals = ({ meal, onDeleteMealClicked }: MealProps) => {
     // The second className here is the props, not a typo dupe
     <Card className={styles.mealCard}>
       <Card.Body>
-        <Card.Title className={stylesUtils.flexCenter}>
-          {title} by: {username}
-          <Link to={`/meals/${meal._id}`}>
-            <p className="font-italic type m-0">View Details</p>
-          </Link>
-          <MdDelete
-            className="text-muted ms-auto"
-            onClick={(e) => {
-              onDeleteMealClicked(meal);
-              // Allows this click to go through
-              e.stopPropagation();
-            }}
-          />
+        <Card.Title>
+          <div className={styles.mealTitle}>
+          {title}
+          </div>
         </Card.Title>
+        <Card.Title>Curated by: {username}</Card.Title>
         <Card.Text className={styles.mealCardText}>{text}</Card.Text>
+        <Link to={`/meals/${meal._id}`}>
+          <h5 className="font-italic type m-0">View Details</h5>
+        </Link>
       </Card.Body>
-
       <Card.Footer className="text-muted">{createdUpdatedText}</Card.Footer>
     </Card>
   );
