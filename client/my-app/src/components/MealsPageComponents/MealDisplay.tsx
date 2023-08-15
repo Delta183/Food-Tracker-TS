@@ -31,9 +31,10 @@ const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods select
 
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
-
-  const [errors, setErrors] = useState({});
   const [meal, setMeal] = useState<MealModel>();
+  const [selections, setSelections] = useState(
+    Array<foodSearchItem>()
+  );
   const [editedMeal] = useState<MealInput>(mealInputTemplate);
   const [mealLoading, setMealLoading] = useState(true);
   // Making an error type specifically for the notes
@@ -287,8 +288,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         setEditMealSelections(meal.selections);
         setEditMealStats(meal.selectionsStats);
         setEditMealTotals(meal.totalsArray);
-        // console.log(meal.userId)
-        // console.log(loggedInUser?._id)
+        setSelections(meal.selections)
       } catch (error) {
         console.error(error);
         // As this is the fail state for loading notes, our custom error type is set
@@ -304,6 +304,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
 
   return (
     <div>
+      {/* Main View */}
       {isEditMode === false ? (
         <>
           {/* There will be no means of adding one on this page */}
@@ -350,10 +351,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 <div className={styles.selectionDesc}>
                   <h4>{meal?.text}</h4>
                 </div>
-
-                <div className={styles.selectionsRow}>
+                {selections.length > 0 ? 
+                  <div className={styles.selectionsRow}>
                   {/* Check meal selections if >0, otherwise an empty state and omit all other components */}
-                  {meal?.selections.map((selection) => {
+                  {selections.map((selection) => {
                     return (
                         <div className={styles.selectionsRowSingle} key={selection.tag_id}>
                           <div  className={styles.selectionsColumn}>
@@ -370,20 +371,26 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                         </div>
                     );
                   })}
+                  <div className={styles.statsRow}>
+                    <CalculationComponent
+                      calculationResults={meal?.selectionsStats}
+                      totalsArray={meal?.totalsArray}
+                    />
                 </div>
-                <div className={styles.statsRow}>
-                  <CalculationComponent
-                    calculationResults={meal?.selectionsStats}
-                    totalsArray={meal?.totalsArray}
-                  />
                 </div>
+              :
+              // Below is the empty state
+              <div className={styles.selectionDesc}>
+                  <h4>Feel free to edit and make more selections to this meal! Its looking a little lonely</h4>
+                </div>
+              
+              } 
               </div>
             </>
           )}
         </>
       ) : (
         // Below is the editing half of the page
-        // TODO: Ensure authentication to avoid wasting user's time, backend is already secure for this
         <>
           <div className={styles.selectionsColumn}>
             <div className={styles.selectionButton}>

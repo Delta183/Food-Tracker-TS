@@ -14,7 +14,7 @@ interface MealProps {
 }
 
 // Prior to NoteProps is the chunk of the arguments that will be passed
-const Meals = ({ meal, onDeleteMealClicked }: MealProps) => {
+const Meals = ({ meal }: MealProps) => {
   // it appears that food items are not accessible at this level
   const { title, text, createdAt, updatedAt, username } = meal;
 
