@@ -1,8 +1,8 @@
 .mealCard {
-  background-color: #CCCCFF;
+  background-color: #ccccff;
 }
 
-.mealTitle{
+.mealTitle {
   white-space: nowrap;
   overflow: hidden;
   overflow-wrap: break-word;

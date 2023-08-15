@@ -199,8 +199,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     }
   };
 
-  
-
   return (
     <div>
       {/* Welcome to Food Tracker! With this you can track your calories and other

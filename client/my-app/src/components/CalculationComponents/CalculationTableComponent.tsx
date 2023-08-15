@@ -40,7 +40,7 @@ const CalculationTableComponent = (props: IProps) => {
           props.calculationResults.map((result) => {
             // Prior to displaying the stats of each food, add their values to the totals
             return (
-              <tr>
+              <tr key={result.tags["tag_id"]}>
                 <td style={{ textTransform: "capitalize" }}>
                   {result.food_name}
                 </td>
@@ -91,7 +91,7 @@ const CalculationTableComponent = (props: IProps) => {
             <td>
               {props.totalsArray.sodium
                 .toFixed(DECIMAL_PLACE)
-                .replace("-0", "0")|| 0}
+                .replace("-0", "0") || 0}
             </td>
             <td>
               {props.totalsArray.totalCarbs

@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { User } from "./models/user";
-import * as NotesApi from "./network/notes.api";
+import * as MealsApi from "./network/meals.api"
 import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 import MealsPage from "./pages/MealsPage";
@@ -15,7 +15,6 @@ import MealDisplay from "./components/MealsPageComponents/MealDisplay";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
-
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -23,7 +22,7 @@ function App() {
     // The functions maintained here are called once on the bootup and not on every refresh
     async function fetchLoggedInUser() {
       try {
-        const user = await NotesApi.getLoggedInUser();
+        const user = await MealsApi.getLoggedInUser();
         setLoggedInUser(user);
       } catch (error) {
         console.error(error);

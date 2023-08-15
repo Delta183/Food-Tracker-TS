@@ -81,6 +81,7 @@ export interface MealInput {
   username?: string;
 }
 
+// TODO: Verify data is valid on front end
 export async function createMeal(meal: MealInput): Promise<Meal> {
   const response = await fetchData("/api/meals", {
     // POST as we putting these values to the MongoDB

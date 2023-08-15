@@ -30,9 +30,7 @@ const Meals = ({ meal, onDeleteMealClicked }: MealProps) => {
     <Card className={styles.mealCard}>
       <Card.Body>
         <Card.Title>
-          <div className={styles.mealTitle}>
-          {title}
-          </div>
+          <div className={styles.mealTitle}>{title}</div>
         </Card.Title>
         <Card.Title>Curated by: {username}</Card.Title>
         <Card.Text className={styles.mealCardText}>{text}</Card.Text>

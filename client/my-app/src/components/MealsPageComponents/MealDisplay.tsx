@@ -21,7 +21,6 @@ import findFoodStatsByTagID from "../../utils/foodStats_array_helpers";
 import ContentContainerComponent from "../ContentContainerComponent";
 import SearchBarComponent from "../SearchComponents/SearchBarComponent";
 import mealInputTemplate from "../../utils/mealInputTemplate";
-import Image from 'react-bootstrap/Image';
 import CalculationComponent from "../CalculationComponents/CalculationComponent";
 
 interface MealsPageProps {
@@ -33,6 +32,7 @@ const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods select
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
 
+  const [error, setError] = useState(false);
   const [meal, setMeal] = useState<MealModel>();
   const [editedMeal] = useState<MealInput>(mealInputTemplate);
   const [mealLoading, setMealLoading] = useState(true);
@@ -232,7 +232,6 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   };
 
   const handleSubmit = async (e: any) => {
-  
     e.preventDefault();
     try {
       if (editedMeal != null) {
@@ -258,19 +257,19 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
       alert(error);
     }
   };
-  
-  const deleteMeal = async (mealId : string | undefined) => {
-    if (mealId != undefined){
+
+  const deleteMeal = async (mealId: string | undefined) => {
+    if (mealId != undefined) {
       try {
         await MealsApi.deleteMeal(mealId);
-        navigate("/meals")
+        navigate("/meals");
       } catch (error) {
         console.error(error);
         // As this is the fail state for loading notes, our custom error type is set
         setShowMealLoadingError(true);
-      } 
+      }
     }
-  }
+  };
 
   useEffect(() => {
     // Await functions need to be async
@@ -315,49 +314,61 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
           {!mealLoading && !showMealLoadingError && (
             <>
               <div className={styles.selectionsColumn}>
-                 {/* This may not be advisable to have these two attributes on client side */}
-                 {meal?.userId === loggedInUser?._id ? 
-                <>
-                 <div className={styles.selectionButton}>
-                  <Button
-                    size="lg"
-                    variant="primary"
-                    onClick={() => setIsEditMode(true)}
-                  >
-                    Edit
-                  </Button>
-                  <Button 
-                    size="lg" 
-                    variant="danger"
-                    onClick={() => deleteMeal(meal?._id )}>
-                    Delete
-                  </Button>
+                {/* This may not be advisable to have these two attributes on client side */}
+                {meal?.userId === loggedInUser?._id ? (
+                  <>
+                    <div className={styles.selectionButton}>
+                      <Button
+                        size="lg"
+                        variant="primary"
+                        onClick={() => setIsEditMode(true)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        size="lg"
+                        variant="danger"
+                        onClick={() => deleteMeal(meal?._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Otherwise the buttons should not appear if the user is not the owner */}
+                  </>
+                )}
+                <div className={styles.selectionTitle}>
+                  <h1>
+                    {" "}
+                    {meal?.title} by {meal?.username}
+                  </h1>
                 </div>
-                </> : 
-                <>
-                  {/* Otherwise the buttons should not appear if the user is not the owner */}
-                </>}
-                <h1>
-                  {meal?.title} by {meal?.username}
-                </h1>
-               
-               
-                <h3>{meal?.text}</h3>
+                <div className={styles.selectionDesc}>
+                  <h4>{meal?.text}</h4>
+                </div>
+
                 <div className={styles.selectionsRow}>
+                  {/* Check meal selections if >0, otherwise an empty state and omit all other components */}
                   {meal?.selections.map((selection) => {
                     return (
-                      <>
-                        <div className={styles.selectionsRowSingle}>
-                          <div className={styles.selectionsColumn}>
-                          <div className={styles.selectionText}>{selection.food_name}</div>
-                          <Image src={selection.photo["thumb"]} thumbnail />
+                        <div className={styles.selectionsRowSingle} key={selection.tag_id}>
+                          <div  className={styles.selectionsColumn}>
+                            <div className={styles.selectionText}>
+                              {selection.food_name}
+                            </div>
+                            <img
+                              alt="foodImage"
+                              className={styles.selectionItemImage}
+                              src={selection.photo["thumb"]}
+                            />
+                            {/* <Image src={selection.photo["thumb"]} thumbnail /> */}
                           </div>
                         </div>
-                      </>
                     );
                   })}
                 </div>
-                <h1>Calculations</h1>
                 <div className={styles.statsRow}>
                   <CalculationComponent
                     calculationResults={meal?.selectionsStats}
@@ -373,14 +384,17 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         // TODO: Ensure authentication to avoid wasting user's time, backend is already secure for this
         <>
           <div className={styles.selectionsColumn}>
-            <h1>
-              Now Editing: {meal?.title} by {meal?.username}
-            </h1>
             <div className={styles.selectionButton}>
               <Button size="lg" variant="primary" onClick={cancelEdit}>
                 Cancel
               </Button>
             </div>
+            <div className={styles.selectionTitle}>
+              <h1>
+                Now Editing: {meal?.title} by {meal?.username}
+              </h1>
+            </div>
+
             {/* Forms below */}
             <Form id="editMealForm" onSubmit={handleSubmit}>
               <Form.Group className="m-3">
@@ -390,8 +404,14 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                   placeholder="Title"
                   value={editMealTitle}
                   onChange={handleTitleChange}
+                  required={true}
+                  isInvalid={!!error}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {error}
+                </Form.Control.Feedback>
               </Form.Group>
+
               <Form.Group className="m-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
@@ -403,12 +423,12 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
               </Form.Group>
 
               {/* Selections below */}
-              <div style={{marginBottom: "12px"}}>
-              <SearchBarComponent
-                input={input}
-                onChange={onSearchBarTextChange}
-                onSearchBarClear={onSearchBarClear}
-              />
+              <div style={{ marginBottom: "12px" }}>
+                <SearchBarComponent
+                  input={input}
+                  onChange={onSearchBarTextChange}
+                  onSearchBarClear={onSearchBarClear}
+                />
               </div>
               <Container fluid>
                 <ContentContainerComponent
@@ -431,11 +451,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 totalsArray={editMealTotals}
               />
               <div className={styles.selectionsColumn}>
-              <Button size="lg" variant="primary" type="submit">
-                Save Edit
-              </Button>
+                <Button size="lg" variant="primary" type="submit">
+                  Save Edit
+                </Button>
               </div>
-              
             </Form>
             {/* Calculations below? */}
           </div>
