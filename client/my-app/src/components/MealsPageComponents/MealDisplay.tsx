@@ -352,6 +352,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                   <h4>{meal?.text}</h4>
                 </div>
                 {selections.length > 0 ? 
+                <>
                   <div className={styles.selectionsRow}>
                   {/* Check meal selections if >0, otherwise an empty state and omit all other components */}
                   {selections.map((selection) => {
@@ -371,13 +372,14 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                         </div>
                     );
                   })}
+                </div>
                   <div className={styles.statsRow}>
-                    <CalculationComponent
-                      calculationResults={meal?.selectionsStats}
-                      totalsArray={meal?.totalsArray}
-                    />
-                </div>
-                </div>
+                  <CalculationComponent
+                    calculationResults={meal?.selectionsStats}
+                    totalsArray={meal?.totalsArray}
+                  />
+              </div>
+              </>
               :
               // Below is the empty state
               <div className={styles.selectionDesc}>
