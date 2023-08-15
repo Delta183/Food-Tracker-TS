@@ -88,7 +88,7 @@ const AddEditMealDialog = ({
 
           <TextInputField
             name="text"
-            label="Text"
+            label="Description (Optional)"
             as="textarea"
             rows={5}
             placeholder="Text"

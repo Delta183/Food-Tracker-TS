@@ -32,7 +32,7 @@ const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods select
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
 
-  const [error, setError] = useState(false);
+  const [errors, setErrors] = useState({});
   const [meal, setMeal] = useState<MealModel>();
   const [editedMeal] = useState<MealInput>(mealInputTemplate);
   const [mealLoading, setMealLoading] = useState(true);
@@ -271,6 +271,8 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
     }
   };
 
+
+
   useEffect(() => {
     // Await functions need to be async
     async function loadMeal() {
@@ -405,10 +407,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                   value={editMealTitle}
                   onChange={handleTitleChange}
                   required={true}
-                  isInvalid={!!error}
+                  isInvalid={!(editMealTitle.length > 0)}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {error}
+                  Please enter input for the title.
                 </Form.Control.Feedback>
               </Form.Group>
 
