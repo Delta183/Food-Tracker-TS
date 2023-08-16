@@ -18,6 +18,7 @@ const NavBarLoggedInView = ({
     try {
       await NotesApi.logout();
       onLogoutSuccessful();
+      // Bring the user back to the main page on logging out
       navigate("/");
     } catch (error) {
       console.error(error);

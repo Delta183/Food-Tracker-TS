@@ -18,7 +18,6 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
   const [mealsLoading, setMealsLoading] = useState(true);
   // Making an error type specifically for the notes
   const [showMealsLoadingError, setShowMealsLoadingError] = useState(true);
-  // TODO: Change this for the sending to the edit page
 
   useEffect(() => {
     // Await functions need to be async
@@ -30,9 +29,6 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
         const meals = await MealsApi.fetchMeals();
         setMeals(meals);
         // Below is a check for if the id is truly unique
-        // meals.forEach((meal) => {
-        //   console.log(meal._id)
-        // });
       } catch (error) {
         console.error(error);
         // As this is the fail state for loading notes, our custom error type is set

@@ -26,6 +26,7 @@ const NavBar = ({
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
           <Nav>
+            {/* Links below for the pages of the website */}
             <Nav.Link as={Link} to="/meals">
               Meals
             </Nav.Link>

@@ -12,7 +12,7 @@ interface IProps {
   user: User | null;
   isEditing: boolean;
   foodSelections: foodSearchItem[]; // The list of selections
-  selectionsStats: foodStatsItem[];
+  selectionsStats: foodStatsItem[]; // The accompanying stats of said selections
   totalsArray: totalsArray;
   MAX_SELECTIONS_LENGTH: number;
   onRemoveFoodSelectionClick: (imdbID: string) => void;
