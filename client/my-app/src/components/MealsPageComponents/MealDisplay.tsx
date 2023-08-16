@@ -22,12 +22,14 @@ import ContentContainerComponent from "../ContentContainerComponent";
 import SearchBarComponent from "../SearchComponents/SearchBarComponent";
 import mealInputTemplate from "../../utils/mealInputTemplate";
 import CalculationComponent from "../CalculationComponents/CalculationComponent";
+import emptyStateLogo from "../../resources/healthy-food-calories-calculator.png"
 
 interface MealsPageProps {
   loggedInUser: User | null;
 }
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
+
 
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
@@ -382,9 +384,12 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
               :
               // Below is the empty state
               <div className={styles.selectionDesc}>
+                <div className={styles.emptyStateImage}>
+                  <img src={emptyStateLogo} alt="emptyStateLogo"/>
+                  </div>
                   <h4>Feel free to edit and make more selections to this meal! Its looking a little lonely</h4>
-                </div>
-              
+                  
+              </div>
               } 
               </div>
             </>

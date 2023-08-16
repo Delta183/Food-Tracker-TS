@@ -12,7 +12,6 @@ const NotesPageLoggedInView = () => {
   // React needs a special type of variable for updated value
   // Using <> allows us to declare the type of the react variables
   const [notes, setNotes] = useState<NoteModel[]>([]);
-
   const [notesLoading, setNotesLoading] = useState(true);
   // Making an error type specifically for the notes
   const [showNotesLoadingError, setShowNotesLoadingError] = useState(true);
