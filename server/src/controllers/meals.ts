@@ -72,6 +72,19 @@ export const getMeals : RequestHandler = async (req, res, next) => {
     }
 };
 
+export const getUserMeals : RequestHandler = async (req, res, next) => {
+    const authenticatedUserId = req.session.userId;
+    try {
+        assertIsDefined(authenticatedUserId);
+        // Get the meals from our database
+        // execute the find function to get all MealModels in the database
+        const meals = await MealModel.find({ userId: authenticatedUserId }).exec();
+        res.status(200).json(meals); 
+    } catch (error) {
+       next(error);
+    }
+};
+
 // TODO: Add one specifically for the users saved meals, perhaps getMealsByUserId or simply add it to users
 
 export const getMeal: RequestHandler = async (req, res, next) => {

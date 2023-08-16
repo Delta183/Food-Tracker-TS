@@ -367,7 +367,6 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                               className={styles.selectionItemImage}
                               src={selection.photo["thumb"]}
                             />
-                            {/* <Image src={selection.photo["thumb"]} thumbnail /> */}
                           </div>
                         </div>
                     );

@@ -1,9 +1,9 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Note } from "../models/note";
-import { NoteInput } from "../network/notes.api";
-import * as NotesApi from "../network/notes.api";
-import TextInputField from "./form/TextInputField";
+import { Note } from "../../models/note";
+import { NoteInput } from "../../network/notes.api";
+import * as NotesApi from "../../network/notes.api";
+import TextInputField from "../form/TextInputField";
 
 interface AddEditNoteDialogProps {
   noteToEdit?: Note; // Variable to differentiate a note to be added and one to be updated

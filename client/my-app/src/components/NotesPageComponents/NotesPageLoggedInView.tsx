@@ -5,7 +5,7 @@ import { Note as NoteModel } from "../../models/note";
 import * as NotesApi from "../../network/notes.api";
 import styles from "../../styles/NotesPage.module.css";
 import stylesUtils from "../../styles/utils.module.css";
-import AddEditNoteDialog from "../AddEditNoteDialog";
+import AddEditNoteDialog from "./AddEditNoteDialog";
 import Note from "./Note";
 
 const NotesPageLoggedInView = () => {

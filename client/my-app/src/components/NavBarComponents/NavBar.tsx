@@ -29,6 +29,9 @@ const NavBar = ({
             <Nav.Link as={Link} to="/meals">
               Meals
             </Nav.Link>
+            <Nav.Link as={Link} to="/meals/user">
+              Your Meals
+            </Nav.Link>
           </Nav>
           <Nav className="ms-auto">
             {loggedInUser ? (

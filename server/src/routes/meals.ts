@@ -5,6 +5,7 @@ import * as MealsController from "../controllers/meals"
 const router = express.Router();
 
 router.get("/", MealsController.getMeals);
+router.get("/user", MealsController.getUserMeals);
 router.get("/:mealId", MealsController.getMeal);
 router.post("/", MealsController.createMeal);
 router.patch("/:mealId", MealsController.updateMeal);

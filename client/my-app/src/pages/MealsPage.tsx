@@ -3,6 +3,7 @@ import { User } from "../models/user";
 import styles from "../styles/MealsPage.module.css";
 import MealsPageLoggedInView from "../components/MealsPageComponents/MealsPageLoggedInView";
 import MealsPageLoggedOutView from "../components/MealsPageComponents/MealsPageLoggedOutView";
+
 interface MealsPageProps {
   loggedInUser: User | null;
 }

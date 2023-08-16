@@ -12,6 +12,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 import MealsPage from "./pages/MealsPage";
 import MealDisplay from "./components/MealsPageComponents/MealDisplay";
+import UserMealsPage from "./pages/UserMealsPage";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -51,6 +52,10 @@ function App() {
           <Route
             path="/meals/:mealId"
             element={<MealDisplay loggedInUser={loggedInUser} />}
+          />
+          <Route
+            path="/meals/user"
+            element={<UserMealsPage loggedInUser={loggedInUser} />}
           />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
