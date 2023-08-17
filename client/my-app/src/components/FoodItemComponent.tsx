@@ -105,6 +105,7 @@ const FoodItemComponent = (props: IProps) => {
             <div>
               <div>Quantity:</div>
               <input
+              className={styles.inputBox}
                 type="number"
                 id="quantity"
                 name="quantity"

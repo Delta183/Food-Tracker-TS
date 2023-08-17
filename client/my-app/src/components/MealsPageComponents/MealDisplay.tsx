@@ -33,14 +33,16 @@ const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods select
 
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
+  
+  // Meal States
   const [meal, setMeal] = useState<MealModel>();
   const [selections, setSelections] = useState(Array<foodSearchItem>());
   const [editedMeal] = useState<MealInput>(mealInputTemplate);
   const [mealLoading, setMealLoading] = useState(true);
-  // Making an error type specifically for the notes
   const [showMealLoadingError, setShowMealLoadingError] = useState(true);
   const { mealId } = useParams(); // Use this to get the element of the given name in the url
 
+  // Edit States
   const [isEditMode, setIsEditMode] = useState(false);
   const [editMealTitle, setEditMealTitle] = useState("");
   const [editMealText, setEditMealText] = useState("");
@@ -49,6 +51,8 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   );
   const [editMealStats, setEditMealStats] = useState(Array<foodStatsItem>());
   const [editMealTotals, setEditMealTotals] = useState(totalsTemplate);
+
+  // Search States
   const [input, setInput] = useState("");
   const [searchResults, setSearchResults] = useState(Array<foodSearchItem>());
   const [searchResultError, setSearchResultError] = useState<Error | null>(
@@ -231,6 +235,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         setMealLoading(true);
         // Anything under the function header is run on every render, useEffect allows it to be done once
         const meal = await MealsApi.fetchMeal(mealId);
+        // This has to be done here as we get to this page via a link and as such, cannot pass the meal down
         setMeal(meal);
         setEditMealTitle(meal.title);
         setEditMealText(meal.text || "");
@@ -423,7 +428,6 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
                 </Button>
               </div>
             </Form>
-            {/* Calculations below? */}
           </div>
         </>
       )}
