@@ -195,7 +195,6 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         editedMeal.text = editMealText;
         // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
         editedMeal.selections = editMealSelections;
-        // TODO: Handle the calculation of the selections should they skip it to happen here
         editedMeal.username = loggedInUser?.username;
         // Presumably here is where the calculations will be saved and put into the meals object
         editedMeal.selectionsStats = editMealStats;
@@ -221,7 +220,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         navigate("/meals");
       } catch (error) {
         console.error(error);
-        // As this is the fail state for loading notes, our custom error type is set
+        // As this is the fail state for loading meals, our custom error type is set
         setShowMealLoadingError(true);
       }
     }
@@ -245,7 +244,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         setSelections(meal.selections);
       } catch (error) {
         console.error(error);
-        // As this is the fail state for loading notes, our custom error type is set
+        // As this is the fail state for loading meals, our custom error type is set
         setShowMealLoadingError(true);
       } finally {
         // Finally is called whether or not an error occurs.
@@ -263,7 +262,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         <>
           {/* There will be no means of adding one on this page */}
           {mealLoading && <Spinner animation="border" variant="primary" />}
-          {/* Contingency if notes don't load */}
+          {/* Contingency if meals don't load */}
           {showMealLoadingError && (
             <p>Something went wrong. Please refresh the page</p>
           )}

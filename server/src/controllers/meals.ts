@@ -85,8 +85,6 @@ export const getUserMeals : RequestHandler = async (req, res, next) => {
     }
 };
 
-// TODO: Add one specifically for the users saved meals, perhaps getMealsByUserId or simply add it to users
-
 export const getMeal: RequestHandler = async (req, res, next) => {
     // Referencing the variable in the router such that it can be read 
     const mealId = req.params.mealId;

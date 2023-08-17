@@ -16,7 +16,7 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
   // Using <> allows us to declare the type of the react variables
   const [meals, setMeals] = useState<MealModel[]>([]);
   const [mealsLoading, setMealsLoading] = useState(true);
-  // Making an error type specifically for the notes
+  // Making an error type specifically for the meals
   const [showMealsLoadingError, setShowMealsLoadingError] = useState(true);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
         // Below is a check for if the id is truly unique
       } catch (error) {
         console.error(error);
-        // As this is the fail state for loading notes, our custom error type is set
+        // As this is the fail state for loading meals, our custom error type is set
         setShowMealsLoadingError(true);
       } finally {
         // Finally is called whether of note an error occurs.
@@ -56,7 +56,7 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
   }
 
   const mealsGrid = (
-    <Row xs={1} md={1} xl={2} className={`g-4 ${styles.notesGrid}`}>
+    <Row xs={1} md={1} xl={2} className={`g-4 ${styles.mealsGrid}`}>
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
@@ -70,11 +70,11 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
     <>
       {/* There will be no means of adding one on this page */}
       {mealsLoading && <Spinner animation="border" variant="primary" />}
-      {/* Contingency if notes don't load */}
+      {/* Contingency if meals don't load */}
       {showMealsLoadingError && (
         <p>Something went wrong. Please refresh the page</p>
       )}
-      {/* Once loading completes, and there is no error, then we must have vaid notes */}
+      {/* Once loading completes, and there is no error, then we must have vaid meals */}
       {!mealsLoading && !showMealsLoadingError && (
         <>
           {/* The empty tages makes for a fragment, allows us to put more than one component */}

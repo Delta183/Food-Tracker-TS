@@ -99,7 +99,7 @@ const FoodSelectionsListComponent = (props: IProps) => {
         <AddEditMealDialog
           onDismiss={() => setShowAddMealDialog(false)}
           onMealSaved={() => {
-            // Creates a new array, adds the notes that exist currently in which we will add the newest one afterwards
+            // Creates a new array, adds the meals that exist currently in which we will add the newest one afterwards
             // Be sure to close the dialog as well
             setShowAddMealDialog(false);
           }}
