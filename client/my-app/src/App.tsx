@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { User } from "./models/user";
-import * as MealsApi from "./network/meals.api"
+import * as MealsApi from "./network/meals.api";
 import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 import MealsPage from "./pages/MealsPage";

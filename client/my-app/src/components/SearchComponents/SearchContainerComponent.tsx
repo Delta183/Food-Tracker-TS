@@ -23,7 +23,8 @@ const SearchContainerComponent = ({
         The calculations are found at the bottom of the page.
       </div>
       <div className={styles.searchTitleLabel}>
-       You can manually input the amount and can also save selections as a meal.
+        You can manually input the amount and can also save selections as a
+        meal.
       </div>
       <div className={styles.searchTitleLabel}>
         Use the searchbar below to find a food or drink:{" "}
