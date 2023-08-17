@@ -1,5 +1,9 @@
+import styles from "../../styles/App.module.css"
+
 const MealsPageLoggedOutView = () => {
-  return <p>Please login to see the meals of users</p>;
+  return <div className={styles.errorTitle}>
+      <h2>Please login to see the meals of users</h2>
+    </div>
 };
 
 export default MealsPageLoggedOutView;

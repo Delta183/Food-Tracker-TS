@@ -46,6 +46,10 @@
   width: 4vmax;
 }
 
+.inputBox {
+  width: 75px;
+}
+
 /* Search container */
 .searchContainer {
   display: flex;
@@ -145,6 +149,4 @@
   border-radius: 8px;
 }
 
-.inputBox {
-  width: 75px;
-}
+
