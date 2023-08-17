@@ -1,6 +1,6 @@
 import { Button, Navbar } from "react-bootstrap";
 import { User } from "../../models/user";
-import * as NotesApi from "../../network/notes.api";
+import * as MealsApi from "../../network/meals.api";
 import { useNavigate } from "react-router-dom";
 
 interface NavBarLoggedInViewProps {
@@ -16,7 +16,7 @@ const NavBarLoggedInView = ({
 
   async function logout() {
     try {
-      await NotesApi.logout();
+      await MealsApi.logout();
       onLogoutSuccessful();
       // Bring the user back to the main page on logging out
       navigate("/");

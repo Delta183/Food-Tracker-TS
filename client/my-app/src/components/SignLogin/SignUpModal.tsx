@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { User } from "../../models/user";
-import { SignUpCredentials } from "../../network/notes.api";
-import * as NotesApi from "../../network/notes.api";
+import { SignUpCredentials } from "../../network/meals.api";
+import * as MealsApi from "../../network/meals.api";
 import { Button, Form, Modal } from "react-bootstrap";
 import TextInputField from ".././form/TextInputField";
 import styleUtils from "../../styles/utils.module.css";
@@ -20,7 +20,7 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 
   async function onSubmit(credentials: SignUpCredentials) {
     try {
-      const newUser = await NotesApi.signUp(credentials);
+      const newUser = await MealsApi.signUp(credentials);
       onSignUpSuccessful(newUser);
     } catch (error) {
       alert(error);

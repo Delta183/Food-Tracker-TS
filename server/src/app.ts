@@ -1,6 +1,5 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
-import notesRoutes from "./routes/notes";
 import userRoutes from "./routes/users";
 import mealsRoutes from "./routes/meals"
 import createHttpError, { isHttpError } from "http-errors";
@@ -33,7 +32,6 @@ app.use(session({
 // Endpoints
 app.use("/api/users", userRoutes)
 // With this, notes are protected by the authorization
-app.use("/api/notes", requiresAuth, notesRoutes)
 app.use("/api/meals", requiresAuth, mealsRoutes)
 
 // For requests for routers in which we have no endpoint for

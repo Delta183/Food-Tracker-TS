@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
-import styles from "../../styles/NotesPage.module.css";
+import styles from "../../styles/MealsPage.module.css";
 import Meal from "./Meals";
 import { User } from "../../models/user";
 
