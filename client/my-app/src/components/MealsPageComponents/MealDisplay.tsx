@@ -23,6 +23,7 @@ import SearchBarComponent from "../SearchComponents/SearchBarComponent";
 import mealInputTemplate from "../../utils/mealInputTemplate";
 import CalculationComponent from "../CalculationComponents/CalculationComponent";
 import emptyStateLogo from "../../resources/healthy-food-calories-calculator.png";
+import { incrementValue, decrementValue, resetValues } from "../../utils/totals_array_helper";
 
 interface MealsPageProps {
   loggedInUser: User | null;
@@ -68,7 +69,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         existingFoodStats.push(results[0]);
         return existingFoodStats;
       }); // The local storage one
-      incrementValue(results[0]);
+      setEditMealTotals(incrementValue(results[0], editMealTotals));
       setCalculationResultError(error);
       // incrementValues(results);
     });
@@ -137,7 +138,9 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
 
     // Fetch the selected item in particular from the Nutritionix API endpoints
     const foodSearchItem = findFoodStatsByTagID(tagID, editMealStats);
-    decrementValue(foodSearchItem);
+    // Decrement the value from the totals
+    setEditMealTotals(decrementValue(foodSearchItem, editMealTotals));
+   
     // Prior to removal, decrement the foodStatItem from the totals
     setEditMealStats((previousFoodStats: foodStatsItem[]) => {
       const existingFoodStats = previousFoodStats.filter(
@@ -151,58 +154,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const clearFoodSelections = async () => {
     setEditMealSelections([]);
     setEditMealStats([]);
-    resetValues();
-  };
-
-  // Upon the start of another calculation, we have to be sure to reset the values
-  const resetValues = () => {
-    const currentTotals = editMealTotals;
-    currentTotals.calories = 0;
-    currentTotals.totalFat = 0;
-    currentTotals.saturatedFat = 0;
-    currentTotals.cholesterol = 0;
-    currentTotals.sodium = 0;
-    currentTotals.totalCarbs = 0;
-    currentTotals.fiber = 0;
-    currentTotals.sugars = 0;
-    currentTotals.protein = 0;
-    currentTotals.potassium = 0;
-    setEditMealTotals(currentTotals);
-  };
-
-  // Possible error here with a null value that returns
-  const incrementValue = (newFood: foodStatsItem) => {
-    const currentTotals = editMealTotals;
-    currentTotals.calories += newFood.nf_calories;
-    currentTotals.totalFat += newFood.nf_total_fat;
-    currentTotals.saturatedFat += newFood.nf_saturated_fat;
-    currentTotals.cholesterol += newFood.nf_cholesterol;
-    currentTotals.sodium += newFood.nf_sodium;
-    currentTotals.totalCarbs += newFood.nf_total_carbohydrate;
-    currentTotals.fiber += newFood.nf_dietary_fiber;
-    currentTotals.sugars += newFood.nf_sugars;
-    currentTotals.protein += newFood.nf_protein;
-    currentTotals.potassium += newFood.nf_potassium;
-    setEditMealTotals(currentTotals);
-  };
-
-  const decrementValue = (newFood: foodStatsItem | null) => {
-    if (newFood !== null) {
-      const currentTotals = editMealTotals;
-      currentTotals.calories -= newFood.nf_calories;
-      currentTotals.totalFat -= newFood.nf_total_fat;
-      currentTotals.saturatedFat -= newFood.nf_saturated_fat;
-      currentTotals.cholesterol -= newFood.nf_cholesterol;
-      currentTotals.sodium -= newFood.nf_sodium;
-      currentTotals.totalCarbs -= newFood.nf_total_carbohydrate;
-      currentTotals.fiber -= newFood.nf_dietary_fiber;
-      currentTotals.sugars -= newFood.nf_sugars;
-      currentTotals.protein -= newFood.nf_protein;
-      currentTotals.potassium -= newFood.nf_potassium;
-      setEditMealTotals(currentTotals);
-    } else {
-      console.log("null food found");
-    }
+    setEditMealTotals(resetValues(editMealTotals));
   };
 
   const cancelEdit = () => {
