@@ -74,10 +74,10 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
     calculateStatistics(query, (results, error) => {
       setEditMealStats((previousFoodStats: foodStatsItem[]) => {
         const existingFoodStats = [...previousFoodStats];
-        existingFoodStats.push(results[0]);
+        existingFoodStats.push(results);
         return existingFoodStats;
       }); // The local storage one
-      setEditMealTotals(incrementValue(results[0], editMealTotals));
+      setEditMealTotals(incrementValue(results, editMealTotals));
       setCalculationResultError(error);
       // incrementValues(results);
     });

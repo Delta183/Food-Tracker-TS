@@ -62,12 +62,13 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     var query = `${foodItem.quantity} ${foodItem.food_name}, `;
     // A function like this is able to maintain its results and errors and be set within its body
     calculateStatistics(query, (results, error) => {
+      
       setFoodStats((previousFoodStats: foodStatsItem[]) => {
         const existingFoodStats = [...previousFoodStats];
-        existingFoodStats.push(results[0]);
+        existingFoodStats.push(results);
         return existingFoodStats;
       }); // The local storage one
-      setTotals(incrementValue(results[0], totals));
+      setTotals(incrementValue(results, totals));
       setCalculationResultError(error);
       // incrementValues(results);
     });

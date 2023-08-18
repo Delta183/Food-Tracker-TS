@@ -6,6 +6,9 @@ import mongoose from "mongoose";
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import { assertIsDefined } from "../util/assertIsDefined";
+// import LRU from "../util/LRUCache";
+
+// const cache = new LRU<ClientFoodStatsItem>(20);
 
 // Implementatations of client models to server side
 export interface ClientFoodSearchItem {
