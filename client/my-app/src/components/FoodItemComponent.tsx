@@ -39,12 +39,12 @@ const FoodItemComponent = (props: IProps) => {
   // Initially the value was being read as a string and thus could not be incremented
   // Also we save the initial value separately as that will be how food servings will be measured
   // much like how nutrition facts don't measure by per "1 macaroni noodle" but rather a cup of noodles
-  const initialQuantity = props.foodItem.serving_qty;
+  // const initialQuantity = props.foodItem.serving_qty;
   const currentQuantity = props.foodItem.quantity;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [load, setLoad] = useState(false);
   const [foodPhoto, setFoodPhoto] = useState("");
-  const [quantityCount, setQuantityCount] = useState(initialQuantity);
+  const [quantityCount, setQuantityCount] = useState("1");
   // This fetch may be prone to error
   // const foodPhoto: string = props.foodItem.photo["thumb"];
 
@@ -64,11 +64,16 @@ const FoodItemComponent = (props: IProps) => {
   }
 
   const onClick = () => {
-    if (quantityCount === "" || quantityCount === null) {
+    if (quantityCount === "" || quantityCount === null || quantityCount.valueOf() <= "0") {
       // In the case of an empty value being entered, default it to 1
       updateQuantity(props.foodItem, "1");
       setQuantityCount("1");
-    } else {
+    }
+    else if(quantityCount.valueOf() >= "1000"){
+      updateQuantity(props.foodItem, "1000");
+      setQuantityCount("1000");
+    } 
+    else {
       updateQuantity(props.foodItem, quantityCount);
     }
     props.buttonConfig.onClick(props.tagID);
@@ -110,9 +115,9 @@ const FoodItemComponent = (props: IProps) => {
                 id="quantity"
                 name="quantity"
                 value={quantityCount}
-                min="0"
+                min="1"
                 max="1000"
-                step="any"
+                step="1"
                 onChange={(e) => setQuantityCount(e.target.value)}
               />
             </div>

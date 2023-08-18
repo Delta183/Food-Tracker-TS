@@ -47,16 +47,16 @@ const CalculationTableComponent = (props: IProps) => {
                 <td>
                   {result.serving_qty} {result.serving_unit}
                 </td>
-                <td>{result.nf_calories || 0}</td>
-                <td>{result.nf_total_fat || 0}</td>
-                <td>{result.nf_saturated_fat || 0}</td>
-                <td>{result.nf_cholesterol || 0}</td>
-                <td>{result.nf_sodium || 0}</td>
-                <td>{result.nf_total_carbohydrate || 0}</td>
-                <td>{result.nf_dietary_fiber || 0}</td>
-                <td>{result.nf_sugars || 0}</td>
-                <td>{result.nf_protein || 0}</td>
-                <td>{result.nf_potassium || 0}</td>
+                <td>{result.nf_calories.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_total_fat.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_saturated_fat.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_cholesterol.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_sodium.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_total_carbohydrate.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_dietary_fiber.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_sugars.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_protein.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>{result.nf_potassium.toFixed(DECIMAL_PLACE) || 0}</td>
               </tr>
             );
           })

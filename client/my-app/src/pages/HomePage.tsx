@@ -62,7 +62,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     var query = `${foodItem.quantity} ${foodItem.food_name}, `;
     // A function like this is able to maintain its results and errors and be set within its body
     calculateStatistics(query, (results, error) => {
-      
       setFoodStats((previousFoodStats: foodStatsItem[]) => {
         const existingFoodStats = [...previousFoodStats];
         existingFoodStats.push(results);
@@ -114,7 +113,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
 
     // Fetch the selected item in particular from the Nutritionix API endpoints
     const foodSearchItem = findFoodByTagID(tagID, searchResults);
-
     // Assuming the food item does exist, it can be set as a selection properly
     if (foodSearchItem !== null) {
       // Toggle that a change occurred for the calculations
@@ -137,7 +135,10 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
 
     // Fetch the selected item in particular from the Nutritionix API endpoints
     const foodSearchItem = findFoodStatsByTagID(tagID, foodStats);
+    console.log("del")
+    console.log(totals)
     setTotals(decrementValue(foodSearchItem, totals));
+    console.log(totals)
 
     // Prior to removal, decrement the foodStatItem from the totals
     setFoodStats((previousFoodStats: foodStatsItem[]) => {
