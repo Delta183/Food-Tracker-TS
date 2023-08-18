@@ -16,7 +16,11 @@ import { User } from "../models/user";
 import { foodStatsItem } from "../models/foodStatsItem";
 import findFoodStatsByTagID from "../utils/foodStats_array_helpers";
 import totalsTemplate from "../utils/totalsTemplate";
-import { incrementValue, decrementValue, resetValues } from "../utils/totals_array_helper";
+import {
+  incrementValue,
+  decrementValue,
+  resetValues,
+} from "../utils/totals_array_helper";
 
 interface HomePageProps {
   loggedInUser: User | null;
@@ -148,7 +152,6 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
     setFoodSelections([]);
     setFoodStats([]);
     setTotals(resetValues(totals));
-
   };
 
   return (

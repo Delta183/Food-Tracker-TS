@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-import {Col, Row, Spinner } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 import { Meal as MealModel } from "../../models/meal";
 import * as MealsApi from "../../network/meals.api";
 import styles from "../../styles/MealsPage.module.css";

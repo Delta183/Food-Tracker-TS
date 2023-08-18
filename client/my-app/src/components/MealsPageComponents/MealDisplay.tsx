@@ -23,7 +23,11 @@ import SearchBarComponent from "../SearchComponents/SearchBarComponent";
 import mealInputTemplate from "../../utils/mealInputTemplate";
 import CalculationComponent from "../CalculationComponents/CalculationComponent";
 import emptyStateLogo from "../../resources/healthy-food-calories-calculator.png";
-import { incrementValue, decrementValue, resetValues } from "../../utils/totals_array_helper";
+import {
+  incrementValue,
+  decrementValue,
+  resetValues,
+} from "../../utils/totals_array_helper";
 
 interface MealsPageProps {
   loggedInUser: User | null;
@@ -33,7 +37,7 @@ const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods select
 
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
-  
+
   // Meal States
   const [meal, setMeal] = useState<MealModel>();
   const [selections, setSelections] = useState(Array<foodSearchItem>());
@@ -144,7 +148,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
     const foodSearchItem = findFoodStatsByTagID(tagID, editMealStats);
     // Decrement the value from the totals
     setEditMealTotals(decrementValue(foodSearchItem, editMealTotals));
-   
+
     // Prior to removal, decrement the foodStatItem from the totals
     setEditMealStats((previousFoodStats: foodStatsItem[]) => {
       const existingFoodStats = previousFoodStats.filter(
