@@ -1,4 +1,5 @@
 export interface totalsArray {
+  // The following will be totals for the following elements
   calories: number;
   totalFat: number;
   saturatedFat: number;

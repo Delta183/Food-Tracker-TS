@@ -11,6 +11,7 @@ interface LoginModalProps {
   onLoginSuccessful: (user: User) => void;
 }
 
+// Modal responsible for the login interaction from users
 const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
   const {
     register,
@@ -18,6 +19,7 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
     formState: { errors, isSubmitting },
   } = useForm<LoginCredentials>();
 
+  // Function to call endpoint from the API to login
   async function onSubmit(credentials: LoginCredentials) {
     try {
       const user = await MealsApi.login(credentials);

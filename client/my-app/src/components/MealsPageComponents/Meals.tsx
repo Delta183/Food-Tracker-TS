@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 // Props is the arguments unto which we pass to the component.
 interface MealProps {
   meal: MealModel;
-  onDeleteMealClicked: (meal: MealModel) => void;
 }
 
-// Prior to NoteProps is the chunk of the arguments that will be passed
+// Prior to MealProps is the chunk of the arguments that will be passed
+// This will be responsible for showing the cards of all the meals on the Meals pages.
 const Meals = ({ meal }: MealProps) => {
   // it appears that food items are not accessible at this level
   const { title, text, createdAt, updatedAt, username } = meal;

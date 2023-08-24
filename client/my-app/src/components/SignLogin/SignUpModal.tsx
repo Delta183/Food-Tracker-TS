@@ -11,6 +11,7 @@ interface SignUpModalProps {
   onSignUpSuccessful: (user: User) => void;
 }
 
+// Modal responsible for the sign in interaction from users
 const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
   const {
     register,

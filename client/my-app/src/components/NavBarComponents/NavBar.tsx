@@ -34,6 +34,7 @@ const NavBar = ({
               Your Meals
             </Nav.Link>
           </Nav>
+          {/* Cases for logged in user and logged out user */}
           <Nav className="ms-auto">
             {loggedInUser ? (
               <NavBarLoggedInView

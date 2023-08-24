@@ -4,11 +4,10 @@ import { foodStatsItem } from "../../models/foodStatsItem";
 import { totalsArray } from "../../models/totalsArray";
 
 interface IProps {
-  calculationResults: foodStatsItem[] | undefined;
-  totalsArray: totalsArray | undefined;
+  calculationResults: foodStatsItem[] | undefined; // The stats of each individual selection
+  totalsArray: totalsArray | undefined; // The totals of all of the stats
 }
-
-const DECIMAL_PLACE = 2;
+const DECIMAL_PLACE = 2; // This is for the toFixed() function used on the results of the calculations
 
 const CalculationTableComponent = (props: IProps) => {
   const tableHeaders = [
@@ -23,7 +22,7 @@ const CalculationTableComponent = (props: IProps) => {
     "Sugars (g)",
     "Protein (g)",
     "Potassium (mg)",
-  ];
+  ]; // Static titles for the columns in the table
 
   return (
     <Table responsive hover={true} variant="light" bordered={true}>
@@ -36,6 +35,7 @@ const CalculationTableComponent = (props: IProps) => {
         </tr>
       </thead>
       <tbody>
+        {/* Only display this rows if there are indeed selections, otherwise put nothing */}
         {props.calculationResults != undefined ? (
           props.calculationResults.map((result) => {
             // Prior to displaying the stats of each food, add their values to the totals
@@ -52,7 +52,9 @@ const CalculationTableComponent = (props: IProps) => {
                 <td>{result.nf_saturated_fat.toFixed(DECIMAL_PLACE) || 0}</td>
                 <td>{result.nf_cholesterol.toFixed(DECIMAL_PLACE) || 0}</td>
                 <td>{result.nf_sodium.toFixed(DECIMAL_PLACE) || 0}</td>
-                <td>{result.nf_total_carbohydrate.toFixed(DECIMAL_PLACE) || 0}</td>
+                <td>
+                  {result.nf_total_carbohydrate.toFixed(DECIMAL_PLACE) || 0}
+                </td>
                 <td>{result.nf_dietary_fiber.toFixed(DECIMAL_PLACE) || 0}</td>
                 <td>{result.nf_sugars.toFixed(DECIMAL_PLACE) || 0}</td>
                 <td>{result.nf_protein.toFixed(DECIMAL_PLACE) || 0}</td>

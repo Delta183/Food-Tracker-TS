@@ -42,25 +42,13 @@ const MealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
     loadMeals();
   }, []); // passing the empty array allows this to run only one time
 
-  // Delete Note logic
-  async function deleteNote(meal: MealModel) {
-    try {
-      await MealsApi.deleteMeal(meal._id);
-      // Go through each note of the array and only includes them if the id does not match the given one
-      // Thus resulting in its removal from the app
-      setMeals(meals.filter((existingNote) => existingNote._id !== meal._id));
-    } catch (error) {
-      console.error(error);
-      alert(error);
-    }
-  }
-
+  // The grid of meals to be outputted in a row by column format
   const mealsGrid = (
     <Row xs={1} md={1} xl={2} className={`g-4 ${styles.mealsGrid}`}>
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
-          <Meal meal={meal} onDeleteMealClicked={deleteNote} />
+          <Meal meal={meal} />
         </Col>
       ))}
     </Row>

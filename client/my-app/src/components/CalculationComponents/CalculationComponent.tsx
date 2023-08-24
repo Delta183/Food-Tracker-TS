@@ -4,10 +4,12 @@ import { totalsArray } from "../../models/totalsArray";
 import CalculationTableComponent from "./CalculationTableComponent";
 
 interface IProps {
-  calculationResults: foodStatsItem[] | undefined;
-  totalsArray: totalsArray | undefined;
+  calculationResults: foodStatsItem[] | undefined; // The stats of each individual selection
+  totalsArray: totalsArray | undefined; // The totals of all of the stats
 }
 
+// The Calculation component that holds the table with the statistics of each item
+// As well as the total of all the individual items. Both are held in their own arrays
 const CalculationComponent = (props: IProps) => {
   return (
     <div className={styles.searchContainer}>

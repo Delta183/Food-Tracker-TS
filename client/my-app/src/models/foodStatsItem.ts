@@ -1,7 +1,7 @@
 export interface foodStatsItem {
   food_name: string;
-  serving_qty: number;
-  serving_unit: string;
+  serving_qty: number; // The amount in each serving
+  serving_unit: string; // The unit of measurement for each serving
   // Below are all the pertinent health stats pulled from the response.
   nf_calories: number;
   nf_total_fat: number;

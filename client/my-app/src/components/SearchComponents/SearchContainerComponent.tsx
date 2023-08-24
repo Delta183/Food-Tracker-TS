@@ -9,6 +9,7 @@ interface IProps {
   onSearchBarClear: () => void;
 }
 
+// The parent component for all components related to searching
 const SearchContainerComponent = ({
   input,
   onChange,

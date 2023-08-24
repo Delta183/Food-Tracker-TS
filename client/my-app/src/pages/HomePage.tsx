@@ -135,10 +135,7 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
 
     // Fetch the selected item in particular from the Nutritionix API endpoints
     const foodSearchItem = findFoodStatsByTagID(tagID, foodStats);
-    console.log("del")
-    console.log(totals)
     setTotals(decrementValue(foodSearchItem, totals));
-    console.log(totals)
 
     // Prior to removal, decrement the foodStatItem from the totals
     setFoodStats((previousFoodStats: foodStatsItem[]) => {

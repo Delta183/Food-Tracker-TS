@@ -8,6 +8,7 @@ interface MealsPageProps {
   loggedInUser: User | null;
 }
 
+// This page will only show the meals of the user who is logged in.
 const UserMealsPage = ({ loggedInUser }: MealsPageProps) => {
   return (
     <Container className={styles.mealsPage}>

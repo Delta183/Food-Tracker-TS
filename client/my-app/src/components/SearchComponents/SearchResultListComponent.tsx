@@ -32,6 +32,7 @@ const shouldShowNoResultsPlaceholder = (props: IProps): boolean => {
 const SearchResultListComponent = (props: IProps) => {
   return (
     <div className={styles.contentListContainer}>
+      {/* Error messages in the form of no results or too many */}
       <div className={styles.contentListHeader}>
         {props.query === null || props.query.length === 0
           ? "Results"
@@ -47,6 +48,7 @@ const SearchResultListComponent = (props: IProps) => {
           No results found. Please try another query.
         </div>
       ) : null}
+      {/* Provided there are results, out a SearchResultComponent for each */}
       {props.results.map((result) => {
         // This part calls on the SearchResultComponent which are all the titles
         // console.log(result.tag_id)

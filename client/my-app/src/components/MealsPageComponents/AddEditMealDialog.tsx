@@ -50,7 +50,7 @@ const AddEditMealDialog = ({
       input.selectionsStats = selectionsStats;
 
       input.totalsArray = totalsArray;
-      // Check for if note is one to edit or one to add, call the according function
+      // Check for if meal is one to edit or one to add, call the according function
       if (mealToEdit) {
         mealResponse = await MealsApi.updateMeal(mealToEdit._id, input);
       } else {

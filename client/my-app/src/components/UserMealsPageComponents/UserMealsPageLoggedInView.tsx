@@ -63,7 +63,7 @@ const UserMealsPageLoggedInView = ({ loggedInUser }: MealsPageProps) => {
       {/* .map allows us to use our array of elements for something */}
       {meals.map((meal) => (
         <Col key={meal._id}>
-          <Meals meal={meal} onDeleteMealClicked={deleteNote} />
+          <Meals meal={meal} />
         </Col>
       ))}
     </Row>

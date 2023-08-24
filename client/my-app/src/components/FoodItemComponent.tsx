@@ -64,16 +64,18 @@ const FoodItemComponent = (props: IProps) => {
   }
 
   const onClick = () => {
-    if (quantityCount === "" || quantityCount === null || quantityCount.valueOf() <= "0") {
+    if (
+      quantityCount === "" ||
+      quantityCount === null ||
+      Number(quantityCount) <= 0
+    ) {
       // In the case of an empty value being entered, default it to 1
       updateQuantity(props.foodItem, "1");
       setQuantityCount("1");
-    }
-    else if(quantityCount.valueOf() >= "1000"){
+    } else if (Number(quantityCount) >= 1000) {
       updateQuantity(props.foodItem, "1000");
       setQuantityCount("1000");
-    } 
-    else {
+    } else {
       updateQuantity(props.foodItem, quantityCount);
     }
     props.buttonConfig.onClick(props.tagID);

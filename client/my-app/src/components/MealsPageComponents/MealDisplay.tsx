@@ -35,6 +35,9 @@ interface MealsPageProps {
 const DEBOUNCE_DURATION = 500;
 const MAX_SELECTIONS_LENGTH = 50; // There has to be a limit to the foods selected
 
+// IMPORTANT: This page does do a lot for a subcomponent, identical to HomePage
+// Yet it needs to be able to do everything said page can for the sake of edits.
+
 const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   const navigate = useNavigate();
 
@@ -159,12 +162,14 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
     });
   };
 
+  // This will be called on the clear button press; Hence set all selections and calculations to empty
   const clearFoodSelections = async () => {
     setEditMealSelections([]);
     setEditMealStats([]);
     setEditMealTotals(resetValues(editMealTotals));
   };
 
+  // For when the user elects to cancel the edit, set the edit values to their default
   const cancelEdit = () => {
     if (meal !== undefined) {
       setEditMealTitle(meal.title);
@@ -181,13 +186,12 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
     window.location.reload();
   }
 
+  // These functions had to exist for the separate title and text element on the form
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 👇 Get input value from "event"
     setEditMealTitle(e.target.value);
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 👇 Get input value from "event"
     setEditMealText(e.target.value);
   };
 
@@ -195,6 +199,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
     e.preventDefault();
     try {
       if (editedMeal != null) {
+        // Construct the meal using the newly set states 
         editedMeal.title = editMealTitle;
         editedMeal.text = editMealText;
         // Be sure to set as it isn't by default and this will otherwise be a means to update new choices
@@ -202,7 +207,6 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
         editedMeal.username = loggedInUser?.username;
         // Presumably here is where the calculations will be saved and put into the meals object
         editedMeal.selectionsStats = editMealStats;
-
         editedMeal.totalsArray = editMealTotals;
         if (meal != null) {
           await MealsApi.updateMeal(meal._id, editedMeal);
@@ -210,17 +214,20 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
       }
       // Afterwards go to main page
       setIsEditMode(false);
-      refreshPage();
+      // Refresh such that the states are reset
+      refreshPage(); 
     } catch (error) {
       console.error(error);
       alert(error);
     }
   };
 
+  // The call for the API to the meal deletion endpoint
   const deleteMeal = async (mealId: string | undefined) => {
     if (mealId != undefined) {
       try {
         await MealsApi.deleteMeal(mealId);
+        // After one is deleted, the user should not remain on that page.
         navigate("/meals");
       } catch (error) {
         console.error(error);

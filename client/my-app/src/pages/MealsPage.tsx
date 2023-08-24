@@ -8,6 +8,7 @@ interface MealsPageProps {
   loggedInUser: User | null;
 }
 
+// Separate from UserMealsPage, this will show all meals
 const MealsPage = ({ loggedInUser }: MealsPageProps) => {
   return (
     <Container className={styles.mealsPage}>
