@@ -1,7 +1,26 @@
-import { RequestHandler } from "express";
+import { RequestHandler, response } from "express";
 import createHttpError from "http-errors";
 import UserModel from "../models/user";
 import bcrypt from "bcrypt";
+import env from "../util/validateEnv";
+
+
+const key = env.NUTRITIONIX_API_KEY || "";
+const id = env.NUTRITIONIX_API_ID || "";
+
+
+// These parameters allow us to call it much like a fetch function
+async function fetchData(input: RequestInfo, init?: RequestInit) {
+    const response = await fetch(input, init);
+    // console.log(response);
+    if (response.ok) {
+      return response;
+    } else {
+      const errorBody = await response.json();
+      const errorMessage = errorBody.error;
+      throw Error(errorMessage);
+    }
+  } // There is no export for this function as we will use it in this file
 
 // This is how we get the information from the database if the user is logged in,
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
@@ -112,3 +131,107 @@ export const logout: RequestHandler = (req, res, next) => {
         }
     });
 };
+
+export interface ClientFoodSearchItem {
+    food_name: string;
+    serving_qty: string; // This will be a point of reference for its increments
+    quantity: string;
+    serving_unit: string;
+    tag_id: string;
+    photo: PhotoArray; // This is simply because of the way the api returned this information did so in an array
+  }
+
+  // This is how we handle nested arrays according
+export interface PhotoArray {
+    thumb: string;
+}
+
+
+export const search: RequestHandler = async (req, res, next) => {
+    try {
+        const { query } = req.params
+       
+        await fetch(
+          `https://trackapi.nutritionix.com/v2/search/instant?query=${query}&branded=false`,
+          {
+            method: "GET",
+            headers: {
+              "x-app-key": key,
+              "x-app-id": id,
+              "Content-Type": "application/json",
+              "x-remote-user-id": "0",
+            },
+        }).then((response) => response.json())
+        .then((searchResponse) => {
+            const errorMessage = searchResponse["Error"];
+            if (errorMessage !== null && errorMessage !== undefined) {
+            const error = new Error(errorMessage);
+            } else {
+            // In the response, I get two arrays in an array where "common" is the header
+            // for the common set of food
+            const searchResponseResults: ClientFoodSearchItem[] =
+                searchResponse["common"];
+            // This will filter items with the same ids in the array
+            const cleanResults: ClientFoodSearchItem[] = searchResponseResults.filter(
+                (searchResponseResults, index, self) =>
+                index ===
+                self.findIndex((t) => t.tag_id === searchResponseResults.tag_id)
+            );
+            // console.log(cleanResults)
+            res.status(200).send(cleanResults);
+            }
+        })
+        .catch((error) => {
+            console.log(`Something went wrong: ${error}`);
+            next(error);
+        });
+        } catch (err) {
+            console.log(err)
+            res.status(500).send('Something went wrong')
+        }
+  }
+
+        // const apiResponseJson = await apiResponse.json()
+        // await db.collection('collection').insertOne(apiResponseJson)
+        // console.log(apiResponseJson)
+    
+
+    // const response = await fetchData("search/" + mealId, {
+    //     // Patch will be used for updates
+    //     method: "PATCH",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(meal),
+    //   });
+
+
+// .then((response) => response.json())
+//   .then((searchResponse) => {
+//       const errorMessage = searchResponse["Error"];
+//       if (errorMessage !== null && errorMessage !== undefined) {
+//         const error = new Error(errorMessage);
+//         callback([], error);
+//       } else {
+//         // In the response, I get two arrays in an array where "common" is the header
+//         // for the common set of food
+//         const searchResponseResults: foodSearchItem[] =
+//           searchResponse["common"];
+//         // This will filter items with the same ids in the array
+//         var cleanResults: foodSearchItem[] = searchResponseResults.filter(
+//           (searchResponseResults, index, self) =>
+//             index ===
+//             self.findIndex((t) => t.tag_id === searchResponseResults.tag_id)
+//         );
+//         if (Array.isArray(cleanResults)) {
+//           callback(cleanResults, null);
+//         } else {
+//           callback([], null);
+//         }
+//       }
+//     })
+//     .catch((error) => {
+//       console.log(`Something went wrong: ${error}`);
+//       callback([], error);
+//     });
+

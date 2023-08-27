@@ -5,4 +5,6 @@ export default cleanEnv(process.env, {
     MONGO_CONNECTION_STRING: str(),
     PORT: port(),
     SESSION_SECRET: str(),
+    NUTRITIONIX_API_KEY: str(),
+    NUTRITIONIX_API_ID: str(),
 });

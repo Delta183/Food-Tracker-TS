@@ -89,10 +89,7 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performSearch = async (query: string) => {
     // A function like this is able to maintain its results and errors and be set within its body
-    searchFoodsWithQuery(query, (results, error) => {
-      setSearchResults(results);
-      setSearchResultError(error);
-    });
+    setSearchResults(await searchFoodsWithQuery(query));
   };
 
   // Clear input and be sure to clear search results
