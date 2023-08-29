@@ -73,18 +73,17 @@ const MealDisplay = ({ loggedInUser }: MealsPageProps) => {
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performCalculation = async (foodItem: foodSearchItem) => {
     var query = `${foodItem.quantity} ${foodItem.food_name}, `;
+    const results = await calculateStatistics(query);
     // A function like this is able to maintain its results and errors and be set within its body
-    calculateStatistics(query, (results, error) => {
       setEditMealStats((previousFoodStats: foodStatsItem[]) => {
         const existingFoodStats = [...previousFoodStats];
         existingFoodStats.push(results);
         return existingFoodStats;
       }); // The local storage one
       setEditMealTotals(incrementValue(results, editMealTotals));
-      setCalculationResultError(error);
       // incrementValues(results);
-    });
-  };
+    };
+
 
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performSearch = async (query: string) => {

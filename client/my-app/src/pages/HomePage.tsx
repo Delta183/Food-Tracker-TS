@@ -60,18 +60,19 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performCalculation = async (foodItem: foodSearchItem) => {
     var query = `${foodItem.quantity} ${foodItem.food_name}, `;
+    const results = await calculateStatistics(query);
+    console.log("results")
+    console.log(results)
+    // console.log(results)
     // A function like this is able to maintain its results and errors and be set within its body
-    calculateStatistics(query, (results, error) => {
       setFoodStats((previousFoodStats: foodStatsItem[]) => {
         const existingFoodStats = [...previousFoodStats];
         existingFoodStats.push(results);
         return existingFoodStats;
       }); // The local storage one
       setTotals(incrementValue(results, totals));
-      setCalculationResultError(error);
       // incrementValues(results);
-    });
-  };
+    };
 
   // Use the function in the api class to get a json response in an array and use the states to set it
   const performSearch = async (query: string) => {
@@ -107,9 +108,11 @@ const HomePage = ({ loggedInUser }: HomePageProps) => {
       });
       return;
     }
-
+    // console.log("search")
+    // console.log(searchResults)
     // Fetch the selected item in particular from the Nutritionix API endpoints
     const foodSearchItem = findFoodByTagID(tagID, searchResults);
+    
     // Assuming the food item does exist, it can be set as a selection properly
     if (foodSearchItem !== null) {
       // Toggle that a change occurred for the calculations

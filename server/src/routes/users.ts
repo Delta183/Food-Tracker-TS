@@ -15,4 +15,6 @@ router.post("/logout", UserController.logout);
 
 router.get("/search/:query", UserController.search);
 
+router.get("/searchStatistics/:query", UserController.searchStatistics);
+
 export default router;
