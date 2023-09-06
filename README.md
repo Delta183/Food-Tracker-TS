@@ -11,9 +11,17 @@ It should be noted that despite hashing and user security being taken into accou
 - TypeScript/TSX
 - CSS
 
+## Images
+
+![Screenshot1](FoodTrackerTS_1.png)
+![Screenshot1](FoodTrackerTS_2.png)
+![Screenshot1](FoodTrackerTS_3.png)
+![Screenshot1](FoodTrackerTS_4.png)
+
+
 ## Getting Started
 
-Link: 
+Link: Currently Deploying 
 
 ## Notes
 - Implementing the cache on the backend would be possible yet the MongoDB implementation proves to be a challenge with respect to MongoDB documentation and schemas.
